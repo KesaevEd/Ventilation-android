@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.ventilation">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Вентиляция"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Ventilation">
+        <activity android:name=".Ploshad"
+            android:label="Площадь"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+        <activity
+            android:name=".Kalorifer"
+            android:label="Калорифер"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+        <activity
+            android:name=".Sechenie"
+            android:label="Подбор сечения"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+        <activity
+            android:name=".Reshetki"
+            android:label="Подбор решеток"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+        <activity
+            android:name=".Conditional"
+            android:label="Кондиционирование"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+        <activity
+            android:name=".Aerodinamica"
+            android:label="Аэродинамика"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+        <activity
+            android:name=".Vozduhoobmen"
+            android:label="Воздухообмен"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="Вентиляция">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

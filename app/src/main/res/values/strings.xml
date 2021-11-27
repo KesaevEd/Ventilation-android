@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">MASTER</string>
+    <string name="build">СТРОИТЕЛЬСТВО</string>
+    <string name="finishing">ОТДЕЛКА</string>
+    <string name="electrician">ЭЛЕКТРИКА</string>
+    <string name="heating">ОТОПЛЕНИЕ</string>
+    <string name="ventilation">ВЕНТИЛЯЦИЯ</string>
+    <string name="water_supply">ВОДОСНАБЖЕНИЕ</string>
+    <string name="sopromat">СОПРОМАТ</string>
+    <string name="geometry">ГЕОМЕТРИЯ</string>
+    <string name="save">СОХРАНЕННЫЕ СМЕТЫ</string>
+    <string name="rashod">РАСЧЕТ ВОЗДУХООБМЕНА</string>
+    <string name="reshetki">Расчет количества решеток</string>
+    <string name="diametri">Подбор сечения воздуховодов</string>
+    <string name="ploshad_vozduhovodov">ПЛОЩАДЬ ВОЗДУХОВОДОВ</string>
+    <string name="kaloriferi">РАСЧЕТ МОЩНОСТИ КАЛОРИФЕРА</string>
+    <string name="aerodinamika">АЭРОДИНАМИЧЕСКИЙ РАСЧЕТ</string>
+    <string name="kondicioneri">РАСЧЕТ МОЩНОСТИ КОНДИЦИОНИРОВАНИЯ</string>
+    <string name="podbor_ventilyatora">ПОДБОР ВЕНТИЛЯТОРА</string>
+    <string name="обьем">Объем помещения:</string>
+    <string name="воздухообмен_по_кратности">Воздухообмен по кратности:</string>
+    <string name="kratnost">Кратность помещения:</string>
+    <string name="обьем_воздуха">Объем воздуха:</string>
+    <string name="sanitNormi">Воздухообмен по санитарным нормам:</string>
+    <string name="teploizb">Воздухообмен по теплоизбыткам:</string>
+    <string name="projects">СОХРАНЕННЫЕ ПРОЕКТЫ</string>
+</resources>

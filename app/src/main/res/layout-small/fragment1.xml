@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout_raschet1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="0dp"
+    android:orientation="vertical"
+    android:background="@drawable/linear_layout_style1"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tw1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/обьем"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/obiem"
+            android:layout_width="70sp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/edit_text_style"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="20sp"
+            android:text="0"
+            android:inputType="numberDecimal|numberSigned"/>
+
+        <TextView
+            android:id="@+id/tw2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="м3"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/remove"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:text="x"
+            android:layout_marginLeft="5dp"
+            android:textSize="15dp"
+            android:background="@color/design_default_color_error"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Назначение помещения:"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/kratnost"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:visibility="invisible"
+            android:background="@drawable/edit_text_style"
+            android:paddingLeft="10dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="20sp"
+            android:inputType="numberDecimal|numberSigned"/>
+
+        <Spinner
+            android:id="@+id/spin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
+
+    </LinearLayout>
+
+</LinearLayout>

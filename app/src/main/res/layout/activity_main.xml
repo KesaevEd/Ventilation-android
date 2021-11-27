@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/b1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/image_button_view"
+            android:scaleType="fitXY"
+            android:src="@drawable/free_icon_air_3260792__1_" />
+
+        <Button
+            android:id="@+id/rashod"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="@string/rashod"
+            android:textColor="@color/black" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/b2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/image_button_view"
+            android:src="@drawable/soprotivlenie"
+            android:scaleType="fitXY"/>
+
+        <Button
+            android:id="@+id/aerodinamica"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="@string/aerodinamika"
+            android:textColor="@color/black" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat4"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/b4"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/image_button_view"
+            android:scaleType="fitXY"
+            android:src="@drawable/vozduhovod" />
+
+        <Button
+            android:id="@+id/sechenie"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="@string/diametri"
+            android:textColor="@color/black" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat5"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/b5"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/image_button_view"
+            android:scaleType="fitXY"
+            android:src="@drawable/reshetki" />
+
+        <Button
+            android:id="@+id/reshetki"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="@string/reshetki"
+            android:textColor="@color/black" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat6"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/b6"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/image_button_view"
+            android:scaleType="fitXY"
+            android:src="@drawable/free_icon_air_1924123" />
+
+        <Button
+            android:id="@+id/kaloriferi"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="@string/kaloriferi"
+            android:textColor="@color/black" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat7"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat6"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/b7"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/image_button_view"
+            android:scaleType="fitXY"
+            android:src="@drawable/free_icon_air_1752536" />
+
+        <Button
+            android:id="@+id/kondicioneri"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="@string/kondicioneri"
+            android:textColor="@color/black" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat3"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat7"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/b3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/image_button_view"
+            android:src="@drawable/ploshadpro"
+            android:scaleType="fitXY" />
+
+        <Button
+            android:id="@+id/vozduhovodi"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="@string/ploshad_vozduhovodov"
+            android:textColor="@color/black" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat8"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat3"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/b8"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/image_button_view"
+            android:scaleType="fitXY"
+            android:src="@drawable/projectspro" />
+
+        <Button
+            android:id="@+id/projects"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="@string/projects"
+            android:textColor="@color/black" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
