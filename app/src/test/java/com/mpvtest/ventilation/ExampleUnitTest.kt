@@ -1,4 +1,4 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
 
 import org.junit.Test
 

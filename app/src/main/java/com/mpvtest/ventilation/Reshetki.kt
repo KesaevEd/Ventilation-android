@@ -1,9 +1,10 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
 
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.mvptest.ventilation.R
 
 class Reshetki : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,10 +41,9 @@ class Reshetki : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long ) {
 
                 val selected = sizes[position]
-                val LisSelected = selected.split("*")
-                var a: Float = 0.000F
-                a = ((LisSelected[0].toFloat()*LisSelected[1].toFloat())/1000000)
-                ploshad.setText("${a}")
+                val listSelected = selected.split("*")
+                val a = ((listSelected[0].toFloat()*listSelected[1].toFloat())/1000000)
+                ploshad.text = "$a"
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }

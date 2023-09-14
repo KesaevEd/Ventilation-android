@@ -1,4 +1,4 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.mvptest.ventilation.R
 
 class Spinner_ploshad (context: Context, figureList: List<Figure>) : ArrayAdapter<Figure>(context, 0, figureList) {
 

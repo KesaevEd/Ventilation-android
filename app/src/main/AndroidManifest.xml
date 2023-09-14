@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ventilation">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mvptest.ventilation">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,36 +12,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ventilation">
-        <activity android:name=".Ploshad"
+        <activity android:name="com.mpvtest.ventilation.Ploshad"
             android:label="Площадь"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".Kalorifer"
+            android:name="com.mpvtest.ventilation.Kalorifer"
             android:label="Калорифер"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".Sechenie"
+            android:name="com.mpvtest.ventilation.Sechenie"
             android:label="Подбор сечения"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".Reshetki"
+            android:name="com.mpvtest.ventilation.Reshetki"
             android:label="Подбор решеток"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".Conditional"
+            android:name="com.mpvtest.ventilation.Conditional"
             android:label="Кондиционирование"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".Aerodinamica"
+            android:name="com.mpvtest.ventilation.Aerodinamica"
             android:label="Аэродинамика"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".Vozduhoobmen"
+            android:name="com.mpvtest.ventilation.Vozduhoobmen"
             android:label="Воздухообмен"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".MainActivity"
-            android:label="Вентиляция">
+            android:name="com.mpvtest.ventilation.MainActivity"
+            android:label="Вентиляция"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

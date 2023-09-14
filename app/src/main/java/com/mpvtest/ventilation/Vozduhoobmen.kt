@@ -1,9 +1,10 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
 
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.mvptest.ventilation.R
 import org.w3c.dom.Text
 
 class Vozduhoobmen : AppCompatActivity() {
@@ -41,41 +42,44 @@ class Vozduhoobmen : AppCompatActivity() {
 
 // Обработка кнопки добавления помещения
 
-        add.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
+        add.setOnClickListener {
+            val layout = getLayoutInflater().inflate(R.layout.fragment1, null)
+            val layout1: LinearLayout = layout.findViewById(R.id.linearLayout4)
+            val et1: EditText = layout1.findViewById(R.id.obiem)
+            val remove: Button = layout1.findViewById(R.id.remove)
+            val layout2: LinearLayout = layout.findViewById(R.id.linearLayout5)
+            val et2: TextView = layout2.findViewById(R.id.kratnost)
+            val spin1: Spinner = layout2.findViewById(R.id.spin)
+            val res1: TextView = findViewById(R.id.result1)
 
-                val layout = getLayoutInflater().inflate(R.layout.fragment1, null)
-                val layout1: LinearLayout = layout.findViewById(R.id.linearLayout4)
-                val et1: EditText = layout1.findViewById(R.id.obiem)
-                val remove: Button = layout1.findViewById(R.id.remove)
-                val layout2: LinearLayout = layout.findViewById(R.id.linearLayout5)
-                val et2: TextView = layout2.findViewById(R.id.kratnost)
-                val spin1: Spinner = layout2.findViewById(R.id.spin)
-                val res1: TextView = findViewById(R.id.result1)
+            gadgets(spin1, et2)
 
-                gadgets(spin1, et2)
+            layout.id = USERID + countID
 
-                layout.id = USERID + countID
+            //ОБРАБОТКА КНОПКИ УДАЛЕНИЯ ПОМЕЩЕНИЯ
 
-                //ОБРАБОТКА КНОПКИ УДАЛЕНИЯ ПОМЕЩЕНИЯ
-
-                remove.setOnClickListener(object : View.OnClickListener {
-                    override fun onClick(v: View?) {
-                        count--
-                        try {
-                            res1.setText("${(res1.text.toString().toFloat() -  et1.text.toString().toInt() * et2.text.toString().toInt()).toInt()}")
-                            total -= et1.text.toString().toInt() * et2.text.toString().toInt()
-                        }catch (e: Exception) {}
-                        AllEditText.remove(layout)
-                        container.removeView(layout)
+            remove.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    count--
+                    try {
+                        res1.setText(
+                            "${
+                                (res1.text.toString().toFloat() - et1.text.toString()
+                                    .toInt() * et2.text.toString().toInt()).toInt()
+                            }"
+                        )
+                        total -= et1.text.toString().toInt() * et2.text.toString().toInt()
+                    } catch (e: Exception) {
                     }
-                })
+                    AllEditText.remove(layout)
+                    container.removeView(layout)
+                }
+            })
 
-                AllEditText.add(layout)
-                container.addView(layout)
-                count ++
-            }
-        })
+            AllEditText.add(layout)
+            container.addView(layout)
+            count++
+        }
 
         //Нахождение Объема по кратности
 
@@ -185,7 +189,9 @@ class Vozduhoobmen : AppCompatActivity() {
 
             try {
                 for (i in 0 until count) {
-                    total += AllEditText2.get(i).findViewById<EditText>(R.id.kol_vo_chelov).text.toString().toFloat() * AllEditText2.get(i).findViewById<EditText>(R.id.naznachenie_pom).text.toString().toFloat()
+                    total += AllEditText2.get(i).findViewById<EditText>(R.id.kol_vo_chelov).text.toString().toFloat() * AllEditText2.get(i).findViewById<EditText>(
+                        R.id.naznachenie_pom
+                    ).text.toString().toFloat()
                 }
             }catch (e: Exception) {result2.setText("Некорректный ввод данных")}
 

@@ -1,9 +1,10 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
 
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.mvptest.ventilation.R
 
 class Conditional : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,6 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
+
+import com.mvptest.ventilation.R
 
 data class Figure(val image: Int, val name: String)
 

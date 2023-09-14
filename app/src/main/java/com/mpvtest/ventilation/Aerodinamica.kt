@@ -1,10 +1,11 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
 
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.mvptest.ventilation.R
 import java.lang.String.format
 import kotlin.math.pow
 

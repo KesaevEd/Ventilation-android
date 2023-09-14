@@ -1,10 +1,11 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.mvptest.ventilation.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

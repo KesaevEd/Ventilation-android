@@ -4,32 +4,46 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\eduar\\StudioProjects\\ventilation_keystore\\vent_key.jks')
+            storePassword '13577qetuu'
+            keyAlias 'vent_text_key'
+            keyPassword '13577qetuu'
+        }
+    }
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.ventilation"
+        applicationId "com.mvptest.ventilation"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+
     viewBinding {
         enabled true
     }
@@ -37,7 +51,9 @@ android {
     buildFeatures {
         viewBinding false
     }
+
 }
+
 
 dependencies {
 

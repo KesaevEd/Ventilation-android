@@ -1,4 +1,4 @@
-package com.example.ventilation
+package com.mpvtest.ventilation
 
 import android.app.ActionBar
 import android.app.AlertDialog
@@ -13,7 +13,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.ventilation.Figures.list
+import com.mvptest.ventilation.R
+import com.mpvtest.ventilation.Figures.list
 import java.nio.file.Files.list
 import java.util.Collections.list
 
@@ -168,7 +169,7 @@ class Ploshad : AppCompatActivity() {
 
 
     private fun setupCustomSpinner(choice: TextView) {
-        val adapter = Spinner_ploshad(this, Figures.list!!)
+        val adapter = Spinner_ploshad(this, list!!)
         val spinner: Spinner = findViewById(R.id.spin)
 
         spinner.adapter = adapter
