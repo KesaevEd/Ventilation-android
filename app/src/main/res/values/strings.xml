@@ -10,8 +10,8 @@
     <string name="geometry">ГЕОМЕТРИЯ</string>
     <string name="save">СОХРАНЕННЫЕ СМЕТЫ</string>
     <string name="rashod">РАСЧЕТ ВОЗДУХООБМЕНА</string>
-    <string name="reshetki">Расчет количества решеток</string>
-    <string name="diametri">Подбор сечения воздуховодов</string>
+    <string name="reshetki">РАСЧЕТ КОЛИЧЕСТВА РЕШЕТОК</string>
+    <string name="diametri">ПОДБОР СЕЧЕНИЯ ВОЗДУХОВОДОВ</string>
     <string name="ploshad_vozduhovodov">ПЛОЩАДЬ ВОЗДУХОВОДОВ</string>
     <string name="kaloriferi">РАСЧЕТ МОЩНОСТИ КАЛОРИФЕРА</string>
     <string name="aerodinamika">АЭРОДИНАМИЧЕСКИЙ РАСЧЕТ</string>
@@ -24,4 +24,28 @@
     <string name="sanitNormi">Воздухообмен по санитарным нормам:</string>
     <string name="teploizb">Воздухообмен по теплоизбыткам:</string>
     <string name="projects">СОХРАНЕННЫЕ ПРОЕКТЫ</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="calculating_bottomnav">Расчет</string>
+    <string name="calculator_subtitile">Калькулятор для расчета</string>
+
+    <string name="projects_title">Проекты</string>
+    <string name="projects_subtitle">Мои готовые\nпроекты</string>
+
+    <string name="have_you_subscription">Уже есть подписка?</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="subscribe">Оформить подписку</string>
+
+    <string name="empty_projects">У Вас пока нет проектов</string>
+    <string name="add_project">Добавить проект</string>
+    <string name="new_project">Новый проект</string>
+    <string name="new_project_subtitle">Создайте свой новый проект</string>
+
+    <string name="project_address">Адрес объекта</string>
+    <string name="start_date">Дата начала монтажа</string>
+
+    <string name="open_project">Открыть проект</string>
+    <string name="create_project">Создать новый проект</string>
+
 </resources>
