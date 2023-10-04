@@ -1,4 +1,4 @@
-package com.mpvtest.presentation.ui
+package com.mpvtest.presentation.ui.calculation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mpvtest.domain.models.CalculateItem
-import com.mpvtest.presentation.ui.bottommenu.BottomNavigationBar
 import com.mvptest.ventilation.R
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -31,15 +30,15 @@ fun CalculatingMainScreen(onItemClicked: (itemId: Int) -> Unit) {
         CalculateItem(id = 5, titleId = R.string.kaloriferi),
         CalculateItem(id = 6, titleId = R.string.kondicioneri)
     )
-    Scaffold(bottomBar = { BottomNavigationBar() }) {
-        LazyVerticalGrid(
-            modifier = Modifier.fillMaxSize(),
-            cells = GridCells.Fixed(1),
-            content = {
-                items(list) { ItemCard(item = it, onItemClicked = onItemClicked) }
-            })
-    }
+
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxSize(),
+        cells = GridCells.Fixed(1),
+        content = {
+            items(list) { ItemCard(item = it, onItemClicked = onItemClicked) }
+        })
 }
+
 
 @Composable
 fun ItemCard(item: CalculateItem, onItemClicked: (id: Int) -> Unit = { }) {

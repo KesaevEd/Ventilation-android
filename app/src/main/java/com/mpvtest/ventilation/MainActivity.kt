@@ -10,14 +10,19 @@ import androidx.navigation.NavController
 import com.mpvtest.presentation.ui.HomeScreen
 import com.mvptest.ventilation.R
 import androidx.activity.compose.setContent
+import androidx.compose.material.Scaffold
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mpvtest.presentation.ui.bottommenu.BottomNavigationBar
+import com.mpvtest.presentation.ui.bottommenu.NavigationGraph
+import com.mpvtest.presentation.ui.myprojects.MyProjectsScreen
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            HomeDestination(navController = navController)
+            App()
         }
 
 
@@ -96,8 +101,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun HomeDestination(navController: NavController){
-        HomeScreen()
+    private fun App(){
+        val navController = rememberNavController()
+        Scaffold(bottomBar = {BottomNavigationBar(navController = navController)}) {
+            NavigationGraph(navController = navController)
+        }
     }
 }
 
@@ -108,7 +116,8 @@ object NavigationKeys {
     }
 
     object Route {
-//        const val PROJECT_LIST = "blogs_list"
+        const val HOME = "home"
+        const val PROJECT_LIST = "projects_list"
 //        const val BLOG_DETAILS = "$BLOG_LIST/{$BLOG_ID}"
     }
 }

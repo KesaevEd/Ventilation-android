@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.mpvtest.domain.models.Project
 import com.mpvtest.presentation.ui.bottommenu.BottomNavigationBar
 import com.mpvtest.utils.interFamily
@@ -43,41 +44,40 @@ fun MyProjectsScreen() {
         Project(1, "Аврора", "Стахановская, 14", "12.11.2023")
     )
 
-    Scaffold(bottomBar = { BottomNavigationBar() }) {
-        Column() {
-            ListContent(projectsList = list)
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 10.dp, start = 18.dp, end = 18.dp)
-                    .align(CenterHorizontally),
-                shape = RoundedCornerShape(16.dp),
-                content = {
-                    Row(modifier = Modifier) {
-                        Icon(
-                            modifier = Modifier
-                                .align(CenterVertically)
-                                .height(20.dp)
-                                .width(20.dp),
-                            painter = painterResource(id = R.drawable.ic_add),
-                            contentDescription = "image",
-                            tint = Color.White,
-                        )
-                        Text(
-                            text = stringResource(id = R.string.create_project),
-                            modifier = Modifier
-                                .padding(17.dp),
-                            color = colorResource(id = R.color.white),
-                            textAlign = TextAlign.Center,
-                        )
-                    }
-                },
-                onClick = { },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
-            )
-        }
+    Column() {
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, start = 18.dp, end = 18.dp)
+                .align(CenterHorizontally),
+            shape = RoundedCornerShape(16.dp),
+            content = {
+                Row(modifier = Modifier) {
+                    Icon(
+                        modifier = Modifier
+                            .align(CenterVertically)
+                            .height(20.dp)
+                            .width(20.dp),
+                        painter = painterResource(id = R.drawable.ic_add),
+                        contentDescription = "image",
+                        tint = Color.White,
+                    )
+                    Text(
+                        text = stringResource(id = R.string.create_project),
+                        modifier = Modifier
+                            .padding(17.dp),
+                        color = colorResource(id = R.color.white),
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            },
+            onClick = { },
+            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+        )
+        ListContent(projectsList = list)
     }
 }
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -85,11 +85,14 @@ fun ListContent(
     projectsList: List<Project>,
     onItemClicked: () -> Unit = { }
 ) {
-    LazyVerticalGrid(modifier = Modifier.padding(bottom = 30.dp), cells = GridCells.Fixed(1), content = {
-        items(projectsList) { item ->
-            ProjectItem(project = item, onItemClicked = onItemClicked)
-        }
-    })
+    LazyVerticalGrid(
+        modifier = Modifier.padding(bottom = 30.dp),
+        cells = GridCells.Fixed(1),
+        content = {
+            items(projectsList) { item ->
+                ProjectItem(project = item, onItemClicked = onItemClicked)
+            }
+        })
 }
 
 @Composable

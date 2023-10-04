@@ -1,5 +1,7 @@
 package com.mpvtest.presentation.ui
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,65 +11,69 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mpvtest.presentation.ui.bottommenu.BottomNavigationBar
+import androidx.navigation.NavController
+import com.mpvtest.presentation.ui.bottommenu.NavigationItem
 import com.mpvtest.utils.interFamily
 import com.mvptest.ventilation.R
 
-@Preview
 @Composable
-fun HomeScreen() {
-    Scaffold(bottomBar = { BottomNavigationBar() }) {
-        Column(modifier = Modifier.padding(start = 18.dp, top = 18.dp, end = 18.dp)) {
+fun HomeScreen(navController: NavController) {
+
+    Column(modifier = Modifier.padding(start = 18.dp, top = 18.dp, end = 18.dp)) {
+        HomeItem(
+            modifier = Modifier.fillMaxWidth().clickable (
+                interactionSource = MutableInteractionSource(),
+                indication = null
+            ){},
+            icon = R.drawable.ic_add,
+            titleId = R.string.new_project,
+            subTitleId = R.string.new_project_subtitle,
+            backgroundColorId = R.color.dark_gray
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 6.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        )
+        {
             HomeItem(
-                modifier = Modifier.fillMaxWidth(),
-                icon = R.drawable.ic_add,
-                titleId = R.string.new_project,
-                subTitleId = R.string.new_project_subtitle,
-                backgroundColorId = R.color.dark_gray
-            )
-            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 6.dp),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    .fillMaxWidth(0.5f).clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null
+                    ) { navController.navigate(NavigationItem.Calculating.route) },
+                icon = R.drawable.ic_calculator,
+                titleId = R.string.calculating_bottomnav,
+                subTitleId = R.string.calculator_subtitile,
+                backgroundColorId = R.color.sand
             )
-            {
-                HomeItem(
-                    modifier = Modifier
-                        .fillMaxWidth(0.5f),
-                    icon = R.drawable.ic_calculator,
-                    titleId = R.string.calculating_bottomnav,
-                    subTitleId = R.string.calculator_subtitile,
-                    backgroundColorId = R.color.sand
-                )
-                HomeItem(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    icon = R.drawable.ic_notes,
-                    titleId = R.string.projects_title,
-                    subTitleId = R.string.projects_subtitle,
-                    backgroundColorId = R.color.dark_blue
-                )
-            }
+            HomeItem(
+                modifier = Modifier
+                    .fillMaxWidth().clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null
+                    ) { navController.navigate(NavigationItem.MyProjects.route) },
+                icon = R.drawable.ic_notes,
+                titleId = R.string.projects_title,
+                subTitleId = R.string.projects_subtitle,
+                backgroundColorId = R.color.dark_blue
+            )
         }
     }
 }
-
 
 @Composable
 fun HomeItem(modifier: Modifier, icon: Int, titleId: Int, subTitleId: Int, backgroundColorId: Int) {
