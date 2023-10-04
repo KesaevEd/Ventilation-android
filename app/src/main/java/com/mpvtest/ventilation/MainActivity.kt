@@ -11,20 +11,26 @@ import com.mpvtest.presentation.ui.HomeScreen
 import com.mvptest.ventilation.R
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mpvtest.presentation.ui.bottommenu.BottomNavigationBar
 import com.mpvtest.presentation.ui.bottommenu.NavigationGraph
 import com.mpvtest.presentation.ui.myprojects.MyProjectsScreen
+import com.mpvtest.presentation.ui.newproject.NewProjectViewModel
+import com.mpvtest.presentation.ui.newroom.NewRoomViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             App()
         }
-
 
 
 //        val ib1: ImageButton = findViewById(R.id.b1)
@@ -101,10 +107,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun App(){
+    private fun App() {
+
+        val newProjectViewModel: NewProjectViewModel = viewModel()
+        val newRoomViewModel: NewRoomViewModel = viewModel()
+
         val navController = rememberNavController()
-        Scaffold(bottomBar = {BottomNavigationBar(navController = navController)}) {
-            NavigationGraph(navController = navController)
+
+        Scaffold(bottomBar = { BottomNavigationBar(navController = navController) }) {
+            NavigationGraph(navController = navController, newProjectViewModel, newRoomViewModel)
         }
     }
 }

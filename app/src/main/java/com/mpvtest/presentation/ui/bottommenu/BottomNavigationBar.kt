@@ -27,6 +27,12 @@ import com.mpvtest.presentation.ui.newproject.NavigationNewProjectItem
 import com.mpvtest.presentation.ui.newproject.NewProjectScreenFirst
 import com.mpvtest.presentation.ui.newproject.NewProjectScreenSecond
 import com.mpvtest.presentation.ui.newproject.NewProjectScreenThird
+import com.mpvtest.presentation.ui.newproject.NewProjectViewModel
+import com.mpvtest.presentation.ui.newroom.NavigationNewRoomItem
+import com.mpvtest.presentation.ui.newroom.NewRoomScreenFirst
+import com.mpvtest.presentation.ui.newroom.NewRoomScreenSecond
+import com.mpvtest.presentation.ui.newroom.NewRoomScreenThird
+import com.mpvtest.presentation.ui.newroom.NewRoomViewModel
 import com.mpvtest.utils.isBottomBarInvisible
 import com.mvptest.ventilation.R
 
@@ -41,7 +47,7 @@ fun BottomNavigationBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    if(currentRoute != null && !isBottomBarInvisible(currentRoute)) {
+    if (currentRoute != null && !isBottomBarInvisible(currentRoute)) {
 
         Card(
             modifier = Modifier
@@ -81,7 +87,11 @@ fun BottomNavigationBar(navController: NavController) {
 }
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun NavigationGraph(
+    navController: NavHostController,
+    newProjectViewModel: NewProjectViewModel,
+    newRoomViewModel: NewRoomViewModel
+) {
     NavHost(navController, startDestination = NavigationItem.Home.route) {
         //Bottom Navigation
         composable(NavigationItem.Home.route) {
@@ -91,7 +101,11 @@ fun NavigationGraph(navController: NavHostController) {
             CalculatingMainScreen(onItemClicked = {})
         }
         composable(NavigationItem.MyProjects.route) {
-            MyProjectsScreen()
+            MyProjectsScreen(onCreateNewProjectClicked = {
+                navController.navigate(
+                    NavigationNewProjectItem.First.route
+                )
+            })
         }
         composable(NavigationItem.Profile.route) {
 
@@ -99,15 +113,64 @@ fun NavigationGraph(navController: NavHostController) {
 
         //New Project Navigation
         composable(NavigationNewProjectItem.First.route) {
-            NewProjectScreenFirst() { navController.navigate(NavigationNewProjectItem.Second.route) }
+            NewProjectScreenFirst(viewModel = newProjectViewModel) {
+                navController.navigate(
+                    NavigationNewProjectItem.Second.route
+                )
+            }
         }
 
         composable(NavigationNewProjectItem.Second.route) {
-            NewProjectScreenSecond() { navController.navigate(NavigationNewProjectItem.Third.route) }
+            NewProjectScreenSecond(
+                viewModel = newProjectViewModel,
+                onBackPressed = {
+                    navController.navigate(
+                        NavigationNewProjectItem.First.route
+                    )
+                },
+                onContinueButtonClick = { navController.navigate(NavigationNewProjectItem.Third.route) })
         }
 
         composable(NavigationNewProjectItem.Third.route) {
-            NewProjectScreenThird() { navController.navigate(NavigationNewProjectItem.Third.route) }
+            NewProjectScreenThird(
+                viewModel = newProjectViewModel,
+                onBackPressed = {
+                    navController.navigate(
+                        NavigationNewProjectItem.Second.route
+                    )
+                },
+                onAddRoomPressed = { navController.navigate(NavigationNewRoomItem.First.route) })
+        }
+
+        //New Room Navigation
+        composable(NavigationNewRoomItem.First.route) {
+            NewRoomScreenFirst(viewModel = newRoomViewModel) {
+                navController.navigate(
+                    NavigationNewRoomItem.Second.route
+                )
+            }
+        }
+
+        composable(NavigationNewRoomItem.Second.route) {
+            NewRoomScreenSecond(
+                viewModel = newRoomViewModel,
+                onBackPressed = {
+                    navController.navigate(
+                        NavigationNewRoomItem.First.route
+                    )
+                },
+                onContinueButtonClick = { navController.navigate(NavigationNewRoomItem.Third.route) })
+        }
+
+        composable(NavigationNewRoomItem.Third.route) {
+            NewRoomScreenThird(
+                viewModel = newRoomViewModel,
+                onBackPressed = {
+                    navController.navigate(
+                        NavigationNewRoomItem.Second.route
+                    )
+                },
+                onAddRoomPressed = {})
         }
     }
 }

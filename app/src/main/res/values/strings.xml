@@ -44,11 +44,20 @@
 
     <string name="project_address">Адрес объекта</string>
     <string name="start_date">Дата начала монтажа</string>
+    <string name="contact">Контактное лицо</string>
+    <string name="contact_phone">Телефон контактного лица</string>
+    <string name="save_button">Сохранить</string>
+
+    <string name="empty_rooms">Помещений пока нет</string>
+    <string name="add_room">Добавить помещение</string>
 
     <string name="open_project">Открыть проект</string>
     <string name="create_project">Создать новый проект</string>
 
     <string name="creating_project">Создание проекта</string>
     <string name="write_project_name">Напишите название проекта</string>
+
+    <string name="new_room">Новое помещение</string>
+    <string name="write_room_title">Напишите название помещения</string>
 
 </resources>

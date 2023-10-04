@@ -1,4 +1,4 @@
-package com.mpvtest.presentation.ui.newproject
+package com.mpvtest.presentation.ui.newroom
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,17 +28,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mpvtest.presentation.ui.common.RoundedTextField
 import com.mpvtest.utils.interFamily
 import com.mvptest.ventilation.R
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
-fun NewProjectScreenFirst(viewModel: NewProjectViewModel, onCheckButtonClick: () -> Unit) {
-
+fun NewRoomScreenFirst(viewModel: NewRoomViewModel, onCheckButtonClick: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -56,7 +51,7 @@ fun NewProjectScreenFirst(viewModel: NewProjectViewModel, onCheckButtonClick: ()
 
         Text(
             modifier = Modifier,
-            text = stringResource(id = R.string.creating_project),
+            text = stringResource(id = R.string.new_room),
             fontSize = 20.sp,
             fontFamily = interFamily,
             fontWeight = FontWeight.Bold
@@ -81,7 +76,7 @@ fun TextFieldWithCheckButton(
     newItem: String,
     modifier: Modifier,
     onCheckButtonClick: () -> Unit,
-    viewModel: NewProjectViewModel
+    viewModel: NewRoomViewModel
 ) {
     var textValue by remember {
         mutableStateOf(value = viewModel.state.title)
@@ -101,7 +96,7 @@ fun TextFieldWithCheckButton(
                 textValue = newValue
                 onTextChanged(newValue)
             },
-            hint = stringResource(id = R.string.write_project_name)
+            hint = stringResource(id = R.string.write_room_title)
         )
 
         Spacer(modifier = Modifier.weight(1f))
