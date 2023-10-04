@@ -20,11 +20,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mpvtest.presentation.ui.bottommenu.NavigationItem
+import com.mpvtest.presentation.ui.newproject.NavigationNewProjectItem
 import com.mpvtest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -36,7 +36,7 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth().clickable (
                 interactionSource = MutableInteractionSource(),
                 indication = null
-            ){},
+            ){ navController.navigate(NavigationNewProjectItem.First.route) },
             icon = R.drawable.ic_add,
             titleId = R.string.new_project,
             subTitleId = R.string.new_project_subtitle,

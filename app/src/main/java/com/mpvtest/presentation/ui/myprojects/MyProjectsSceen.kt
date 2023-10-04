@@ -36,9 +36,8 @@ import com.mpvtest.presentation.ui.bottommenu.BottomNavigationBar
 import com.mpvtest.utils.interFamily
 import com.mvptest.ventilation.R
 
-@Preview
 @Composable
-fun MyProjectsScreen() {
+fun MyProjectsScreen(onCreateNewProjectClicked: () -> Unit) {
     val list = listOf(
         Project(0, "СОШ№24", "Карпинского, 14", "02.11.2023"),
         Project(1, "Аврора", "Стахановская, 14", "12.11.2023")
@@ -71,7 +70,7 @@ fun MyProjectsScreen() {
                     )
                 }
             },
-            onClick = { },
+            onClick = { onCreateNewProjectClicked() },
             colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
         )
         ListContent(projectsList = list)
