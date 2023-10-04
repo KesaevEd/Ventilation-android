@@ -48,4 +48,7 @@
     <string name="open_project">Открыть проект</string>
     <string name="create_project">Создать новый проект</string>
 
+    <string name="creating_project">Создание проекта</string>
+    <string name="write_project_name">Напишите название проекта</string>
+
 </resources>
