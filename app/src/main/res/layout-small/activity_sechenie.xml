@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="10dp"
     app:layout_goneMarginRight="10dp"
-    tools:context="com.mpvtest.ventilation.Sechenie">
+    tools:context="com.mvptest.ventilation.Sechenie">
 
     <LinearLayout
         android:id="@+id/itog"

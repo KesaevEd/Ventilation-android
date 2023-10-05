@@ -6,42 +6,42 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.mpvtest.VentilationApp"
+        android:name="com.mvptest.VentilationApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Вентиляция"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.mpvtest.ventilation.Ploshad"
+        <activity android:name=".Ploshad"
             android:label="Площадь"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name="com.mpvtest.ventilation.Kalorifer"
+            android:name=".Kalorifer"
             android:label="Калорифер"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name="com.mpvtest.ventilation.Sechenie"
+            android:name=".Sechenie"
             android:label="Подбор сечения"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name="com.mpvtest.ventilation.Reshetki"
+            android:name=".Reshetki"
             android:label="Подбор решеток"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name="com.mpvtest.ventilation.Conditional"
+            android:name=".Conditional"
             android:label="Кондиционирование"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name="com.mpvtest.ventilation.Aerodinamica"
+            android:name=".Aerodinamica"
             android:label="Аэродинамика"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name="com.mpvtest.ventilation.Vozduhoobmen"
+            android:name=".Vozduhoobmen"
             android:label="Воздухообмен"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name="com.mpvtest.ventilation.MainActivity"
+            android:name="com.mvptest.presentation.MainActivity"
             android:label="Вентиляция"
             android:exported="true">
             <intent-filter>

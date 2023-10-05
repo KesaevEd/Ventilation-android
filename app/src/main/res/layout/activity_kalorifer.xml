@@ -11,7 +11,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
-        tools:context="com.mpvtest.ventilation.Kalorifer">
+        tools:context="com.mvptest.ventilation.Kalorifer">
 
         <LinearLayout
             android:id="@+id/linearLayout1"
