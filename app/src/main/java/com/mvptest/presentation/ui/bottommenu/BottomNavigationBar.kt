@@ -115,11 +115,11 @@ fun NavigationGraph(
 
         //New Project Navigation
         composable(NavigationNewProjectItem.First.route) {
-            NewProjectScreenFirst(viewModel = newProjectViewModel) {
+            NewProjectScreenFirst(viewModel = newProjectViewModel, {
                 navController.navigate(
                     NavigationNewProjectItem.Second.route
                 )
-            }
+            }, { navController.navigate(NavigationItem.Home.route) })
         }
 
         composable(NavigationNewProjectItem.Second.route) {
@@ -146,33 +146,36 @@ fun NavigationGraph(
 
         //New Room Navigation
         composable(NavigationNewRoomItem.First.route) {
-            NewRoomScreenFirst(viewModel = newRoomViewModel) {
+            NewRoomScreenFirst(viewModel = newRoomViewModel, {
                 navController.navigate(
                     NavigationNewRoomItem.Second.route
                 )
-            }
+            }, { navController.navigate(NavigationItem.Home.route) })
         }
 
         composable(NavigationNewRoomItem.Second.route) {
             NewRoomScreenSecond(
-                viewModel = newRoomViewModel,
+                newRoomViewModel = newRoomViewModel,
+                newProjectViewModel = newProjectViewModel,
                 onBackPressed = {
                     navController.navigate(
                         NavigationNewRoomItem.First.route
                     )
                 },
-                onContinueButtonClick = { navController.navigate(NavigationNewRoomItem.Third.route) })
+                onContinueButtonClick = { navController.navigate(NavigationNewRoomItem.Third.route) }
+            )
         }
 
         composable(NavigationNewRoomItem.Third.route) {
             NewRoomScreenThird(
-                viewModel = newRoomViewModel,
-                onBackPressed = {
-                    navController.navigate(
-                        NavigationNewRoomItem.Second.route
-                    )
-                },
-                onAddRoomPressed = {})
+//                viewModel = newRoomViewModel,
+//                onBackPressed = {
+//                    navController.navigate(
+//                        NavigationNewRoomItem.Second.route
+//                    )
+//                },
+//                onAddRoomPressed = {}
+            )
         }
     }
 }

@@ -16,7 +16,7 @@ fun ProjectDbEntity.toProject(): Project =
         id = id, title = title, address = address, startDate = startDate
     )
 
-fun RoomDetails.toDbEntity(projectId: Int): RoomDbEntity =
+fun RoomDetails.toDbEntity(projectId: String): RoomDbEntity =
     RoomDbEntity(
         id = id,
         projectId = projectId,

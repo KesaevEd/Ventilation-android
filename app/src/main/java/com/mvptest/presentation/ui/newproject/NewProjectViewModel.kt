@@ -17,10 +17,17 @@ class NewProjectViewModel @Inject constructor(private val projectsRepository: Pr
 
     var state by mutableStateOf(NewProjectViewState())
 
+    var projectId = UUID.randomUUID().toString()
+        private set
+
     fun saveProject(){
         viewModelScope.launch {
-            projectsRepository.saveProject(Project(id = UUID.randomUUID().toString(), state.title!!, state.address!!, state.startDate!!, state.contact, state.contactPhone))
+            projectsRepository.saveProject(Project(id = projectId, state.title!!, state.address!!, state.startDate!!, state.contact, state.contactPhone))
         }
+    }
+
+    fun clearState(){
+        state = state.copy("", "", "", "", "")
     }
 
     fun setTitle(title: String){

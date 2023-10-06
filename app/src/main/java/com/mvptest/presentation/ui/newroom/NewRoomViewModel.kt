@@ -4,15 +4,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mvptest.domain.RoomsRepository
 import com.mvptest.domain.models.HeaterType
+import com.mvptest.domain.models.RoomDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRepository) : ViewModel() {
+class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRepository) :
+    ViewModel() {
 
     var state by mutableStateOf(NewRoomViewState())
+
+    fun saveRoom(projectId: String) {
+        viewModelScope.launch {
+            roomsRepository.saveRoom(room = state.toRoomDetails(), projectId = projectId)
+        }
+    }
 
     fun setTitle(title: String) {
         state = state.copy(title = title)
@@ -28,6 +38,10 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
 
     fun setRoomDestination(roomDestination: String) {
         state = state.copy(roomDestination = roomDestination)
+    }
+
+    fun setStartDate(startDate: String) {
+        state = state.copy(startDate = startDate)
     }
 
     fun setAirExchangePerformance(airExchangePerformance: Int) {

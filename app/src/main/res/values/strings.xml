@@ -60,4 +60,26 @@
     <string name="new_room">Новое помещение</string>
     <string name="write_room_title">Напишите название помещения</string>
 
+    <string name="vent_system_number">№ вентиляционной системы</string>
+    <string name="room_volume">Объем помещения, м3</string>
+    <string name="room_destination">Назначение помещения</string>
+    <string name="dead_lines">Сроки выполнения работ</string>
+    <string name="comment">Комментарии к проекту</string>
+    <string name="air_exchange_performance">Производительность воздухообмена, м3</string>
+    <string name="pressure_loss_and_air_area">Потери давления и площадь воздуховодов</string>
+    <string name="pressure_loss">Потери давления, Па</string>
+    <string name="air_duct_area">Площадь воздуховодов, м2</string>
+    <string name="heater_type">Выбор калорифера</string>
+    <string name="heater_performance">Производительность калорифера, кВт</string>
+    <string name="air_conditioner">Кондиционер</string>
+    <string name="air_conditioner_performance">Значение, кВт</string>
+    <string name="calculating">Рассчитать</string>
+    <string name="water_heater">Водяной</string>
+    <string name="electro_heater">Электр.</string>
+    <string name="no_heater">Нет</string>
+    <string name="value_m3">Значение, м3</string>
+    <string name="value_kvt">Значение, кВт</string>
+
+    <string name="forward">Далее</string>
+
 </resources>

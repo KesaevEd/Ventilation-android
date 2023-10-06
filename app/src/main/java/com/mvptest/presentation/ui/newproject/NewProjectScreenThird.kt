@@ -30,7 +30,11 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun NewProjectScreenThird(viewModel: NewProjectViewModel, onBackPressed:() -> Unit, onAddRoomPressed:() -> Unit) {
+fun NewProjectScreenThird(
+    viewModel: NewProjectViewModel,
+    onBackPressed: () -> Unit,
+    onAddRoomPressed: () -> Unit
+) {
     Column() {
         Box(
             modifier = Modifier
@@ -140,7 +144,10 @@ fun NewProjectScreenThird(viewModel: NewProjectViewModel, onBackPressed:() -> Un
                 modifier = Modifier
                     .width(60.dp)
                     .height(60.dp),
-                onClick = { onBackPressed() },
+                onClick = {
+                    viewModel.clearState()
+                    onBackPressed()
+                },
                 border = BorderStroke(1.dp, color = colorResource(id = R.color.dark_gray_2)),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.white)),

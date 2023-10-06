@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "rooms")
 data class RoomDbEntity(
     @PrimaryKey
-    @ColumnInfo(name = "id") val id: Int,
-    @ColumnInfo(name = "project_id") val projectId: Int,
+    @ColumnInfo(name = "id") val id: String,
+    @ColumnInfo(name = "project_id") val projectId: String,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "systemNumber") val systemNumber: String,
     @ColumnInfo(name = "roomVolume") val roomVolume: Int,
