@@ -24,6 +24,26 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
         }
     }
 
+    fun clearState(){
+        state = state.copy(
+            id = null,
+            title = null,
+            systemNumber = null,
+            roomVolume = null,
+            roomDestination = null,
+            startDate = null,
+            airExchangePerformance = null,
+            pressureLoss = null,
+            airDuctArea = null,
+            heaterType = null,
+            heaterPerformance = null,
+            isAirConditioner = null,
+            airConditionerPerformance = null,
+            deadLines = null,
+            comment = null
+        )
+    }
+
     fun setTitle(title: String) {
         state = state.copy(title = title)
     }
@@ -56,7 +76,7 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
         state = state.copy(airDuctArea = airDuctArea)
     }
 
-    fun setHeaterType(heaterType: com.mvptest.domain.models.HeaterType) {
+    fun setHeaterType(heaterType: HeaterType) {
         state = state.copy(heaterType = heaterType)
     }
 

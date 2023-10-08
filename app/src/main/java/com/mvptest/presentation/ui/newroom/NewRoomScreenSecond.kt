@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.presentation.ui.common.RoundedTextField
+import com.mvptest.presentation.ui.common.TextTitleOfTextField
 import com.mvptest.presentation.ui.newproject.NewProjectViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
@@ -102,10 +103,8 @@ fun NewRoomScreenSecond(
 
         }
 
-        Text(
-            modifier = Modifier.padding(top = 20.dp),
-            text = stringResource(id = R.string.vent_system_number)
-        )
+
+        TextTitleOfTextField(modifier = Modifier.padding(top = 20.dp), textId = R.string.vent_system_number)
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -118,10 +117,7 @@ fun NewRoomScreenSecond(
             hint = stringResource(id = R.string.vent_system_number)
         )
 
-        Text(
-            modifier = Modifier.padding(top = 15.dp),
-            text = stringResource(id = R.string.room_volume)
-        )
+        TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.room_volume)
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -135,10 +131,7 @@ fun NewRoomScreenSecond(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
-        Text(
-            modifier = Modifier.padding(top = 15.dp),
-            text = stringResource(id = R.string.room_destination)
-        )
+        TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.room_destination)
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -151,10 +144,7 @@ fun NewRoomScreenSecond(
             hint = stringResource(id = R.string.room_destination)
         )
 
-        Text(
-            modifier = Modifier.padding(top = 15.dp),
-            text = stringResource(id = R.string.start_date)
-        )
+        TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.start_date)
         Box() {
             RoundedTextField(
                 modifier = Modifier
@@ -177,10 +167,7 @@ fun NewRoomScreenSecond(
             )
         }
 
-        Text(
-            modifier = Modifier.padding(top = 15.dp),
-            text = stringResource(id = R.string.dead_lines)
-        )
+        TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.dead_lines)
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -193,10 +180,7 @@ fun NewRoomScreenSecond(
             hint = stringResource(id = R.string.dead_lines)
         )
 
-        Text(
-            modifier = Modifier.padding(top = 15.dp),
-            text = stringResource(id = R.string.comment)
-        )
+        TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.comment_room)
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -206,7 +190,7 @@ fun NewRoomScreenSecond(
                 newRoomViewModel.setComment(it)
                 comment = it
             },
-            hint = stringResource(id = R.string.comment),
+            hint = stringResource(id = R.string.comment_project),
             singleLine = false
         )
 

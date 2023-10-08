@@ -168,13 +168,18 @@ fun NavigationGraph(
 
         composable(NavigationNewRoomItem.Third.route) {
             NewRoomScreenThird(
-//                viewModel = newRoomViewModel,
-//                onBackPressed = {
-//                    navController.navigate(
-//                        NavigationNewRoomItem.Second.route
-//                    )
-//                },
-//                onAddRoomPressed = {}
+                newRoomViewModel = newRoomViewModel,
+                newProjectViewModel = newProjectViewModel,
+                onBackPressed = {
+                    navController.navigate(
+                        NavigationNewRoomItem.Second.route
+                    )
+                },
+                onSaveRoomClicked = {
+                    navController.navigate(
+                        NavigationNewProjectItem.Third.route
+                    )
+                }
             )
         }
     }

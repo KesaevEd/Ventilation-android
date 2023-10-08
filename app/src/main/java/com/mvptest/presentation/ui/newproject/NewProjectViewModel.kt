@@ -13,40 +13,62 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class NewProjectViewModel @Inject constructor(private val projectsRepository: ProjectsRepository) : ViewModel() {
+class NewProjectViewModel @Inject constructor(private val projectsRepository: ProjectsRepository) :
+    ViewModel() {
+
+    fun init() {
+
+    }
 
     var state by mutableStateOf(NewProjectViewState())
 
-    var projectId = UUID.randomUUID().toString()
+    lateinit var projectId: String
         private set
 
-    fun saveProject(){
+    fun saveProject() {
         viewModelScope.launch {
-            projectsRepository.saveProject(Project(id = projectId, state.title!!, state.address!!, state.startDate!!, state.contact, state.contactPhone))
+            projectId = UUID.randomUUID().toString()
+            projectsRepository.saveProject(
+                Project(
+                    id = projectId,
+                    state.title!!,
+                    state.address!!,
+                    state.startDate!!,
+                    state.contact,
+                    state.contactPhone
+                )
+            )
         }
     }
 
-    fun clearState(){
-        state = state.copy("", "", "", "", "")
+    fun clearState() {
+        state = state.copy(
+            title = "",
+            address = "",
+            startDate = "",
+            contact = "",
+            contactPhone = ""
+        )
+        projectId = ""
     }
 
-    fun setTitle(title: String){
+    fun setTitle(title: String) {
         state = state.copy(title = title)
     }
 
-    fun setAddress(address: String){
+    fun setAddress(address: String) {
         state = state.copy(address = address)
     }
 
-    fun setStartDate(startDate: String){
+    fun setStartDate(startDate: String) {
         state = state.copy(startDate = startDate)
     }
 
-    fun setContact(contact: String){
+    fun setContact(contact: String) {
         state = state.copy(contact = contact)
     }
 
-    fun setContactPhone(contactPhone: String){
+    fun setContactPhone(contactPhone: String) {
         state = state.copy(contactPhone = contactPhone)
     }
 }

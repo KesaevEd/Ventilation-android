@@ -2,11 +2,11 @@ package com.mvptest.presentation.ui.newroom
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -15,6 +15,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.RadioButton
+import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,22 +30,23 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.domain.models.HeaterType
+import com.mvptest.presentation.ui.common.BackOrSaveRow
 import com.mvptest.presentation.ui.common.CalculatingButton
 import com.mvptest.presentation.ui.common.RoundedTextField
+import com.mvptest.presentation.ui.common.TextTitleOfTextField
+import com.mvptest.presentation.ui.newproject.NewProjectViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
-@Preview
 @Composable
 fun NewRoomScreenThird(
-//    newRoomViewModel: NewRoomViewModel,
-//    newProjectViewModel: NewProjectViewModel,
-//    onBackPressed: () -> Unit,
-//    onSaveRoomClicked: () -> Unit
+    newRoomViewModel: NewRoomViewModel,
+    newProjectViewModel: NewProjectViewModel,
+    onBackPressed: () -> Unit,
+    onSaveRoomClicked: () -> Unit
 ) {
 
     val heaterTypes = listOf(HeaterType.NONE, HeaterType.WATER, HeaterType.ELECTRICITY)
@@ -54,31 +57,31 @@ fun NewRoomScreenThird(
     )
 
     var airExchangePerformance by remember {
-        mutableStateOf(value = "")
+        mutableStateOf(value = newRoomViewModel.state.airExchangePerformance ?: "")
     }
 
     var pressureLoss by remember {
-        mutableStateOf(value = "")
+        mutableStateOf(value = newRoomViewModel.state.pressureLoss ?: "")
     }
 
     var airDuctArea by remember {
-        mutableStateOf(value = "")
+        mutableStateOf(value = newRoomViewModel.state.airDuctArea ?: "")
     }
 
     var heaterType by remember {
-        mutableStateOf(value = "")
+        mutableStateOf(value = HeaterType.NONE)
     }
 
     var heaterPerformance by remember {
-        mutableStateOf(value = "")
+        mutableStateOf(value = newRoomViewModel.state.heaterPerformance ?: "")
     }
 
     var isAirConditioner by remember {
-        mutableStateOf(value = "")
+        mutableStateOf(value = newRoomViewModel.state.isAirConditioner ?: false)
     }
 
     var airConditionerPerformance by remember {
-        mutableStateOf(value = "")
+        mutableStateOf(value = newRoomViewModel.state.airConditionerPerformance ?: "")
     }
 
     var selectedHeaterButtonIndex by remember { mutableStateOf(0) }
@@ -100,7 +103,7 @@ fun NewRoomScreenThird(
             Column(modifier = Modifier.padding(start = 25.dp, bottom = 25.dp, top = 25.dp)) {
                 Text(
                     modifier = Modifier.padding(),
-                    text = "newRoomViewModel.state.title ?:",
+                    text = newRoomViewModel.state.title ?: "",
                     fontSize = 22.sp,
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Bold,
@@ -109,7 +112,7 @@ fun NewRoomScreenThird(
 
                 Text(
                     modifier = Modifier.padding(top = 15.dp),
-                    text = "newProjectViewModel.state.address ?: ",
+                    text = newProjectViewModel.state.address ?: "",
                     fontSize = 16.sp,
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Medium,
@@ -119,17 +122,17 @@ fun NewRoomScreenThird(
 
         }
 
-        Text(
+        TextTitleOfTextField(
             modifier = Modifier.padding(top = 20.dp),
-            text = stringResource(id = R.string.air_exchange_performance)
+            textId = R.string.air_exchange_performance
         )
         Box(modifier = Modifier.padding(top = 5.dp)) {
             RoundedTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = airExchangePerformance,
+                value = airExchangePerformance.toString(),
                 onValueChange = {
-//                newRoomViewModel.setSystemNumber(it)
+                    newRoomViewModel.setAirExchangePerformance(it.toInt())
                     airExchangePerformance = it
                 },
                 hint = stringResource(id = R.string.value_m3),
@@ -138,22 +141,22 @@ fun NewRoomScreenThird(
             CalculatingButton(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(end = 25.dp)
+                    .padding(end = 15.dp)
             ) {}
         }
 
-        Text(
+        TextTitleOfTextField(
             modifier = Modifier.padding(top = 15.dp),
-            text = stringResource(id = R.string.pressure_loss_and_air_area)
+            textId = R.string.pressure_loss_and_air_area
         )
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp),
-            value = airExchangePerformance,
+            value = pressureLoss.toString(),
             onValueChange = {
-//                newRoomViewModel.setSystemNumber(it)
-                airExchangePerformance = it
+                newRoomViewModel.setPressureLoss(it.toInt())
+                pressureLoss = it
             },
             hint = stringResource(id = R.string.pressure_loss),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -162,10 +165,10 @@ fun NewRoomScreenThird(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp),
-            value = airExchangePerformance,
+            value = airDuctArea.toString(),
             onValueChange = {
-//                newRoomViewModel.setSystemNumber(it)
-                airExchangePerformance = it
+                newRoomViewModel.setAirDuctArea(it.toInt())
+                airDuctArea = it
             },
             hint = stringResource(id = R.string.air_duct_area),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -173,13 +176,12 @@ fun NewRoomScreenThird(
         CalculatingButton(
             modifier = Modifier
                 .align(Alignment.End)
-                .padding(end = 25.dp, top = 10.dp)
+                .padding(end = 15.dp, top = 10.dp)
         ) {}
 
-
-        Text(
+        TextTitleOfTextField(
             modifier = Modifier.padding(top = 15.dp),
-            text = stringResource(id = R.string.heater_type)
+            textId = R.string.heater_type
         )
         Box(
             modifier = Modifier
@@ -189,21 +191,22 @@ fun NewRoomScreenThird(
                     shape = RoundedCornerShape(15.dp)
                 )
         ) {
-            Row(modifier = Modifier.padding(horizontal = 25.dp)) {
+            Row() {
                 for (index in 0..2) {
                     Button(
                         onClick = {
-                            heaterType = heaterTypes[index].name
+                            heaterType = heaterTypes[index]
                             selectedHeaterButtonIndex = index
+                            newRoomViewModel.setHeaterType(heaterTypes[index])
                         },
                         modifier = Modifier
                             .weight(1f)
-                            .padding(10.dp)
-                            .background(
-                                color = colorResource(id = R.color.light_gray),
-                                shape = RoundedCornerShape(100.dp)
-                            )
-                            .border(BorderStroke(1.dp, color = colorResource(id = R.color.gray))),
+                            .padding(10.dp),
+                        border = BorderStroke(
+                            1.dp,
+                            color = colorResource(id = R.color.gray)
+                        ),
+                        shape = RoundedCornerShape(100.dp),
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = if (selectedHeaterButtonIndex == index) colorResource(
                                 id = R.color.dark_gray_2
@@ -211,43 +214,109 @@ fun NewRoomScreenThird(
                             contentColor = if (selectedHeaterButtonIndex == index) Color.White else colorResource(
                                 id = R.color.gray
                             )
-                        )
-                    ) {
-                        Text(
-                            modifier = Modifier.fillMaxSize(),
-                            text = heaterNames[index],
-                            fontFamily = interFamily,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 12.sp
-                        )
-                    }
+                        ),
+                        content = {
+                            Text(
+                                modifier = Modifier.fillMaxHeight(),
+                                text = heaterNames[index],
+                                fontFamily = interFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 12.sp
+                            )
+                        }
+                    )
                 }
             }
         }
 
-
-        Text(
-            modifier = Modifier.padding(top = 15.dp),
-            text = stringResource(id = R.string.heater_performance)
-        )
-        Box(modifier = Modifier.padding(top = 5.dp)) {
-            RoundedTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                value = airExchangePerformance,
-                onValueChange = {
-//                newRoomViewModel.setSystemNumber(it)
-                    airExchangePerformance = it
-                },
-                hint = stringResource(id = R.string.value_kvt),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        if (heaterType != HeaterType.NONE) {
+            TextTitleOfTextField(
+                modifier = Modifier.padding(top = 15.dp),
+                textId = R.string.heater_performance
             )
-            CalculatingButton(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(end = 25.dp)
-            ) {}
+            Box(modifier = Modifier.padding(top = 5.dp)) {
+                RoundedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    value = heaterPerformance.toString(),
+                    onValueChange = {
+                        newRoomViewModel.setHeaterPerformance(it.toInt())
+                        heaterPerformance = it
+                    },
+                    hint = stringResource(id = R.string.value_kvt),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+                CalculatingButton(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(end = 15.dp)
+                ) {}
+            }
         }
+
+        Box(
+            modifier = Modifier
+                .padding(top = 15.dp)
+                .background(
+                    colorResource(id = R.color.light_gray),
+                    shape = RoundedCornerShape(15.dp)
+                )
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(id = R.string.air_conditioner),
+                    modifier = Modifier.padding(start = 25.dp, top = 21.dp, bottom = 21.dp)
+                )
+                Spacer(Modifier.weight(1f))
+                RadioButton(
+                    modifier = Modifier.padding(end = 15.dp),
+                    colors = RadioButtonDefaults.colors(
+                        unselectedColor = colorResource(id = R.color.dark_gray),
+                        selectedColor = colorResource(
+                            id = R.color.dark_gray
+                        )
+                    ),
+                    selected = isAirConditioner,
+                    onClick = {
+                        isAirConditioner = !isAirConditioner
+                        newRoomViewModel.setIsAirConditioner(isAirConditioner)
+                    })
+            }
+        }
+
+        if (isAirConditioner) {
+            TextTitleOfTextField(
+                modifier = Modifier.padding(top = 15.dp),
+                textId = R.string.air_conditioner_performance
+            )
+            Box(modifier = Modifier.padding(top = 5.dp)) {
+                RoundedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    value = airConditionerPerformance.toString(),
+                    onValueChange = {
+                        newRoomViewModel.setAirConditionerPerformance(it.toInt())
+                        airConditionerPerformance = it
+                    },
+                    hint = stringResource(id = R.string.value_kvt),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+                CalculatingButton(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(end = 15.dp)
+                ) {}
+            }
+        }
+
+        BackOrSaveRow(onBackPressed = { onBackPressed() }, onSaveClick = {
+            newRoomViewModel.saveRoom(projectId = newProjectViewModel.projectId)
+            newRoomViewModel.clearState()
+            onSaveRoomClicked()
+        })
 
     }
 
