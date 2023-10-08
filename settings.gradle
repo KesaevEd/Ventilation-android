@@ -1,3 +1,2 @@
 rootProject.name = "Ventilation"
 include ':app'
-include ':data'

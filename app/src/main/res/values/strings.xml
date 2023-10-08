@@ -10,8 +10,8 @@
     <string name="geometry">ГЕОМЕТРИЯ</string>
     <string name="save">СОХРАНЕННЫЕ СМЕТЫ</string>
     <string name="rashod">РАСЧЕТ ВОЗДУХООБМЕНА</string>
-    <string name="reshetki">РАСЧЕТ КОЛИЧЕСТВА РЕШЕТОК</string>
-    <string name="diametri">ПОДБОР СЕЧЕНИЯ ВОЗДУХОВОДОВ</string>
+    <string name="reshetki">Расчет количества решеток</string>
+    <string name="diametri">Подбор сечения воздуховодов</string>
     <string name="ploshad_vozduhovodov">ПЛОЩАДЬ ВОЗДУХОВОДОВ</string>
     <string name="kaloriferi">РАСЧЕТ МОЩНОСТИ КАЛОРИФЕРА</string>
     <string name="aerodinamika">АЭРОДИНАМИЧЕСКИЙ РАСЧЕТ</string>
@@ -24,63 +24,4 @@
     <string name="sanitNormi">Воздухообмен по санитарным нормам:</string>
     <string name="teploizb">Воздухообмен по теплоизбыткам:</string>
     <string name="projects">СОХРАНЕННЫЕ ПРОЕКТЫ</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="calculating_bottomnav">Расчет</string>
-    <string name="calculator_subtitile">Калькулятор для расчета</string>
-
-    <string name="projects_title">Проекты</string>
-    <string name="projects_subtitle">Мои готовые\nпроекты</string>
-
-    <string name="have_you_subscription">Уже есть подписка?</string>
-    <string name="phone_number">Номер телефона</string>
-    <string name="subscribe">Оформить подписку</string>
-
-    <string name="empty_projects">У Вас пока нет проектов</string>
-    <string name="add_project">Добавить проект</string>
-    <string name="new_project">Новый проект</string>
-    <string name="new_project_subtitle">Создайте свой новый проект</string>
-
-    <string name="project_address">Адрес объекта</string>
-    <string name="start_date">Дата начала монтажа</string>
-    <string name="contact">Контактное лицо</string>
-    <string name="contact_phone">Телефон контактного лица</string>
-    <string name="save_button">Сохранить</string>
-
-    <string name="empty_rooms">Помещений пока нет</string>
-    <string name="add_room">Добавить помещение</string>
-
-    <string name="open_project">Открыть проект</string>
-    <string name="create_project">Создать новый проект</string>
-
-    <string name="creating_project">Создание проекта</string>
-    <string name="write_project_name">Напишите название проекта</string>
-
-    <string name="new_room">Новое помещение</string>
-    <string name="write_room_title">Напишите название помещения</string>
-
-    <string name="vent_system_number">№ вентиляционной системы</string>
-    <string name="room_volume">Объем помещения, м3</string>
-    <string name="room_destination">Назначение помещения</string>
-    <string name="dead_lines">Сроки выполнения работ</string>
-    <string name="comment_project">Комментарии к проекту</string>
-    <string name="comment_room">Комментарии к помещению</string>
-    <string name="air_exchange_performance">Производительность воздухообмена, м3</string>
-    <string name="pressure_loss_and_air_area">Потери давления и площадь воздуховодов</string>
-    <string name="pressure_loss">Потери давления, Па</string>
-    <string name="air_duct_area">Площадь воздуховодов, м2</string>
-    <string name="heater_type">Выбор калорифера</string>
-    <string name="heater_performance">Производительность калорифера, кВт</string>
-    <string name="air_conditioner">Кондиционер</string>
-    <string name="air_conditioner_performance">Производительность кондиционера, кВт</string>
-    <string name="calculating">Рассчитать</string>
-    <string name="water_heater">Водяной</string>
-    <string name="electro_heater">Электро</string>
-    <string name="no_heater">Нет</string>
-    <string name="value_m3">Значение, м3</string>
-    <string name="value_kvt">Значение, кВт</string>
-
-    <string name="forward">Далее</string>
-
 </resources>
