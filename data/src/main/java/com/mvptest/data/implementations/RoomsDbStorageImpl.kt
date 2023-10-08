@@ -8,7 +8,7 @@ import com.mvptest.domain.models.RoomDetails
 import javax.inject.Inject
 
 class RoomsDbStorageImpl @Inject constructor(private val roomsDao: RoomsDao): RoomsStorage {
-    override suspend fun insertRoom(room: RoomDetails, projectId: Int) {
+    override suspend fun insertRoom(room: RoomDetails, projectId: String) {
         roomsDao.insertRoom(room.toDbEntity(projectId))
     }
 

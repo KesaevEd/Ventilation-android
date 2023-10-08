@@ -1,6 +1,8 @@
 package com.mvptest.presentation.ui.newproject
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,12 +35,14 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun NewProjectScreenFirst(viewModel: NewProjectViewModel, onCheckButtonClick: () -> Unit) {
+fun NewProjectScreenFirst(
+    viewModel: NewProjectViewModel,
+    onCheckButtonClick: () -> Unit,
+    onBackPressed: () -> Unit
+) {
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize()
     ) {
 
         var newItem by remember { mutableStateOf(value = viewModel.state.title ?: "") }
@@ -50,24 +54,44 @@ fun NewProjectScreenFirst(viewModel: NewProjectViewModel, onCheckButtonClick: ()
             )
         }
 
-        Text(
-            modifier = Modifier,
-            text = stringResource(id = R.string.creating_project),
-            fontSize = 20.sp,
-            fontFamily = interFamily,
-            fontWeight = FontWeight.Bold
-        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(end = 20.dp, top = 41.dp)
+        ) {
+            Icon(
+                modifier = Modifier
+                    .clickable { onBackPressed() },
+                painter = painterResource(id = R.drawable.ic_close),
+                tint = colorResource(id = R.color.gray),
+                contentDescription = "image"
+            )
+        }
 
-        TextFieldWithCheckButton(onTextChanged = { text ->
-            newItem = text
-            if (newItem.isNotEmpty()) {
-                newTextFieldModifier = Modifier.height(60.dp)
-            } else {
-                newTextFieldModifier = Modifier
-                    .height(60.dp)
-                    .fillMaxWidth()
-            }
-        }, newItem = newItem, newTextFieldModifier, onCheckButtonClick, viewModel)
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                modifier = Modifier,
+                text = stringResource(id = R.string.new_project),
+                fontSize = 20.sp,
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Bold
+            )
+
+            TextFieldWithCheckButton(onTextChanged = { text ->
+                newItem = text
+                if (newItem.isNotEmpty()) {
+                    newTextFieldModifier = Modifier.height(60.dp)
+                } else {
+                    newTextFieldModifier = Modifier
+                        .height(60.dp)
+                        .fillMaxWidth()
+                }
+            }, newItem = newItem, newTextFieldModifier, onCheckButtonClick, viewModel)
+        }
     }
 }
 

@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class RoomsRepositoryImpl @Inject constructor(private val roomsStorage: RoomsStorage):
     RoomsRepository {
-    override suspend fun saveRoom(room: RoomDetails, projectId: Int) {
+    override suspend fun saveRoom(room: RoomDetails, projectId: String) {
         roomsStorage.insertRoom(room, projectId)
     }
 

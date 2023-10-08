@@ -1,7 +1,10 @@
 package com.mvptest.domain.models
 
+import androidx.compose.ui.res.stringResource
+import com.mvptest.data.R
+
 data class RoomDetails(
-    val id: Int,
+    val id: String,
     val title: String,
     val systemNumber: String,
     val roomVolume: Int,
@@ -17,6 +20,6 @@ data class RoomDetails(
     val comment: String,
 )
 
-enum class HeaterType(){
-    NONE, ELECTRICITY, WATER
+enum class HeaterType(string: String){
+    NONE("Отсутствует"), ELECTRICITY("Электр."), WATER("Водяной")
 }

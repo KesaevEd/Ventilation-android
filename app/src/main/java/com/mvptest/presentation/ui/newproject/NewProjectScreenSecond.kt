@@ -2,6 +2,7 @@ package com.mvptest.presentation.ui.newproject
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -83,17 +84,27 @@ fun NewProjectScreenSecond(
             hint = stringResource(id = R.string.project_address)
         )
 
-        RoundedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
-            value = startDate,
-            onValueChange = {
-                viewModel.setStartDate(it)
-                startDate = it
-            },
-            hint = stringResource(id = R.string.start_date)
-        )
+        Box() {
+            RoundedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                value = startDate,
+                onValueChange = {
+                    viewModel.setStartDate(it)
+                    startDate = it
+                },
+                hint = stringResource(id = R.string.start_date)
+            )
+            Icon(
+                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 25.dp).clickable {  },
+                painter = painterResource(id = R.drawable.ic_calculator),
+                contentDescription = "image",
+                tint = colorResource(
+                    id = R.color.gray
+                )
+            )
+        }
 
         RoundedTextField(
             modifier = Modifier
