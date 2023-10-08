@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ventilation">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mvptest.ventilation">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.mvptest.VentilationApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Вентиляция"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Ventilation">
+        android:theme="@style/AppTheme">
         <activity android:name=".Ploshad"
             android:label="Площадь"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
@@ -39,8 +41,9 @@
             android:label="Воздухообмен"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
-            android:name=".MainActivity"
-            android:label="Вентиляция">
+            android:name="com.mvptest.presentation.MainActivity"
+            android:label="Вентиляция"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
