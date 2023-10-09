@@ -12,6 +12,7 @@ data class RoomDetails(
     val airExchangePerformance: Int,
     val pressureLoss: Int,
     val airDuctArea: Int,
+    val startDate: String,
     val heaterType: HeaterType,
     val heaterPerformance: Int,
     val isAirConditioner: Boolean,
@@ -20,6 +21,6 @@ data class RoomDetails(
     val comment: String,
 )
 
-enum class HeaterType(string: String){
-    NONE("Отсутствует"), ELECTRICITY("Электр."), WATER("Водяной")
+enum class HeaterType(val string: String){
+    NONE("Нет"), ELECTRICITY("Электро"), WATER("Водяной")
 }

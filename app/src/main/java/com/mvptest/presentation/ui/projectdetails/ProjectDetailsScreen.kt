@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.projectdetails
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,10 +42,19 @@ fun ProjectDetailsScreen(
     projectId: String,
     onBackPressed: () -> Unit,
     onAddRoomPressed: (projectId: String) -> Unit,
-    onEditProjectInfoClicked: (projectId: String) -> Unit
+    onEditProjectInfoClicked: (projectId: String) -> Unit,
+    onRoomItemClicked: (roomId: String) -> Unit
 ) {
 
-    projectDetailsViewModel.getProjectById(projectId)
+    var tempProjectId = ""
+
+    if (projectId != "{projectId}") {
+        tempProjectId = projectId
+    } else {
+        tempProjectId = projectDetailsViewModel.temporalProjectId
+    }
+
+    projectDetailsViewModel.getProjectById(tempProjectId)
 
     Column() {
         Box(
@@ -168,7 +178,9 @@ fun ProjectDetailsScreen(
             )
 
         } else {
-            ListContent(projectsList = projectDetailsViewModel.state.rooms ?: emptyList())
+            ListContent(
+                projectsList = projectDetailsViewModel.state.rooms ?: emptyList()
+            ) { roomId -> onRoomItemClicked.invoke(roomId) }
         }
 
         Row(modifier = Modifier.padding(top = 30.dp, start = 18.dp, end = 18.dp)) {
@@ -221,7 +233,7 @@ fun ProjectDetailsScreen(
                         )
                     }
                 },
-                onClick = { onAddRoomPressed.invoke(projectId) },
+                onClick = { onAddRoomPressed.invoke(tempProjectId) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
             )
 
@@ -232,7 +244,7 @@ fun ProjectDetailsScreen(
 @Composable
 fun ListContent(
     projectsList: List<RoomItemUiEntity>,
-    onItemClicked: () -> Unit = { }
+    onItemClicked: (roomId: String) -> Unit = { }
 ) {
     LazyVerticalGrid(
         modifier = Modifier.padding(start = 18.dp, end = 18.dp),
@@ -247,7 +259,7 @@ fun ListContent(
 @Composable
 fun ProjectDetailsItem(
     project: RoomItemUiEntity,
-    onItemClicked: () -> Unit = { }
+    onItemClicked: (roomId: String) -> Unit = { }
 ) {
     ProjectDetailsItemCard(item = project, onItemClicked = onItemClicked)
 }
@@ -255,7 +267,7 @@ fun ProjectDetailsItem(
 @Composable
 fun ProjectDetailsItemCard(
     item: RoomItemUiEntity,
-    onItemClicked: () -> Unit = { }
+    onItemClicked: (roomId: String) -> Unit = { }
 ) {
     Box(
         modifier = Modifier
@@ -281,7 +293,7 @@ fun ProjectDetailsItemCard(
                 modifier = Modifier.padding(end = 25.dp),
                 colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray_2)),
                 shape = RoundedCornerShape(8.dp),
-                onClick = { onItemClicked() },
+                onClick = { onItemClicked(item.id) },
                 content = {
                     Text(
                         text = stringResource(id = R.string.open),

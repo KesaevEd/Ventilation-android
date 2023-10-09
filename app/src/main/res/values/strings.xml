@@ -85,5 +85,13 @@
     <string name="cancel">Отмена</string>
     <string name="ok">Ок</string>
     <string name="open">Открыть</string>
+    <string name="edit">Редактировать</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+
+    <string name="m2">м2</string>
+    <string name="m3">м3</string>
+    <string name="kvt">кВт</string>
+    <string name="pa">Па</string>
 
 </resources>

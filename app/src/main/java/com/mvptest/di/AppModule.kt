@@ -6,6 +6,7 @@ import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.newproject.NewProjectViewModel
 import com.mvptest.presentation.ui.newroom.NewRoomViewModel
 import com.mvptest.presentation.ui.projectdetails.ProjectDetailsViewModel
+import com.mvptest.presentation.ui.roomdetails.RoomDetailsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,5 +34,10 @@ object AppModule {
     @Provides
     fun provideProjectDetailsViewModel(activity: AppCompatActivity): ProjectDetailsViewModel {
         return ViewModelProvider(activity)[ProjectDetailsViewModel::class.java]
+    }
+
+    @Provides
+    fun provideRoomDetailsViewModel(activity: AppCompatActivity): RoomDetailsViewModel {
+        return ViewModelProvider(activity)[RoomDetailsViewModel::class.java]
     }
 }

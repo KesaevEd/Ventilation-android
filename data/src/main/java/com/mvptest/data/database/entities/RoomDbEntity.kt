@@ -20,6 +20,7 @@ data class RoomDbEntity(
     @ColumnInfo(name = "heaterPerformance") val heaterPerformance: Int,
     @ColumnInfo(name = "isAirConditioner") val isAirConditioner: Boolean,
     @ColumnInfo(name = "airConditionerPerformance") val airConditionerPerformance: Int,
+    @ColumnInfo(name = "start_dates") val startDate: String,
     @ColumnInfo(name = "deadLines") val deadLines: String,
     @ColumnInfo(name = "comment") val comment: String,
 )
