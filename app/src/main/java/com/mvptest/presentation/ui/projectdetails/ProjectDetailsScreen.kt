@@ -40,7 +40,7 @@ fun ProjectDetailsScreen(
     projectDetailsViewModel: ProjectDetailsViewModel,
     projectId: String,
     onBackPressed: () -> Unit,
-    onAddRoomPressed: () -> Unit,
+    onAddRoomPressed: (projectId: String) -> Unit,
     onEditProjectInfoClicked: (projectId: String) -> Unit
 ) {
 
@@ -221,7 +221,7 @@ fun ProjectDetailsScreen(
                         )
                     }
                 },
-                onClick = { onAddRoomPressed() },
+                onClick = { onAddRoomPressed.invoke(projectId) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
             )
 

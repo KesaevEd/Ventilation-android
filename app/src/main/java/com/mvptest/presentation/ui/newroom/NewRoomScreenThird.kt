@@ -46,7 +46,6 @@ import java.util.IdentityHashMap
 fun NewRoomScreenThird(
     newRoomViewModel: NewRoomViewModel,
     newProjectViewModel: NewProjectViewModel,
-    projectId: String,
     onBackPressed: () -> Unit,
     onSaveRoomClicked: (projectId: String) -> Unit
 ) {

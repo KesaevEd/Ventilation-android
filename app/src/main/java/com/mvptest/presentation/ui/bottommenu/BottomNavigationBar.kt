@@ -181,12 +181,14 @@ fun NavigationGraph(
                             NavigationItem.Home.route
                         ) { popUpTo(NavigationItem.Home.route) { inclusive = true } }
                     },
-                    onAddRoomPressed = { navController.navigate(NavigationNewRoomItem.First.route) },
+                    onAddRoomPressed = { projectId ->
+                        newProjectViewModel.initEditMode(projectId)
+                        navController.navigate(NavigationNewRoomItem.First.route)
+                    },
                     onEditProjectInfoClicked = { projectId ->
                         newProjectViewModel.initEditMode(projectId)
                         navController.navigate(NavigationNewProjectItem.First.route)
                     })
-
             }
         }
 
@@ -229,7 +231,6 @@ fun NavigationGraph(
             NewRoomScreenThird(
                 newRoomViewModel = newRoomViewModel,
                 newProjectViewModel = newProjectViewModel,
-                projectId = "TODO projectId",
                 onBackPressed = {
                     navController.navigate(
                         NavigationNewRoomItem.Second.route
