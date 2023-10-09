@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.newproject.NewProjectViewModel
 import com.mvptest.presentation.ui.newroom.NewRoomViewModel
+import com.mvptest.presentation.ui.projectdetails.ProjectDetailsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +28,10 @@ object AppModule {
     @Provides
     fun provideMyProjectsViewModel(activity: AppCompatActivity): MyProjectsViewModel {
         return ViewModelProvider(activity)[MyProjectsViewModel::class.java]
+    }
+
+    @Provides
+    fun provideProjectDetailsViewModel(activity: AppCompatActivity): ProjectDetailsViewModel {
+        return ViewModelProvider(activity)[ProjectDetailsViewModel::class.java]
     }
 }

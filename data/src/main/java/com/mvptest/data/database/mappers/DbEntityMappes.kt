@@ -8,12 +8,22 @@ import com.mvptest.domain.models.RoomDetails
 
 fun Project.toDbEntity(): ProjectDbEntity =
     ProjectDbEntity(
-        id = id, title = title, address = address, startDate = startDate
+        id = id,
+        title = title,
+        address = address,
+        startDate = startDate ?: "",
+        contact = contact ?: "",
+        contactPhone = contactPhone ?: ""
     )
 
 fun ProjectDbEntity.toProject(): Project =
     Project(
-        id = id, title = title, address = address, startDate = startDate
+        id = id,
+        title = title,
+        address = address,
+        startDate = startDate,
+        contact = contact,
+        contactPhone = contactPhone
     )
 
 fun RoomDetails.toDbEntity(projectId: String): RoomDbEntity =

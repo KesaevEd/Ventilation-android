@@ -16,5 +16,5 @@ interface ProjectsDao {
     suspend fun getMyProjects(): List<ProjectDbEntity>
 
     @Query("SELECT * FROM projects WHERE id = :id")
-    suspend fun getProjectById(id: Int): ProjectDbEntity
+    suspend fun getProjectById(id: String): ProjectDbEntity
 }

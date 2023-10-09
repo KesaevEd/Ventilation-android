@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mvptest.presentation.ui.common.MyDatePickerDialog
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
 import com.mvptest.presentation.ui.newproject.NewProjectViewModel
@@ -60,12 +61,14 @@ fun NewRoomScreenSecond(
     var startDate by remember {
         mutableStateOf(value = newRoomViewModel.state.startDate ?: "")
     }
+    val isCalendarClicked = remember { mutableStateOf(false) }
     var deadLines by remember {
         mutableStateOf(value = newRoomViewModel.state.deadLines ?: "")
     }
     var comment by remember {
         mutableStateOf(value = newRoomViewModel.state.comment ?: "")
     }
+
 
     Column(
         modifier = Modifier
@@ -104,7 +107,10 @@ fun NewRoomScreenSecond(
         }
 
 
-        TextTitleOfTextField(modifier = Modifier.padding(top = 20.dp), textId = R.string.vent_system_number)
+        TextTitleOfTextField(
+            modifier = Modifier.padding(top = 20.dp),
+            textId = R.string.vent_system_number
+        )
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -117,7 +123,10 @@ fun NewRoomScreenSecond(
             hint = stringResource(id = R.string.vent_system_number)
         )
 
-        TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.room_volume)
+        TextTitleOfTextField(
+            modifier = Modifier.padding(top = 15.dp),
+            textId = R.string.room_volume
+        )
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -131,7 +140,10 @@ fun NewRoomScreenSecond(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
-        TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.room_destination)
+        TextTitleOfTextField(
+            modifier = Modifier.padding(top = 15.dp),
+            textId = R.string.room_destination
+        )
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -152,19 +164,31 @@ fun NewRoomScreenSecond(
                     .padding(top = 5.dp),
                 value = startDate,
                 onValueChange = {
-                newRoomViewModel.setStartDate(it)
+                    newRoomViewModel.setStartDate(it)
                     startDate = it
                 },
                 hint = stringResource(id = R.string.start_date)
             )
             Icon(
-                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 25.dp).clickable {  },
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 25.dp)
+                    .clickable {
+                        isCalendarClicked.value = true
+                    },
                 painter = painterResource(id = R.drawable.ic_calculator),
                 contentDescription = "image",
                 tint = colorResource(
                     id = R.color.gray
                 )
             )
+        }
+
+        if (isCalendarClicked.value) {
+            MyDatePickerDialog(onDateSelected = { date ->
+                startDate = date
+                newProjectViewModel.setStartDate(date)
+            }) { isCalendarClicked.value = false }
         }
 
         TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.dead_lines)
@@ -180,7 +204,10 @@ fun NewRoomScreenSecond(
             hint = stringResource(id = R.string.dead_lines)
         )
 
-        TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.comment_room)
+        TextTitleOfTextField(
+            modifier = Modifier.padding(top = 15.dp),
+            textId = R.string.comment_room
+        )
         RoundedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -244,7 +271,6 @@ fun NewRoomScreenSecond(
                     }
                 },
                 onClick = {
-                    newRoomViewModel.saveRoom(newProjectViewModel.projectId)
                     onContinueButtonClick()
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))

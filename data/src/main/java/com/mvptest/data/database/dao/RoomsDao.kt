@@ -13,8 +13,8 @@ interface RoomsDao {
     suspend fun insertRoom(room: RoomDbEntity)
 
     @Query("SELECT * FROM rooms WHERE project_id = :projectId")
-    suspend fun getRoomsByProjectId(projectId: Int): List<RoomDbEntity>
+    suspend fun getRoomsByProjectId(projectId: String): List<RoomDbEntity>
 
     @Query("SELECT * FROM rooms WHERE id = :id")
-    suspend fun getRoomById(id: Int): RoomDbEntity
+    suspend fun getRoomById(id: String): RoomDbEntity
 }

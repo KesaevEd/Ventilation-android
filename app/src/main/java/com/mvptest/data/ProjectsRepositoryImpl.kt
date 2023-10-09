@@ -1,5 +1,6 @@
 package com.mvptest.data
 
+import android.util.Log
 import com.mvptest.domain.ProjectsRepository
 import com.mvptest.domain.ProjectsStorage
 import com.mvptest.domain.models.Project
@@ -15,7 +16,8 @@ class ProjectsRepositoryImpl @Inject constructor(private val projectsStorage: Pr
         return projectsStorage.getMyProjects()
     }
 
-    override suspend fun getProjectById(id: Int): Project {
-        return projectsStorage.getProjectById(id)
+    override suspend fun getProjectById(id: String): Project {
+        val res = projectsStorage.getProjectById(id)
+        return res
     }
 }

@@ -40,13 +40,14 @@ import com.mvptest.presentation.ui.common.TextTitleOfTextField
 import com.mvptest.presentation.ui.newproject.NewProjectViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
+import java.util.IdentityHashMap
 
 @Composable
 fun NewRoomScreenThird(
     newRoomViewModel: NewRoomViewModel,
     newProjectViewModel: NewProjectViewModel,
     onBackPressed: () -> Unit,
-    onSaveRoomClicked: () -> Unit
+    onSaveRoomClicked: (projectId: String) -> Unit
 ) {
 
     val heaterTypes = listOf(HeaterType.NONE, HeaterType.WATER, HeaterType.ELECTRICITY)
@@ -315,7 +316,7 @@ fun NewRoomScreenThird(
         BackOrSaveRow(onBackPressed = { onBackPressed() }, onSaveClick = {
             newRoomViewModel.saveRoom(projectId = newProjectViewModel.projectId)
             newRoomViewModel.clearState()
-            onSaveRoomClicked()
+            onSaveRoomClicked(newProjectViewModel.projectId)
         })
 
     }

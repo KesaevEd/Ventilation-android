@@ -1,5 +1,6 @@
 package com.mvptest.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import com.mvptest.presentation.ui.bottommenu.NavigationGraph
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.newproject.NewProjectViewModel
 import com.mvptest.presentation.ui.newroom.NewRoomViewModel
+import com.mvptest.presentation.ui.projectdetails.ProjectDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -96,17 +98,25 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     @Composable
     private fun App() {
 
         val newProjectViewModel: NewProjectViewModel = viewModel()
         val newRoomViewModel: NewRoomViewModel = viewModel()
         val myProjectsViewModel: MyProjectsViewModel = viewModel()
+        val projectDetailsViewModel: ProjectDetailsViewModel = viewModel()
 
         val navController = rememberNavController()
 
         Scaffold(bottomBar = { BottomNavigationBar(navController = navController) }) {
-            NavigationGraph(navController = navController, newProjectViewModel, newRoomViewModel, myProjectsViewModel)
+            NavigationGraph(
+                navController = navController,
+                newProjectViewModel,
+                newRoomViewModel,
+                myProjectsViewModel,
+                projectDetailsViewModel
+            )
         }
     }
 }

@@ -12,11 +12,11 @@ class RoomsDbStorageImpl @Inject constructor(private val roomsDao: RoomsDao): Ro
         roomsDao.insertRoom(room.toDbEntity(projectId))
     }
 
-    override suspend fun getRoomsByProjectId(projectId: Int): List<RoomDetails> {
+    override suspend fun getRoomsByProjectId(projectId: String): List<RoomDetails> {
         return roomsDao.getRoomsByProjectId(projectId).map { it.toRoomDetails() }
     }
 
-    override suspend fun getRoomById(id: Int): RoomDetails {
+    override suspend fun getRoomById(id: String): RoomDetails {
         return roomsDao.getRoomById(id).toRoomDetails()
     }
 }

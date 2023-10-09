@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mvptest.presentation.ui.common.MyDatePickerDialog
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
@@ -38,7 +39,7 @@ import com.mvptest.ventilation.R
 fun NewProjectScreenSecond(
     viewModel: NewProjectViewModel,
     onBackPressed: () -> Unit,
-    onContinueButtonClick: () -> Unit
+    onContinueButtonClick: (id: String) -> Unit
 ) {
 
     var address by remember {
@@ -47,6 +48,7 @@ fun NewProjectScreenSecond(
     var startDate by remember {
         mutableStateOf(value = viewModel.state.startDate ?: "")
     }
+    val isCalendarClicked = remember { mutableStateOf(false) }
     var contact by remember {
         mutableStateOf(value = viewModel.state.contact ?: "")
     }
@@ -84,11 +86,10 @@ fun NewProjectScreenSecond(
             hint = stringResource(id = R.string.project_address)
         )
 
-        Box() {
+        Box(modifier = Modifier.padding(top = 20.dp)) {
             RoundedTextField(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp),
+                    .fillMaxWidth(),
                 value = startDate,
                 onValueChange = {
                     viewModel.setStartDate(it)
@@ -97,14 +98,28 @@ fun NewProjectScreenSecond(
                 hint = stringResource(id = R.string.start_date)
             )
             Icon(
-                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 25.dp).clickable {  },
+                modifier = Modifier.padding(end = 25.dp)
+                    .align(Alignment.CenterEnd)
+                    .clickable {
+                        isCalendarClicked.value = true
+                    },
                 painter = painterResource(id = R.drawable.ic_calculator),
                 contentDescription = "image",
                 tint = colorResource(
                     id = R.color.gray
                 )
             )
+
         }
+
+
+        if (isCalendarClicked.value) {
+            MyDatePickerDialog(onDateSelected = { date ->
+                startDate = date
+                viewModel.setStartDate(date)
+            }) { isCalendarClicked.value = false }
+        }
+
 
         RoundedTextField(
             modifier = Modifier
@@ -182,7 +197,7 @@ fun NewProjectScreenSecond(
                 },
                 onClick = {
                     viewModel.saveProject()
-                    onContinueButtonClick()
+                    onContinueButtonClick.invoke(viewModel.projectId)
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
             )

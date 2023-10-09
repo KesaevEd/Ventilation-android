@@ -16,27 +16,38 @@ import javax.inject.Inject
 class NewProjectViewModel @Inject constructor(private val projectsRepository: ProjectsRepository) :
     ViewModel() {
 
-    fun init() {
-
-    }
-
     var state by mutableStateOf(NewProjectViewState())
 
-    lateinit var projectId: String
-        private set
+    var projectId = ""
 
     fun saveProject() {
         viewModelScope.launch {
-            projectId = UUID.randomUUID().toString()
+            if(projectId == "") {
+                projectId = UUID.randomUUID().toString()
+            }
             projectsRepository.saveProject(
                 Project(
                     id = projectId,
-                    state.title!!,
-                    state.address!!,
-                    state.startDate!!,
+                    state.title ?: "",
+                    state.address ?: "",
+                    state.startDate,
                     state.contact,
                     state.contactPhone
                 )
+            )
+        }
+    }
+
+    fun initEditMode(id: String) {
+        viewModelScope.launch {
+            projectId = id
+            val project = projectsRepository.getProjectById(projectId)
+            state = state.copy(
+                title = project.title,
+                address = project.address,
+                startDate = project.startDate,
+                contact = project.contact,
+                contactPhone = project.contactPhone
             )
         }
     }
