@@ -1,14 +1,19 @@
-package com.mvptest.presentation.ui.newproject
+package com.mvptest.presentation.ui.projectdetails
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -17,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -30,11 +36,16 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun NewProjectScreenThird(
-    viewModel: NewProjectViewModel,
+fun ProjectDetailsScreen(
+    projectDetailsViewModel: ProjectDetailsViewModel,
+    projectId: String,
     onBackPressed: () -> Unit,
-    onAddRoomPressed: () -> Unit
+    onAddRoomPressed: () -> Unit,
+    onEditProjectInfoClicked: (projectId: String) -> Unit
 ) {
+
+    projectDetailsViewModel.getProjectById(projectId)
+
     Column() {
         Box(
             modifier = Modifier
@@ -45,10 +56,26 @@ fun NewProjectScreenThird(
                     shape = RoundedCornerShape(25.dp)
                 )
         ) {
+            Box(
+                modifier = Modifier
+                    .align(TopEnd)
+                    .padding(top = 16.dp, end = 25.dp)
+                    .clickable { onEditProjectInfoClicked.invoke(projectId) }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_ellipse),
+                    contentDescription = "image"
+                )
+                Icon(
+                    modifier = Modifier.align(Alignment.Center),
+                    painter = painterResource(id = R.drawable.ic_edit),
+                    contentDescription = "image",
+                    tint = colorResource(id = R.color.gray)
+                )
+            }
             Column(modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp)) {
                 Text(
                     modifier = Modifier.padding(),
-                    text = viewModel.state.title ?: "",
+                    text = projectDetailsViewModel.state.title ?: "",
                     fontSize = 22.sp,
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Bold,
@@ -66,7 +93,7 @@ fun NewProjectScreenThird(
 
                 Text(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = viewModel.state.address ?: "",
+                    text = projectDetailsViewModel.state.address ?: "",
                     fontSize = 14.sp,
                     color = Color.White,
                     fontFamily = interFamily,
@@ -84,7 +111,7 @@ fun NewProjectScreenThird(
 
                 Text(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = viewModel.state.startDate ?: "",
+                    text = projectDetailsViewModel.state.startDate ?: "",
                     fontSize = 14.sp,
                     color = Color.White,
                     fontFamily = interFamily,
@@ -102,7 +129,7 @@ fun NewProjectScreenThird(
 
                 Text(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = viewModel.state.contact ?: "",
+                    text = projectDetailsViewModel.state.contact ?: "",
                     fontSize = 14.sp,
                     color = Color.White,
                     fontFamily = interFamily,
@@ -120,7 +147,7 @@ fun NewProjectScreenThird(
 
                 Text(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = viewModel.state.contactPhone ?: "",
+                    text = projectDetailsViewModel.state.contactPhone ?: "",
                     fontSize = 14.sp,
                     color = Color.White,
                     fontFamily = interFamily,
@@ -129,15 +156,20 @@ fun NewProjectScreenThird(
             }
         }
 
-        Text(
-            modifier = Modifier
-                .padding(top = 40.dp)
-                .align(CenterHorizontally),
-            text = stringResource(id = R.string.empty_rooms),
-            fontSize = 16.sp,
-            fontFamily = interFamily,
-            fontWeight = FontWeight.Medium
-        )
+        if (projectDetailsViewModel.state.rooms == null || projectDetailsViewModel.state.rooms!!.isEmpty()) {
+            Text(
+                modifier = Modifier
+                    .padding(top = 40.dp)
+                    .align(CenterHorizontally),
+                text = stringResource(id = R.string.empty_rooms),
+                fontSize = 16.sp,
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Medium
+            )
+
+        } else {
+            ListContent(projectsList = projectDetailsViewModel.state.rooms ?: emptyList())
+        }
 
         Row(modifier = Modifier.padding(top = 30.dp, start = 18.dp, end = 18.dp)) {
             Button(
@@ -145,7 +177,7 @@ fun NewProjectScreenThird(
                     .width(60.dp)
                     .height(60.dp),
                 onClick = {
-                    viewModel.clearState()
+                    projectDetailsViewModel.clearState()
                     onBackPressed()
                 },
                 border = BorderStroke(1.dp, color = colorResource(id = R.color.dark_gray_2)),
@@ -156,7 +188,7 @@ fun NewProjectScreenThird(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .width(60.dp),
-                        painter = painterResource(id = R.drawable.ic_arrow_left),
+                        painter = painterResource(id = R.drawable.ic_log_out),
                         contentDescription = "image",
                         tint = colorResource(id = R.color.dark_gray_2),
                     )
@@ -193,6 +225,73 @@ fun NewProjectScreenThird(
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
             )
 
+        }
+    }
+}
+
+@Composable
+fun ListContent(
+    projectsList: List<RoomItemUiEntity>,
+    onItemClicked: () -> Unit = { }
+) {
+    LazyVerticalGrid(
+        modifier = Modifier.padding(start = 18.dp, end = 18.dp),
+        columns = GridCells.Fixed(1),
+        content = {
+            items(projectsList) { item ->
+                ProjectDetailsItem(project = item, onItemClicked = onItemClicked)
+            }
+        })
+}
+
+@Composable
+fun ProjectDetailsItem(
+    project: RoomItemUiEntity,
+    onItemClicked: () -> Unit = { }
+) {
+    ProjectDetailsItemCard(item = project, onItemClicked = onItemClicked)
+}
+
+@Composable
+fun ProjectDetailsItemCard(
+    item: RoomItemUiEntity,
+    onItemClicked: () -> Unit = { }
+) {
+    Box(
+        modifier = Modifier
+            .padding(top = 15.dp)
+            .background(
+                colorResource(id = R.color.light_gray),
+                shape = RoundedCornerShape(15.dp)
+            )
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = item.title,
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                modifier = Modifier.padding(start = 25.dp, top = 29.dp, bottom = 29.dp)
+            )
+            Spacer(Modifier.weight(1f))
+            Button(
+                modifier = Modifier.padding(end = 25.dp),
+                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_gray_2)),
+                shape = RoundedCornerShape(8.dp),
+                onClick = { onItemClicked() },
+                content = {
+                    Text(
+                        text = stringResource(id = R.string.open),
+                        color = Color.White,
+                        fontFamily = interFamily,
+                        fontWeight = FontWeight.Light,
+                        fontSize = 12.sp
+                    )
+                }
+            )
         }
     }
 }

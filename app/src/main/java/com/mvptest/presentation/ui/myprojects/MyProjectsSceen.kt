@@ -7,8 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -33,7 +34,11 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun MyProjectsScreen(viewModel: MyProjectsViewModel, onCreateNewProjectClicked: () -> Unit) {
+fun MyProjectsScreen(
+    viewModel: MyProjectsViewModel,
+    onCreateNewProjectClicked: () -> Unit,
+    onItemClicked: (id: String) -> Unit
+) {
 
     viewModel.getMyProjects()
 
@@ -67,20 +72,20 @@ fun MyProjectsScreen(viewModel: MyProjectsViewModel, onCreateNewProjectClicked: 
             onClick = { onCreateNewProjectClicked() },
             colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
         )
-        ListContent(projectsList = viewModel.state.projects ?: emptyList())
+        ListContent(
+            projectsList = viewModel.state.projects ?: emptyList()
+        ) { itemId -> onItemClicked.invoke(itemId) }
     }
 }
 
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ListContent(
     projectsList: List<Project>,
-    onItemClicked: () -> Unit = { }
+    onItemClicked: (id: String) -> Unit = { }
 ) {
     LazyVerticalGrid(
         modifier = Modifier.padding(bottom = 80.dp),
-        cells = GridCells.Fixed(1),
+        columns = GridCells.Fixed(1),
         content = {
             items(projectsList) { item ->
                 ProjectItem(project = item, onItemClicked = onItemClicked)
@@ -91,7 +96,7 @@ fun ListContent(
 @Composable
 fun ProjectItem(
     project: Project,
-    onItemClicked: () -> Unit = { }
+    onItemClicked: (id: String) -> Unit = { }
 ) {
     ItemCard(item = project, onItemClicked = onItemClicked)
 }
@@ -99,7 +104,7 @@ fun ProjectItem(
 @Composable
 fun ItemCard(
     item: Project,
-    onItemClicked: () -> Unit = { }
+    onItemClicked: (id: String) -> Unit = { }
 ) {
     Card(
         modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 18.dp),
@@ -147,7 +152,7 @@ fun ItemCard(
 
             Text(
                 modifier = Modifier.padding(top = 5.dp),
-                text = item.startDate,
+                text = item.startDate ?: "",
                 fontSize = 14.sp,
                 color = Color.White,
                 fontFamily = interFamily,
@@ -168,7 +173,7 @@ fun ItemCard(
                         textAlign = TextAlign.Center,
                     )
                 },
-                onClick = { onItemClicked() },
+                onClick = { onItemClicked.invoke(item.id) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.background_gray))
             )
 

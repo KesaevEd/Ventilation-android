@@ -1,5 +1,6 @@
 package com.mvptest.data.implementations
 
+import android.util.Log
 import com.mvptest.data.database.dao.ProjectsDao
 import com.mvptest.data.database.mappers.toDbEntity
 import com.mvptest.data.database.mappers.toProject
@@ -17,7 +18,9 @@ class ProjectsDbStorageImpl @Inject constructor(private val projectsDao: Project
         return projectsDao.getMyProjects().map { it.toProject() }
     }
 
-    override suspend fun getProjectById(id: Int): Project {
-        return projectsDao.getProjectById(id).toProject()
+    override suspend fun getProjectById(id: String): Project {
+        val res = projectsDao.getProjectById(id)
+        Log.d("getProjectById", "res = $res")
+            return res.toProject()
     }
 }

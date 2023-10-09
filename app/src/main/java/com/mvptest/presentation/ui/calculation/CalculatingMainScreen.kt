@@ -3,9 +3,9 @@ package com.mvptest.presentation.ui.calculation
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -32,7 +32,7 @@ fun CalculatingMainScreen(onItemClicked: (itemId: Int) -> Unit) {
 
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
-        cells = GridCells.Fixed(1),
+        columns = GridCells.Fixed(1),
         content = {
             items(list) { ItemCard(item = it, onItemClicked = onItemClicked) }
         })

@@ -6,7 +6,7 @@ interface RoomsStorage {
 
     suspend fun insertRoom(room: RoomDetails, projectId: String)
 
-    suspend fun getRoomsByProjectId(projectId: Int): List<RoomDetails>
+    suspend fun getRoomsByProjectId(projectId: String): List<RoomDetails>
 
-    suspend fun getRoomById(id: Int): RoomDetails
+    suspend fun getRoomById(id: String): RoomDetails
 }

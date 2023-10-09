@@ -10,5 +10,7 @@ data class ProjectDbEntity(
     @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "address") val address: String,
-    @ColumnInfo(name = "startDate") val startDate: String
+    @ColumnInfo(name = "start_date") val startDate: String,
+    @ColumnInfo(name = "contact") val contact: String,
+    @ColumnInfo(name = "contact_phone") val contactPhone: String,
 )
