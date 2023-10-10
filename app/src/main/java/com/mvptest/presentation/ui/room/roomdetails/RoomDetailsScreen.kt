@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.roomdetails
+package com.mvptest.presentation.ui.room.roomdetails
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -196,9 +196,10 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.roomVolume.toString() + ", " + stringResource(
+                    text = if (state.value.roomDetails?.roomVolume != "") state.value.roomDetails?.roomVolume.toString() + stringResource(
                         id = R.string.m3
-                    )
+                    ) else ""
+
                 )
 
                 TextTitleOfText(
@@ -243,9 +244,9 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.airExchangePerformance.toString() + ", " + stringResource(
+                    text = if (state.value.roomDetails?.airExchangePerformance != "") state.value.roomDetails?.airExchangePerformance.toString() + stringResource(
                         id = R.string.m3
-                    )
+                    ) else ""
                 )
 
                 TextTitleOfText(
@@ -254,9 +255,9 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.pressureLoss.toString() + ", " + stringResource(
+                    text = if(state.value.roomDetails?.pressureLoss != "") state.value.roomDetails?.pressureLoss.toString() + stringResource(
                         id = R.string.pa
-                    )
+                    ) else ""
                 )
 
                 TextTitleOfText(
@@ -265,9 +266,9 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.airDuctArea.toString() + ", " + stringResource(
+                    text = if(state.value.roomDetails?.airDuctArea != "") state.value.roomDetails?.airDuctArea.toString() + stringResource(
                         id = R.string.m2
-                    )
+                    ) else ""
                 )
 
                 TextTitleOfText(
@@ -285,9 +286,9 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.heaterPerformance.toString() + ", " + stringResource(
+                    text = if(state.value.roomDetails?.heaterPerformance != "") state.value.roomDetails?.heaterPerformance.toString() + stringResource(
                         id = R.string.kvt
-                    )
+                    ) else ""
                 )
 
                 TextTitleOfText(
@@ -310,9 +311,9 @@ fun RoomDetailsScreen(
                     )
                     TextMediumBlack14sp(
                         modifier = Modifier.padding(top = 5.dp, bottom = 25.dp),
-                        text = state.value.roomDetails?.airConditionerPerformance.toString() + ", " + stringResource(
+                        text = if(state.value.roomDetails?.airConditionerPerformance != "") state.value.roomDetails?.airConditionerPerformance.toString() + stringResource(
                             id = R.string.kvt
-                        )
+                        ) else ""
                     )
                 } else {
                     Spacer(modifier = Modifier.height(25.dp))

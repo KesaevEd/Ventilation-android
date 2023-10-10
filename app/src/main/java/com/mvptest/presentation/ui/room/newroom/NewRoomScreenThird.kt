@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.newroom
+package com.mvptest.presentation.ui.room.newroom
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -20,6 +20,7 @@ import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,7 +38,7 @@ import com.mvptest.presentation.ui.common.BackOrSaveRow
 import com.mvptest.presentation.ui.common.CalculatingButton
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
-import com.mvptest.presentation.ui.newproject.NewProjectViewModel
+import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 import java.util.IdentityHashMap
@@ -85,7 +86,7 @@ fun NewRoomScreenThird(
         mutableStateOf(value = newRoomViewModel.state.airConditionerPerformance ?: "")
     }
 
-    var selectedHeaterButtonIndex by remember { mutableStateOf(0) }
+    var selectedHeaterButtonIndex by remember { mutableIntStateOf(0) }
 
     Column(
         modifier = Modifier
@@ -131,9 +132,9 @@ fun NewRoomScreenThird(
             RoundedTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = airExchangePerformance.toString(),
+                value = airExchangePerformance,
                 onValueChange = {
-                    newRoomViewModel.setAirExchangePerformance(it.toInt())
+                    newRoomViewModel.setAirExchangePerformance(it)
                     airExchangePerformance = it
                 },
                 hint = stringResource(id = R.string.value_m3),
@@ -154,9 +155,9 @@ fun NewRoomScreenThird(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp),
-            value = pressureLoss.toString(),
+            value = pressureLoss,
             onValueChange = {
-                newRoomViewModel.setPressureLoss(it.toInt())
+                newRoomViewModel.setPressureLoss(it)
                 pressureLoss = it
             },
             hint = stringResource(id = R.string.pressure_loss),
@@ -166,9 +167,9 @@ fun NewRoomScreenThird(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp),
-            value = airDuctArea.toString(),
+            value = airDuctArea,
             onValueChange = {
-                newRoomViewModel.setAirDuctArea(it.toInt())
+                newRoomViewModel.setAirDuctArea(it)
                 airDuctArea = it
             },
             hint = stringResource(id = R.string.air_duct_area),
@@ -239,9 +240,9 @@ fun NewRoomScreenThird(
                 RoundedTextField(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    value = heaterPerformance.toString(),
+                    value = heaterPerformance,
                     onValueChange = {
-                        newRoomViewModel.setHeaterPerformance(it.toInt())
+                        newRoomViewModel.setHeaterPerformance(it)
                         heaterPerformance = it
                     },
                     hint = stringResource(id = R.string.value_kvt),
@@ -297,9 +298,9 @@ fun NewRoomScreenThird(
                 RoundedTextField(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    value = airConditionerPerformance.toString(),
+                    value = airConditionerPerformance,
                     onValueChange = {
-                        newRoomViewModel.setAirConditionerPerformance(it.toInt())
+                        newRoomViewModel.setAirConditionerPerformance(it)
                         airConditionerPerformance = it
                     },
                     hint = stringResource(id = R.string.value_kvt),

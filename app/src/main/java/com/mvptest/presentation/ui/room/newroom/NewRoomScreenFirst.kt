@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.newroom
+package com.mvptest.presentation.ui.room.newroom
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mvptest.presentation.ui.common.MyAlertDialog
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
@@ -40,6 +41,22 @@ fun NewRoomScreenFirst(
     onCheckButtonClick: () -> Unit,
     onBackPressed: () -> Unit
 ) {
+
+    val openDialog = remember { mutableStateOf(false) }
+
+    if (openDialog.value) {
+        MyAlertDialog(
+            titleId = R.string.ask_cancel_create_room,
+            confirmButtonText = R.string.yes_stop,
+            onCancelClicked = {
+                openDialog.value = false
+            },
+            onConfirmClicked = {
+                openDialog.value = false
+                onBackPressed()
+            })
+    }
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -60,7 +77,7 @@ fun NewRoomScreenFirst(
         ) {
             Icon(
                 modifier = Modifier
-                    .clickable { onBackPressed() },
+                    .clickable { openDialog.value = true },
                 painter = painterResource(id = R.drawable.ic_close),
                 tint = colorResource(id = R.color.gray),
                 contentDescription = "image"
@@ -81,15 +98,16 @@ fun NewRoomScreenFirst(
                 fontWeight = FontWeight.Bold
             )
 
+            if (newItem.isNotEmpty()) {
+                newTextFieldModifier = Modifier.height(60.dp)
+            } else {
+                newTextFieldModifier = Modifier
+                    .height(60.dp)
+                    .fillMaxWidth()
+            }
+
             TextFieldWithCheckButton(onTextChanged = { text ->
                 newItem = text
-                if (newItem.isNotEmpty()) {
-                    newTextFieldModifier = Modifier.height(60.dp)
-                } else {
-                    newTextFieldModifier = Modifier
-                        .height(60.dp)
-                        .fillMaxWidth()
-                }
             }, newItem = newItem, newTextFieldModifier, onCheckButtonClick, viewModel)
         }
     }

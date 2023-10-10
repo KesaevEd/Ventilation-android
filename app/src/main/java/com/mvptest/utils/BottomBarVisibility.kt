@@ -1,7 +1,7 @@
 package com.mvptest.utils
 
-import com.mvptest.presentation.ui.newproject.NavigationNewProjectItem
-import com.mvptest.presentation.ui.newroom.NavigationNewRoomItem
+import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
+import com.mvptest.presentation.ui.room.newroom.NavigationNewRoomItem
 
 fun isBottomBarInvisible(route: String): Boolean = when (route) {
     NavigationNewProjectItem.First.route -> true

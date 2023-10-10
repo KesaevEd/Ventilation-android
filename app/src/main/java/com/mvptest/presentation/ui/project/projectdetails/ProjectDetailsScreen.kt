@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.projectdetails
+package com.mvptest.presentation.ui.project.projectdetails
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -45,7 +45,7 @@ fun ProjectDetailsScreen(
     onBackPressed: () -> Unit,
     onAddRoomPressed: (projectId: String) -> Unit,
     onEditProjectInfoClicked: (projectId: String) -> Unit,
-    onRoomItemClicked: (roomId: String) -> Unit
+    onRoomItemClicked: (roomId: String, projectId: String) -> Unit
 ) {
 
     var tempProjectId = ""
@@ -255,7 +255,7 @@ fun ProjectDetailsScreen(
         } else {
             ListContent(
                 projectsList = projectDetailsViewModel.state.rooms ?: emptyList()
-            ) { roomId -> onRoomItemClicked.invoke(roomId) }
+            ) { roomId -> onRoomItemClicked.invoke(roomId, projectId) }
         }
 
         Row(modifier = Modifier.padding(top = 30.dp, start = 18.dp, end = 18.dp)) {

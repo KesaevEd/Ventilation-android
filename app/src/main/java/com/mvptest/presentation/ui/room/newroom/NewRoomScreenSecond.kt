@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.newroom
+package com.mvptest.presentation.ui.room.newroom
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -20,6 +20,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.mvptest.presentation.ui.common.MyDatePickerDialog
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
-import com.mvptest.presentation.ui.newproject.NewProjectViewModel
+import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -72,7 +73,7 @@ fun NewRoomScreenSecond(
 
     Column(
         modifier = Modifier
-            .padding(18.dp)
+            .padding(top = 18.dp, start = 18.dp, end = 18.dp)
             .verticalScroll(rememberScrollState())
     ) {
 
@@ -133,8 +134,8 @@ fun NewRoomScreenSecond(
                 .padding(top = 5.dp),
             value = roomVolume.toString(),
             onValueChange = {
-                newRoomViewModel.setRoomVolume(it.toInt())
-                roomVolume = it
+                    newRoomViewModel.setRoomVolume(it)
+                    roomVolume = it
             },
             hint = stringResource(id = R.string.room_volume),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -221,7 +222,7 @@ fun NewRoomScreenSecond(
             singleLine = false
         )
 
-        Row(modifier = Modifier.padding(top = 30.dp)) {
+        Row(modifier = Modifier.padding(top = 30.dp, bottom = 18.dp)) {
             Button(
                 modifier = Modifier
                     .width(60.dp)
