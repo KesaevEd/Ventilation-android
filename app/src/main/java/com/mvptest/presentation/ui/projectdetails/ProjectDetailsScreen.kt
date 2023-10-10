@@ -1,6 +1,5 @@
 package com.mvptest.presentation.ui.projectdetails
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +20,8 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.TopEnd
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mvptest.presentation.ui.common.MyAlertDialog
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -56,6 +58,24 @@ fun ProjectDetailsScreen(
 
     projectDetailsViewModel.getProjectById(tempProjectId)
 
+    val openMore = remember { mutableStateOf(false) }
+    val openSendDialog = remember { mutableStateOf(false) }
+    val openDeleteDialog = remember { mutableStateOf(false) }
+
+    if (openDeleteDialog.value) {
+        MyAlertDialog(
+            titleId = R.string.ask_delete_project,
+            confirmButtonText = R.string.yes_delete,
+            onCancelClicked = {
+                openDeleteDialog.value = false
+            },
+            onConfirmClicked = {
+                openDeleteDialog.value = false
+                projectDetailsViewModel.deleteProject()
+                onBackPressed()
+            })
+    }
+
     Column() {
         Box(
             modifier = Modifier
@@ -66,21 +86,76 @@ fun ProjectDetailsScreen(
                     shape = RoundedCornerShape(25.dp)
                 )
         ) {
-            Box(
+            Column(
                 modifier = Modifier
                     .align(TopEnd)
                     .padding(top = 16.dp, end = 25.dp)
-                    .clickable { onEditProjectInfoClicked.invoke(projectId) }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_ellipse),
-                    contentDescription = "image"
-                )
-                Icon(
-                    modifier = Modifier.align(Alignment.Center),
-                    painter = painterResource(id = R.drawable.ic_edit),
-                    contentDescription = "image",
-                    tint = colorResource(id = R.color.gray)
-                )
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clickable { openMore.value = !openMore.value }) {
+                    Icon(
+                        modifier = Modifier.height(50.dp).width(50.dp),
+                        painter = painterResource(id = R.drawable.ic_ellipse),
+                        contentDescription = "image"
+                    )
+                    Icon(
+                        modifier = Modifier.align(Alignment.Center),
+                        painter = painterResource(id = R.drawable.ic_more),
+                        contentDescription = "image",
+                        tint = colorResource(id = R.color.gray)
+                    )
+                }
+                if (openMore.value) {
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable { onEditProjectInfoClicked.invoke(projectId) }) {
+                        Icon(
+                            modifier = Modifier.height(50.dp).width(50.dp),
+                            painter = painterResource(id = R.drawable.ic_ellipse),
+                            contentDescription = "image"
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_edit),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray)
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable { openSendDialog.value = true }) {
+                        Icon(
+                            modifier = Modifier.height(50.dp).width(50.dp),
+                            painter = painterResource(id = R.drawable.ic_ellipse),
+                            contentDescription = "image"
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_send),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray)
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable { openDeleteDialog.value = true }) {
+                        Icon(
+                            modifier = Modifier.height(50.dp).width(50.dp),
+                            painter = painterResource(id = R.drawable.ic_ellipse),
+                            contentDescription = "image"
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_delete),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray)
+                        )
+                    }
+                }
             }
             Column(modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp)) {
                 Text(

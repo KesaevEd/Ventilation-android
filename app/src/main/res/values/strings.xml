@@ -37,7 +37,7 @@
     <string name="phone_number">Номер телефона</string>
     <string name="subscribe">Оформить подписку</string>
 
-    <string name="empty_projects">У Вас пока нет проектов</string>
+    <string name="empty_projects">Проектов пока нет</string>
     <string name="add_project">Добавить проект</string>
     <string name="new_project">Новый проект</string>
     <string name="new_project_subtitle">Создайте свой новый проект</string>

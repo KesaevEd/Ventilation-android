@@ -8,5 +8,7 @@ interface ProjectsStorage {
 
     suspend fun getMyProjects(): List<Project>
 
-    suspend fun getProjectById(id: String): Project
+    suspend fun getProjectById(id: String): Project?
+
+    suspend fun deleteProject(id: String)
 }
