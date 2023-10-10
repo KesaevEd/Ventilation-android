@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.projectdetails
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -28,13 +29,22 @@ class ProjectDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             val project = projectsRepository.getProjectById(projectId)
             val rooms = roomsRepository.getRoomsByProjectId(projectId)
-            state = state.copy(
-                title = project.title,
-                address = project.address,
-                startDate = project.startDate,
-                contact = project.contact,
-                contactPhone = project.contactPhone,
-                rooms = rooms.map { RoomItemUiEntity(it.id, it.title) })
+            if(project != null && rooms != null) {
+                state = state.copy(
+                    title = project.title,
+                    address = project.address,
+                    startDate = project.startDate,
+                    contact = project.contact,
+                    contactPhone = project.contactPhone,
+                    rooms = rooms.map { RoomItemUiEntity(it.id, it.title) })
+            }
+        }
+    }
+
+    fun deleteProject(){
+        viewModelScope.launch {
+            projectsRepository.deleteProject(temporalProjectId)
+            roomsRepository.deleteRoomByProjectId(temporalProjectId)
         }
     }
 

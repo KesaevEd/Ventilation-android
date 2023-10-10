@@ -1,6 +1,7 @@
 package com.mvptest.data.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,5 +17,9 @@ interface ProjectsDao {
     suspend fun getMyProjects(): List<ProjectDbEntity>
 
     @Query("SELECT * FROM projects WHERE id = :id")
-    suspend fun getProjectById(id: String): ProjectDbEntity
+    suspend fun getProjectById(id: String): ProjectDbEntity?
+
+    @Query("DELETE FROM projects WHERE id = :id")
+    suspend fun deleteProject(id: String)
+
 }

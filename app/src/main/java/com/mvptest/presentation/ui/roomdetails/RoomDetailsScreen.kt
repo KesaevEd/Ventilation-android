@@ -2,6 +2,8 @@ package com.mvptest.presentation.ui.roomdetails
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.domain.models.HeaterType
+import com.mvptest.presentation.ui.common.MyAlertDialog
 import com.mvptest.presentation.ui.common.TextMediumBlack14sp
 import com.mvptest.presentation.ui.common.TextTitle
 import com.mvptest.presentation.ui.common.TextTitleOfText
@@ -53,6 +56,24 @@ fun RoomDetailsScreen(
         mutableStateOf(value = roomDetailsViewModel.state)
     }
 
+    val openMore = remember { mutableStateOf(false) }
+    val openSendDialog = remember { mutableStateOf(false) }
+    val openDeleteDialog = remember { mutableStateOf(false) }
+
+    if (openDeleteDialog.value) {
+        MyAlertDialog(
+            titleId = R.string.ask_delete_room,
+            confirmButtonText = R.string.yes_delete,
+            onCancelClicked = {
+                openDeleteDialog.value = false
+            },
+            onConfirmClicked = {
+                openDeleteDialog.value = false
+                roomDetailsViewModel.deleteRoom(roomId)
+                onBackPressed()
+            })
+    }
+
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -66,6 +87,89 @@ fun RoomDetailsScreen(
                     shape = RoundedCornerShape(25.dp)
                 )
         ) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 16.dp, end = 25.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clickable { openMore.value = !openMore.value }) {
+                    Icon(
+                        modifier = Modifier
+                            .height(50.dp)
+                            .width(50.dp),
+                        tint = Color.White,
+                        painter = painterResource(id = R.drawable.ic_ellipse_white),
+                        contentDescription = "image"
+                    )
+                    Icon(
+                        modifier = Modifier.align(Alignment.Center),
+                        painter = painterResource(id = R.drawable.ic_more),
+                        contentDescription = "image",
+                        tint = colorResource(id = R.color.gray)
+                    )
+                }
+                if (openMore.value) {
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable { onEditRoomClicked.invoke(roomId) }) {
+                        Icon(
+                            modifier = Modifier
+                                .height(50.dp)
+                                .width(50.dp),
+                            tint = Color.White,
+                            painter = painterResource(id = R.drawable.ic_ellipse_white),
+                            contentDescription = "image"
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_edit),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray)
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable { openSendDialog.value = true }) {
+                        Icon(
+                            modifier = Modifier
+                                .height(50.dp)
+                                .width(50.dp),
+                            tint = Color.White,
+                            painter = painterResource(id = R.drawable.ic_ellipse_white),
+                            contentDescription = "image"
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_send),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray)
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable { openDeleteDialog.value = true }) {
+                        Icon(
+                            modifier = Modifier
+                                .height(50.dp)
+                                .width(50.dp),
+                            tint = Color.White,
+                            painter = painterResource(id = R.drawable.ic_ellipse_white),
+                            contentDescription = "image"
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_delete),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray)
+                        )
+                    }
+                }
+            }
             Column(
                 modifier = Modifier
                     .padding(start = 25.dp)
@@ -92,7 +196,9 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.roomVolume.toString() + ", " + stringResource(id = R.string.m3)
+                    text = state.value.roomDetails?.roomVolume.toString() + ", " + stringResource(
+                        id = R.string.m3
+                    )
                 )
 
                 TextTitleOfText(

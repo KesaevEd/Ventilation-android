@@ -1,6 +1,5 @@
 package com.mvptest.presentation.ui.myprojects
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -18,6 +16,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -42,7 +41,7 @@ fun MyProjectsScreen(
 
     viewModel.getMyProjects()
 
-    Column() {
+    Column(Modifier.padding(top = 10.dp)) {
         Button(
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,15 +65,33 @@ fun MyProjectsScreen(
                             .padding(17.dp),
                         color = colorResource(id = R.color.white),
                         textAlign = TextAlign.Center,
+                        fontFamily = interFamily,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium
                     )
                 }
             },
             onClick = { onCreateNewProjectClicked() },
             colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
         )
-        ListContent(
-            projectsList = viewModel.state.projects ?: emptyList()
-        ) { itemId -> onItemClicked.invoke(itemId) }
+        if (viewModel.state.projects != null && viewModel.state.projects!!.isEmpty()) {
+            Text(
+                modifier = Modifier
+                    .align(alignment = CenterHorizontally)
+                    .padding(top = 150.dp),
+                text = stringResource(id = R.string.empty_projects),
+                fontSize = 16.sp,
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Medium,
+                color = colorResource(
+                    id = R.color.dark_gray
+                )
+            )
+        } else {
+            ListContent(
+                projectsList = viewModel.state.projects ?: emptyList()
+            ) { itemId -> onItemClicked.invoke(itemId) }
+        }
     }
 }
 

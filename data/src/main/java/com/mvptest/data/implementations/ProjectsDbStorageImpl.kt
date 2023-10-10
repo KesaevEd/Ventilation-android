@@ -18,9 +18,13 @@ class ProjectsDbStorageImpl @Inject constructor(private val projectsDao: Project
         return projectsDao.getMyProjects().map { it.toProject() }
     }
 
-    override suspend fun getProjectById(id: String): Project {
+    override suspend fun getProjectById(id: String): Project? {
         val res = projectsDao.getProjectById(id)
         Log.d("getProjectById", "res = $res")
-            return res.toProject()
+            return res?.toProject()
+    }
+
+    override suspend fun deleteProject(id: String) {
+        projectsDao.deleteProject(id)
     }
 }

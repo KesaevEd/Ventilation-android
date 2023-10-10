@@ -16,8 +16,11 @@ class ProjectsRepositoryImpl @Inject constructor(private val projectsStorage: Pr
         return projectsStorage.getMyProjects()
     }
 
-    override suspend fun getProjectById(id: String): Project {
-        val res = projectsStorage.getProjectById(id)
-        return res
+    override suspend fun getProjectById(id: String): Project? {
+        return projectsStorage.getProjectById(id)
+    }
+
+    override suspend fun deleteProject(id: String) {
+        projectsStorage.deleteProject(id)
     }
 }

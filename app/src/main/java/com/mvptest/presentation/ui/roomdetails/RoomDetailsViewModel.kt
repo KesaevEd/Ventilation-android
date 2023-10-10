@@ -25,6 +25,12 @@ class RoomDetailsViewModel @Inject constructor(private val roomsRepository: Room
         }
     }
 
+    fun deleteRoom(roomId: String){
+        viewModelScope.launch {
+            roomsRepository.deleteRoom(roomId)
+        }
+    }
+
     fun clearState() {
         state.value = state.value.copy(roomDetails = null)
     }

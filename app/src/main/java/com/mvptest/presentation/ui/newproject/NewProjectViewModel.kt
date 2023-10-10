@@ -42,13 +42,15 @@ class NewProjectViewModel @Inject constructor(private val projectsRepository: Pr
         viewModelScope.launch {
             projectId = id
             val project = projectsRepository.getProjectById(projectId)
-            state = state.copy(
-                title = project.title,
-                address = project.address,
-                startDate = project.startDate,
-                contact = project.contact,
-                contactPhone = project.contactPhone
-            )
+            if(project != null) {
+                state = state.copy(
+                    title = project.title,
+                    address = project.address,
+                    startDate = project.startDate,
+                    contact = project.contact,
+                    contactPhone = project.contactPhone
+                )
+            }
         }
     }
 

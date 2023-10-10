@@ -70,6 +70,14 @@ fun NewProjectScreenFirst(
             )
         }
 
+        if (newItem.isNotEmpty()) {
+            newTextFieldModifier = Modifier.height(60.dp)
+        } else {
+            newTextFieldModifier = Modifier
+                .height(60.dp)
+                .fillMaxWidth()
+        }
+
         Box(
             modifier = Modifier
                 .align(Alignment.End)
@@ -99,13 +107,6 @@ fun NewProjectScreenFirst(
 
             TextFieldWithCheckButton(onTextChanged = { text ->
                 newItem = text
-                if (newItem.isNotEmpty()) {
-                    newTextFieldModifier = Modifier.height(60.dp)
-                } else {
-                    newTextFieldModifier = Modifier
-                        .height(60.dp)
-                        .fillMaxWidth()
-                }
             }, newItem = newItem, newTextFieldModifier, onCheckButtonClick, viewModel)
         }
     }

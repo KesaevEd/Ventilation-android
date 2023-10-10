@@ -11,11 +11,19 @@ class RoomsRepositoryImpl @Inject constructor(private val roomsStorage: RoomsSto
         roomsStorage.insertRoom(room, projectId)
     }
 
-    override suspend fun getRoomsByProjectId(projectId: String): List<RoomDetails> {
+    override suspend fun getRoomsByProjectId(projectId: String): List<RoomDetails>? {
         return roomsStorage.getRoomsByProjectId(projectId = projectId)
     }
 
-    override suspend fun getRoomById(id: String): RoomDetails {
+    override suspend fun getRoomById(id: String): RoomDetails? {
         return roomsStorage.getRoomById(id)
+    }
+
+    override suspend fun deleteRoom(id: String) {
+        roomsStorage.deleteRoom(id)
+    }
+
+    override suspend fun deleteRoomByProjectId(projectId: String) {
+        roomsStorage.getRoomsByProjectId(projectId)
     }
 }
