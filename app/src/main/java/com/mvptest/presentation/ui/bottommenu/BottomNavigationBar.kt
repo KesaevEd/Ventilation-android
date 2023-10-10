@@ -35,6 +35,8 @@ import com.mvptest.presentation.ui.newroom.NewRoomScreenSecond
 import com.mvptest.presentation.ui.newroom.NewRoomScreenThird
 import com.mvptest.presentation.ui.newroom.NewRoomViewModel
 import com.mvptest.presentation.ui.projectdetails.ProjectDetailsViewModel
+import com.mvptest.presentation.ui.roomdetails.RoomDetailsScreen
+import com.mvptest.presentation.ui.roomdetails.RoomDetailsViewModel
 import com.mvptest.utils.isBottomBarInvisible
 import com.mvptest.ventilation.R
 
@@ -94,7 +96,8 @@ fun NavigationGraph(
     newProjectViewModel: NewProjectViewModel,
     newRoomViewModel: NewRoomViewModel,
     myProjectsViewModel: MyProjectsViewModel,
-    projectDetailsViewModel: ProjectDetailsViewModel
+    projectDetailsViewModel: ProjectDetailsViewModel,
+    roomDetailsViewModel: RoomDetailsViewModel
 ) {
     NavHost(navController, startDestination = NavigationItem.Home.route) {
         //Bottom Navigation
@@ -114,7 +117,7 @@ fun NavigationGraph(
                 },
                 onItemClicked = { projectId ->
                     navController.navigate(
-                        NavigationNewProjectItem.Third.route.replace(
+                        NavigationNewProjectItem.ProjectDetails.route.replace(
                             oldValue = "{projectId}",
                             newValue = projectId
                         )
@@ -157,7 +160,7 @@ fun NavigationGraph(
                 },
                 onContinueButtonClick = { projectId ->
                     navController.navigate(
-                        NavigationNewProjectItem.Third.route.replace(
+                        NavigationNewProjectItem.ProjectDetails.route.replace(
                             oldValue = "{projectId}",
                             newValue = projectId
                         )
@@ -166,7 +169,7 @@ fun NavigationGraph(
         }
 
         composable(
-            route = NavigationNewProjectItem.Third.route
+            route = NavigationNewProjectItem.ProjectDetails.route
         ) {
             val projectId = it.arguments?.getString("projectId")
             projectId?.let { id ->
@@ -188,6 +191,14 @@ fun NavigationGraph(
                     onEditProjectInfoClicked = { projectId ->
                         newProjectViewModel.initEditMode(projectId)
                         navController.navigate(NavigationNewProjectItem.First.route)
+                    },
+                    onRoomItemClicked = { roomId ->
+                        navController.navigate(
+                            NavigationNewRoomItem.RoomDetails.route.replace(
+                                oldValue = "{roomId}",
+                                newValue = roomId
+                            )
+                        )
                     })
             }
         }
@@ -238,13 +249,37 @@ fun NavigationGraph(
                 },
                 onSaveRoomClicked = { projectId ->
                     navController.navigate(
-                        NavigationNewProjectItem.Third.route.replace(
+                        NavigationNewProjectItem.ProjectDetails.route.replace(
                             oldValue = "{projectId}",
                             newValue = projectId
                         )
                     )
                 }
             )
+        }
+
+        //Room Details
+        composable(route = NavigationNewRoomItem.RoomDetails.route) {
+            val roomId = it.arguments?.getString("roomId")
+            roomId?.let { id ->
+                RoomDetailsScreen(
+                    roomDetailsViewModel = roomDetailsViewModel,
+                    roomId = id,
+                    onBackPressed = {
+                        navController.navigate(
+                            NavigationNewProjectItem.ProjectDetails.route
+                        )
+                    },
+                    onEditRoomClicked = { roomId ->
+//                    navController.navigate(
+//                        NavigationNewProjectItem.Third.route.replace(
+//                            oldValue = "{roomId}",
+//                            newValue = roomId
+//                        )
+//                    )
+                    }
+                )
+            }
         }
     }
 }

@@ -36,6 +36,7 @@ fun NewRoomViewState.toRoomDetails(): RoomDetails {
         heaterPerformance = heaterPerformance ?: 0,
         isAirConditioner = isAirConditioner ?: false,
         airConditionerPerformance = airConditionerPerformance ?: 0,
+        startDate = startDate ?: "",
         deadLines = deadLines ?: "",
         comment = comment ?: ""
     )

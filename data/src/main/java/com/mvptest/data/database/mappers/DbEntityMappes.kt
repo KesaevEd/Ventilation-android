@@ -41,6 +41,7 @@ fun RoomDetails.toDbEntity(projectId: String): RoomDbEntity =
         heaterPerformance = heaterPerformance,
         isAirConditioner = isAirConditioner,
         airConditionerPerformance = airConditionerPerformance,
+        startDate = startDate,
         deadLines = deadLines,
         comment = comment
     )
@@ -59,6 +60,7 @@ fun RoomDbEntity.toRoomDetails(): RoomDetails =
         heaterPerformance = heaterPerformance,
         isAirConditioner = isAirConditioner,
         airConditionerPerformance = airConditionerPerformance,
+        startDate = startDate,
         deadLines = deadLines,
         comment = comment
     )

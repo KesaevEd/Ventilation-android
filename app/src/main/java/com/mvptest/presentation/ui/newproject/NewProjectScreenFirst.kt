@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mvptest.presentation.ui.common.MyAlertDialog
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
@@ -40,6 +41,21 @@ fun NewProjectScreenFirst(
     onCheckButtonClick: () -> Unit,
     onBackPressed: () -> Unit
 ) {
+
+    val openDialog = remember { mutableStateOf(false) }
+
+    if (openDialog.value) {
+        MyAlertDialog(
+            titleId = R.string.ask_cancel_create_project,
+            confirmButtonText = R.string.yes_stop,
+            onCancelClicked = {
+                openDialog.value = false
+            },
+            onConfirmClicked = {
+                openDialog.value = false
+                onBackPressed()
+            })
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -61,7 +77,7 @@ fun NewProjectScreenFirst(
         ) {
             Icon(
                 modifier = Modifier
-                    .clickable { onBackPressed() },
+                    .clickable { openDialog.value = true },
                 painter = painterResource(id = R.drawable.ic_close),
                 tint = colorResource(id = R.color.gray),
                 contentDescription = "image"

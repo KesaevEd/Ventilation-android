@@ -162,3 +162,39 @@ fun TextTitleOfTextField(modifier: Modifier, textId: Int){
         fontSize = 14.sp
     )
 }
+
+@Composable
+fun TextTitle(modifier: Modifier, text: String, colorId: Int){
+    Text(
+        modifier = modifier,
+        text = text,
+        color = colorResource(id = colorId),
+        fontFamily = interFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp
+    )
+}
+
+@Composable
+fun TextTitleOfText(modifier: Modifier, textId: Int){
+    Text(
+        modifier = modifier,
+        color = colorResource(id = R.color.dark_gray_2),
+        text = stringResource(id = textId),
+        fontFamily = interFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 12.sp
+    )
+}
+
+@Composable
+fun TextMediumBlack14sp(modifier: Modifier, text: String){
+    Text(
+        modifier = modifier,
+        color = colorResource(id = R.color.dark_gray),
+        text = text,
+        fontFamily = interFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp
+    )
+}

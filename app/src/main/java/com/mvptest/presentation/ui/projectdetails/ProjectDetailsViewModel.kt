@@ -20,7 +20,11 @@ class ProjectDetailsViewModel @Inject constructor(
     var state by mutableStateOf(ProjectDetailsViewState())
         private set
 
+    var temporalProjectId = ""
+        private set
+
     fun getProjectById(projectId: String) {
+        temporalProjectId = projectId
         viewModelScope.launch {
             val project = projectsRepository.getProjectById(projectId)
             val rooms = roomsRepository.getRoomsByProjectId(projectId)
@@ -36,6 +40,7 @@ class ProjectDetailsViewModel @Inject constructor(
 
     fun clearState() {
         state = state.copy(null, null, null, null, null, null)
+        temporalProjectId = ""
     }
 
 }

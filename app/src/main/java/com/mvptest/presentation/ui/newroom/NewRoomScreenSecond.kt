@@ -187,7 +187,7 @@ fun NewRoomScreenSecond(
         if (isCalendarClicked.value) {
             MyDatePickerDialog(onDateSelected = { date ->
                 startDate = date
-                newProjectViewModel.setStartDate(date)
+                newRoomViewModel.setStartDate(date)
             }) { isCalendarClicked.value = false }
         }
 
@@ -217,7 +217,7 @@ fun NewRoomScreenSecond(
                 newRoomViewModel.setComment(it)
                 comment = it
             },
-            hint = stringResource(id = R.string.comment_project),
+            hint = stringResource(id = R.string.comment_room),
             singleLine = false
         )
 
