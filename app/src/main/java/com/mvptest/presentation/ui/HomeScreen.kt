@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mvptest.presentation.ui.bottommenu.NavigationItem
-import com.mvptest.presentation.ui.newproject.NavigationNewProjectItem
+import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 

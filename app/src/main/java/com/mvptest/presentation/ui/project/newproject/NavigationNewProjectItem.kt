@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.newproject
+package com.mvptest.presentation.ui.project.newproject
 
 sealed class NavigationNewProjectItem(var route: String) {
     object First : NavigationNewProjectItem("new_project_first")

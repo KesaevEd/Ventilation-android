@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.roomdetails
+package com.mvptest.presentation.ui.room.roomdetails
 
 import android.util.Log
 import androidx.compose.runtime.getValue

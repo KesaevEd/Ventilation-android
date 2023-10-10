@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.newproject
+package com.mvptest.presentation.ui.project.newproject
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

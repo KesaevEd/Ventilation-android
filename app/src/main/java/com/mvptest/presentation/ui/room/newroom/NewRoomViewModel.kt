@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.newroom
+package com.mvptest.presentation.ui.room.newroom
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -11,6 +11,7 @@ import com.mvptest.domain.models.HeaterType
 import com.mvptest.domain.models.RoomDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,9 +20,24 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
 
     var state by mutableStateOf(NewRoomViewState())
 
+    var roomId = ""
+
     fun saveRoom(projectId: String) {
         viewModelScope.launch {
-            roomsRepository.saveRoom(room = state.toRoomDetails(), projectId = projectId)
+            if(roomId == ""){
+                roomId = UUID.randomUUID().toString()
+            }
+            roomsRepository.saveRoom(room = state.toRoomDetails(roomId), projectId = projectId)
+        }
+    }
+
+    fun initEditMode(id: String){
+        viewModelScope.launch{
+            roomId = id
+            val room = roomsRepository.getRoomById(roomId)
+            if(room != null){
+                state = room.toRoomViewState(roomId)
+            }
         }
     }
 
@@ -43,6 +59,7 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
             deadLines = null,
             comment = null
         )
+        roomId = ""
     }
 
     fun setTitle(title: String) {
@@ -53,7 +70,7 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
         state = state.copy(systemNumber = systemNumber)
     }
 
-    fun setRoomVolume(roomVolume: Int) {
+    fun setRoomVolume(roomVolume: String) {
         state = state.copy(roomVolume = roomVolume)
     }
 
@@ -65,15 +82,15 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
         state = state.copy(startDate = startDate)
     }
 
-    fun setAirExchangePerformance(airExchangePerformance: Int) {
+    fun setAirExchangePerformance(airExchangePerformance: String) {
         state = state.copy(airExchangePerformance = airExchangePerformance)
     }
 
-    fun setPressureLoss(pressureLoss: Int) {
+    fun setPressureLoss(pressureLoss: String) {
         state = state.copy(pressureLoss = pressureLoss)
     }
 
-    fun setAirDuctArea(airDuctArea: Int) {
+    fun setAirDuctArea(airDuctArea: String) {
         state = state.copy(airDuctArea = airDuctArea)
     }
 
@@ -81,7 +98,7 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
         state = state.copy(heaterType = heaterType)
     }
 
-    fun setHeaterPerformance(heaterPerformance: Int) {
+    fun setHeaterPerformance(heaterPerformance: String) {
         state = state.copy(heaterPerformance = heaterPerformance)
     }
 
@@ -89,7 +106,7 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
         state = state.copy(isAirConditioner = isAirConditioner)
     }
 
-    fun setAirConditionerPerformance(airConditionerPerformance: Int) {
+    fun setAirConditionerPerformance(airConditionerPerformance: String) {
         state = state.copy(airConditionerPerformance = airConditionerPerformance)
     }
 

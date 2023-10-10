@@ -24,19 +24,19 @@ import com.mvptest.presentation.ui.HomeScreen
 import com.mvptest.presentation.ui.calculation.CalculatingMainScreen
 import com.mvptest.presentation.ui.myprojects.MyProjectsScreen
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
-import com.mvptest.presentation.ui.newproject.NavigationNewProjectItem
-import com.mvptest.presentation.ui.newproject.NewProjectScreenFirst
-import com.mvptest.presentation.ui.newproject.NewProjectScreenSecond
-import com.mvptest.presentation.ui.projectdetails.ProjectDetailsScreen
-import com.mvptest.presentation.ui.newproject.NewProjectViewModel
-import com.mvptest.presentation.ui.newroom.NavigationNewRoomItem
-import com.mvptest.presentation.ui.newroom.NewRoomScreenFirst
-import com.mvptest.presentation.ui.newroom.NewRoomScreenSecond
-import com.mvptest.presentation.ui.newroom.NewRoomScreenThird
-import com.mvptest.presentation.ui.newroom.NewRoomViewModel
-import com.mvptest.presentation.ui.projectdetails.ProjectDetailsViewModel
-import com.mvptest.presentation.ui.roomdetails.RoomDetailsScreen
-import com.mvptest.presentation.ui.roomdetails.RoomDetailsViewModel
+import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
+import com.mvptest.presentation.ui.project.newproject.NewProjectScreenFirst
+import com.mvptest.presentation.ui.project.newproject.NewProjectScreenSecond
+import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsScreen
+import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
+import com.mvptest.presentation.ui.room.newroom.NavigationNewRoomItem
+import com.mvptest.presentation.ui.room.newroom.NewRoomScreenFirst
+import com.mvptest.presentation.ui.room.newroom.NewRoomScreenSecond
+import com.mvptest.presentation.ui.room.newroom.NewRoomScreenThird
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
+import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsViewModel
+import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsScreen
+import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsViewModel
 import com.mvptest.utils.isBottomBarInvisible
 import com.mvptest.ventilation.R
 
@@ -192,7 +192,8 @@ fun NavigationGraph(
                         newProjectViewModel.initEditMode(projectId)
                         navController.navigate(NavigationNewProjectItem.First.route)
                     },
-                    onRoomItemClicked = { roomId ->
+                    onRoomItemClicked = { roomId, projectId ->
+                        newProjectViewModel.projectId = projectId
                         navController.navigate(
                             NavigationNewRoomItem.RoomDetails.route.replace(
                                 oldValue = "{roomId}",
@@ -207,18 +208,17 @@ fun NavigationGraph(
         composable(NavigationNewRoomItem.First.route) {
             NewRoomScreenFirst(
                 viewModel = newRoomViewModel,
-                {
+                onCheckButtonClick = {
                     navController.navigate(
                         NavigationNewRoomItem.Second.route
                     )
                 },
-                {
-                    navController.navigate(NavigationItem.Home.route) {
+                onBackPressed = {
+                    navController.navigate(NavigationNewProjectItem.ProjectDetails.route) {
 
-                        newProjectViewModel.clearState()
                         newRoomViewModel.clearState()
 
-                        popUpTo(NavigationItem.Home.route) {
+                        popUpTo(NavigationNewProjectItem.ProjectDetails.route) {
                             inclusive = true
                         }
                     }
@@ -271,12 +271,13 @@ fun NavigationGraph(
                         )
                     },
                     onEditRoomClicked = { roomId ->
-//                    navController.navigate(
-//                        NavigationNewProjectItem.Third.route.replace(
-//                            oldValue = "{roomId}",
-//                            newValue = roomId
-//                        )
-//                    )
+                        newRoomViewModel.initEditMode(roomId)
+                        navController.navigate(
+                            NavigationNewRoomItem.First.route.replace(
+                                oldValue = "{roomId}",
+                                newValue = roomId
+                            )
+                        )
                     }
                 )
             }

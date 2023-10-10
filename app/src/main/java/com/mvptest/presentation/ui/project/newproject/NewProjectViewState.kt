@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.newproject
+package com.mvptest.presentation.ui.project.newproject
 
 data class NewProjectViewState(
     val title: String? = "",

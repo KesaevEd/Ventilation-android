@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.newroom
+package com.mvptest.presentation.ui.room.newroom
 
 sealed class NavigationNewRoomItem(val route: String) {
     object First : NavigationNewRoomItem("new_room_first")

@@ -96,9 +96,9 @@
     <string name="no">Нет</string>
     <string name="yes">Да</string>
 
-    <string name="m2">м2</string>
-    <string name="m3">м3</string>
-    <string name="kvt">кВт</string>
-    <string name="pa">Па</string>
+    <string name="m2"> м2</string>
+    <string name="m3"> м3</string>
+    <string name="kvt"> кВт</string>
+    <string name="pa"> Па</string>
 
 </resources>

@@ -3,10 +3,10 @@ package com.mvptest.di
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
-import com.mvptest.presentation.ui.newproject.NewProjectViewModel
-import com.mvptest.presentation.ui.newroom.NewRoomViewModel
-import com.mvptest.presentation.ui.projectdetails.ProjectDetailsViewModel
-import com.mvptest.presentation.ui.roomdetails.RoomDetailsViewModel
+import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
+import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsViewModel
+import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
