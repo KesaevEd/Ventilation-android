@@ -1,10 +1,10 @@
 package com.mvptest.presentation.ui.common
 
-import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -15,53 +15,77 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 
-//fun DatePickerDialog(
-//    context: Context,
-//    selectedDate: MutableState<Date>,
-//    onDateSelected: (Date) -> Unit
-//) {
-//    val calendar = Calendar.getInstance()
-//    calendar.time = selectedDate.value
-//
-//    val onDateSet: DatePickerDialog.OnDateSetListener =
-//        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-//            calendar.set(Calendar.YEAR, year)
-//            calendar.set(Calendar.MONTH, month)
-//            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-//            selectedDate.value = calendar.time
-//            onDateSelected(calendar.time)
-//        }
-//
-//    val onClick: () -> Unit = {
-//        val datePickerDialog = DatePickerDialog(
-//            context,
-//            onDateSet,
-//            calendar.get(Calendar.YEAR),
-//            calendar.get(Calendar.MONTH),
-//            calendar.get(Calendar.DAY_OF_MONTH)
-//        )
-//        datePickerDialog.show()
-//    }
-//
-//    Button(onClick = onClick) {
-//        Text(text = "Select Date")
-//    }
-//}
+@Composable
+fun MyAlertDialog(titleId: Int, confirmButtonText: Int, onCancelClicked: () -> Unit, onConfirmClicked: () -> Unit) {
+    AlertDialog(
+        modifier = Modifier,
+        title = {
+            Text(
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Medium,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                text = stringResource(id = titleId)
+            )
+        },
+        shape = RoundedCornerShape(20.dp),
+        backgroundColor = Color.White,
+        onDismissRequest = { onCancelClicked() },
+        buttons = {
+            Row(
+                modifier = Modifier.padding(
+                    top = 15.dp,
+                    start = 25.dp,
+                    end = 25.dp,
+                    bottom = 20.dp
+                )
+            ) {
+                Button(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
+                    shape = RoundedCornerShape(12.dp),
+                    onClick = { onCancelClicked() },
+                    content = {
+                        Text(
+                            fontFamily = interFamily,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 14.sp,
+                            text = stringResource(id = R.string.cancel),
+                            color = Color.White
+                        )
+                    })
+                Spacer(modifier = Modifier.weight(1f))
+                Button(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.light_gray)),
+                    shape = RoundedCornerShape(12.dp),
+                    onClick = { onConfirmClicked() },
+                    content = {
+                        Text(
+                            fontFamily = interFamily,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 14.sp,
+                            text = stringResource(id = confirmButtonText),
+                            color = colorResource(id = R.color.dark_gray)
+                        )
+                    })
+            }
+        }
+    )
+}
 
 
-@RequiresApi(Build.VERSION_CODES.N)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyDatePickerDialog(
@@ -82,19 +106,27 @@ fun MyDatePickerDialog(
     DatePickerDialog(
         onDismissRequest = { onDismiss() },
         confirmButton = {
-            Button(modifier = Modifier.padding(end = 15.dp), shape = RoundedCornerShape(15.dp), colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_blue)), onClick = {
-                onDateSelected(selectedDate)
-                onDismiss()
-            }
+            Button(
+                modifier = Modifier.padding(end = 15.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_blue)),
+                onClick = {
+                    onDateSelected(selectedDate)
+                    onDismiss()
+                }
 
             ) {
                 Text(text = stringResource(id = R.string.ok), color = Color.White)
             }
         },
         dismissButton = {
-            Button(modifier = Modifier.padding(end = 5.dp), shape = RoundedCornerShape(15.dp), colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_blue)), onClick = {
-                onDismiss()
-            }) {
+            Button(
+                modifier = Modifier.padding(end = 5.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.dark_blue)),
+                onClick = {
+                    onDismiss()
+                }) {
                 Text(text = stringResource(id = R.string.cancel), color = Color.White)
             }
         },
