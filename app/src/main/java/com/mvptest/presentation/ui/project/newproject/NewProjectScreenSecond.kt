@@ -86,7 +86,11 @@ fun NewProjectScreenSecond(
             hint = stringResource(id = R.string.project_address)
         )
 
-        Box(modifier = Modifier.padding(top = 20.dp)) {
+        Box(modifier = Modifier
+            .padding(top = 20.dp)
+            .clickable {
+                isCalendarClicked.value = true
+            }) {
             RoundedTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -95,14 +99,13 @@ fun NewProjectScreenSecond(
                     viewModel.setStartDate(it)
                     startDate = it
                 },
-                hint = stringResource(id = R.string.start_date)
+                hint = stringResource(id = R.string.start_date),
+                enabled = false
             )
             Icon(
-                modifier = Modifier.padding(end = 25.dp)
-                    .align(Alignment.CenterEnd)
-                    .clickable {
-                        isCalendarClicked.value = true
-                    },
+                modifier = Modifier
+                    .padding(end = 25.dp)
+                    .align(Alignment.CenterEnd),
                 painter = painterResource(id = R.drawable.ic_calculator),
                 contentDescription = "image",
                 tint = colorResource(

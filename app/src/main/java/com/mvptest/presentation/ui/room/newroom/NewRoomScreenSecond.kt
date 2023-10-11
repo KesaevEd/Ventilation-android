@@ -158,25 +158,22 @@ fun NewRoomScreenSecond(
         )
 
         TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.start_date)
-        Box() {
+        Box(modifier = Modifier.padding(top = 5.dp).clickable { isCalendarClicked.value = true }) {
             RoundedTextField(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp),
+                    .fillMaxWidth(),
                 value = startDate,
                 onValueChange = {
                     newRoomViewModel.setStartDate(it)
                     startDate = it
                 },
-                hint = stringResource(id = R.string.start_date)
+                hint = stringResource(id = R.string.start_date),
+                enabled = false
             )
             Icon(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(end = 25.dp)
-                    .clickable {
-                        isCalendarClicked.value = true
-                    },
+                    .padding(end = 25.dp),
                 painter = painterResource(id = R.drawable.ic_calculator),
                 contentDescription = "image",
                 tint = colorResource(

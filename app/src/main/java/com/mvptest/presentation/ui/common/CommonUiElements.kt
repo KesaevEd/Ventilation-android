@@ -38,7 +38,8 @@ fun RoundedTextField(
     hint: String,
     modifier: Modifier = Modifier,
     singleLine: Boolean? = null,
-    keyboardOptions: KeyboardOptions? = null
+    keyboardOptions: KeyboardOptions? = null,
+    enabled: Boolean? = null
 ) {
     TextField(
         value = value,
@@ -68,7 +69,8 @@ fun RoundedTextField(
             disabledIndicatorColor = Color.Transparent,
             cursorColor = Color.Black
         ),
-        keyboardOptions = keyboardOptions ?: KeyboardOptions(keyboardType = KeyboardType.Text)
+        keyboardOptions = keyboardOptions ?: KeyboardOptions(keyboardType = KeyboardType.Text),
+        enabled = enabled ?: true
     )
 }
 
