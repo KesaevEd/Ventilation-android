@@ -181,8 +181,8 @@ fun NavigationGraph(
                         newRoomViewModel.clearState()
 
                         navController.navigate(
-                            NavigationItem.Home.route
-                        ) { popUpTo(NavigationItem.Home.route) { inclusive = true } }
+                            NavigationItem.MyProjects.route
+                        ) { popUpTo(NavigationItem.MyProjects.route) { inclusive = true } }
                     },
                     onAddRoomPressed = { projectId ->
                         newProjectViewModel.initEditMode(projectId)

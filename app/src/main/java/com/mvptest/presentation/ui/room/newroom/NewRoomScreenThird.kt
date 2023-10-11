@@ -71,7 +71,7 @@ fun NewRoomScreenThird(
     }
 
     var heaterType by remember {
-        mutableStateOf(value = HeaterType.NONE)
+        mutableStateOf(value = newRoomViewModel.state.heaterType ?: HeaterType.NONE)
     }
 
     var heaterPerformance by remember {
@@ -194,11 +194,11 @@ fun NewRoomScreenThird(
                 )
         ) {
             Row() {
+                selectedHeaterButtonIndex = heaterTypes.indexOf(heaterType)
                 for (index in 0..2) {
                     Button(
                         onClick = {
                             heaterType = heaterTypes[index]
-                            selectedHeaterButtonIndex = index
                             newRoomViewModel.setHeaterType(heaterTypes[index])
                         },
                         modifier = Modifier

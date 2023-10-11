@@ -3,5 +3,10 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">#ffffff</item>
+        <item name="android:textViewStyle">@style/CustomTextView</item>
+    </style>
+
+    <style name="CustomTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="fontFamily">@font/inter_medium</item>
     </style>
 </resources>
