@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.presentation.ui.common.MyDatePickerDialog
+import com.mvptest.presentation.ui.common.RoomDestinationDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
@@ -132,10 +134,10 @@ fun NewRoomScreenSecond(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp),
-            value = roomVolume.toString(),
+            value = roomVolume,
             onValueChange = {
-                    newRoomViewModel.setRoomVolume(it)
-                    roomVolume = it
+                newRoomViewModel.setRoomVolume(it)
+                roomVolume = it
             },
             hint = stringResource(id = R.string.room_volume),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -145,20 +147,30 @@ fun NewRoomScreenSecond(
             modifier = Modifier.padding(top = 15.dp),
             textId = R.string.room_destination
         )
-        RoundedTextField(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 5.dp),
-            value = roomDestination,
-            onValueChange = {
+                .padding(top = 5.dp)
+        ) {
+            RoomDestinationDropDown(onItemClick = {
                 newRoomViewModel.setRoomDestination(it)
                 roomDestination = it
-            },
-            hint = stringResource(id = R.string.room_destination)
-        )
+            })
+            Icon(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 25.dp),
+                painter = painterResource(id = R.drawable.ic_arrow_down),
+                contentDescription = "image",
+                tint = colorResource(
+                    id = R.color.gray
+                )
+            )
+        }
 
         TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.start_date)
-        Box(modifier = Modifier.padding(top = 5.dp).clickable { isCalendarClicked.value = true }) {
+        Box(modifier = Modifier
+            .padding(top = 5.dp)
+            .clickable { isCalendarClicked.value = true }) {
             RoundedTextField(
                 modifier = Modifier
                     .fillMaxWidth(),

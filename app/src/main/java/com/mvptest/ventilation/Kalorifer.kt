@@ -1,5 +1,6 @@
 package com.mvptest.ventilation
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +11,7 @@ import java.lang.Exception
 import kotlin.math.roundToInt
 
 class Kalorifer : AppCompatActivity() {
+    @SuppressLint("DefaultLocale")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kalorifer)
@@ -118,8 +120,8 @@ class Kalorifer : AppCompatActivity() {
             try {
                 val a = (rashod3.text.toString().toInt() * 1000) / (3.6 * widht.text.toString()
                     .toInt() * hight.text.toString().toInt())
-                result5.setText(java.lang.String.format(("%.1f"), a))
-                m5.setText("м/с")
+                result5.text = java.lang.String.format(("%.1f"), a)
+                m5.text = "м/с"
             }catch (e: Exception) {result5.setText("Некорректный ввод данных")}
         }
 
