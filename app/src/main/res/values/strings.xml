@@ -9,13 +9,13 @@
     <string name="sopromat">СОПРОМАТ</string>
     <string name="geometry">ГЕОМЕТРИЯ</string>
     <string name="save">СОХРАНЕННЫЕ СМЕТЫ</string>
-    <string name="rashod">Воздухообмена \n</string>
-    <string name="reshetki">Количества решеток</string>
-    <string name="diametri">Сечения воздуховодов</string>
+    <string name="rashod">РАСЧЕТ ВОЗДУХООБМЕНА</string>
+    <string name="reshetki">РАСЧЕТ КОЛИЧЕСТВА РЕШЕТОК</string>
+    <string name="diametri">ПОДБОР СЕЧЕНИЯ ВОЗДУХОВОДОВ</string>
     <string name="ploshad_vozduhovodov">ПЛОЩАДЬ ВОЗДУХОВОДОВ</string>
-    <string name="kaloriferi">Мощности калорифера \n</string>
-    <string name="aerodinamika">Аэродинами\nческий</string>
-    <string name="kondicioneri">Мощности кондиционирования</string>
+    <string name="kaloriferi">РАСЧЕТ МОЩНОСТИ КАЛОРИФЕРА</string>
+    <string name="aerodinamika">АЭРОДИНАМИЧЕСКИЙ РАСЧЕТ</string>
+    <string name="kondicioneri">РАСЧЕТ МОЩНОСТИ КОНДИЦИОНИРОВАНИЯ</string>
     <string name="podbor_ventilyatora">ПОДБОР ВЕНТИЛЯТОРА</string>
     <string name="обьем">Объем помещения:</string>
     <string name="воздухообмен_по_кратности">Воздухообмен по кратности:</string>
@@ -28,7 +28,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="calculating_bottomnav">Расчет</string>
-    <string name="selection">Подбор</string>
     <string name="calculator_subtitile">Калькулятор для расчета</string>
 
     <string name="projects_title">Проекты</string>
