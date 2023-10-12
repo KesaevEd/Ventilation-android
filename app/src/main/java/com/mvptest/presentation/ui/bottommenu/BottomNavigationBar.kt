@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mvptest.presentation.ui.HomeScreen
 import com.mvptest.presentation.ui.calculation.CalculatingMainScreen
+import com.mvptest.presentation.ui.calculation.calculationGraph
 import com.mvptest.presentation.ui.myprojects.MyProjectsScreen
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
@@ -106,6 +107,7 @@ fun NavigationGraph(
         }
         composable(NavigationItem.Calculating.route) {
             CalculatingMainScreen(onItemClicked = {})
+            calculationGraph(navController)
         }
         composable(NavigationItem.MyProjects.route) {
             MyProjectsScreen(
