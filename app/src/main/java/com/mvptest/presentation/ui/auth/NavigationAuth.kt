@@ -13,18 +13,17 @@ sealed class NavigationAuthItem(val route: String) {
 }
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
-    navigation(startDestination = NavigationAuthItem.Login.route, route = "login") {
-        composable(route = NavigationAuthItem.Login.route) {
-
-        }
+    navigation(startDestination = NavigationAuthItem.Registration.route, route = "auth") {
         composable(route = NavigationAuthItem.Registration.route) {
-
+            RegistrationScreen(logUpClick = {
+                navController.navigate(NavigationAuthItem.EmailCode.route)
+            })
         }
         composable(route = NavigationAuthItem.EmailCode.route) {
-
+            EmailCodeScreen()
         }
         composable(route = NavigationAuthItem.ForgotPassword.route) {
-
+            ForgotPasswordScreen()
         }
     }
 }

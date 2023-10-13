@@ -24,7 +24,7 @@ fun NavGraphBuilder.newProjectGraph(
 ) {
     navigation(
         startDestination = NavigationNewProjectItem.First.route,
-        route = "new_project_first"
+        route = "new_project"
     ) {
         composable(NavigationNewProjectItem.First.route) {
             NewProjectScreenFirst(
