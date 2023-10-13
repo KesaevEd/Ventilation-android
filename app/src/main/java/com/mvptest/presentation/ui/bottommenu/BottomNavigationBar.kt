@@ -20,8 +20,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navigation
 import com.mvptest.presentation.ui.HomeScreen
+import com.mvptest.presentation.ui.auth.authGraph
 import com.mvptest.presentation.ui.calculation.CalculatingMainScreen
+import com.mvptest.presentation.ui.calculation.calculationGraph
 import com.mvptest.presentation.ui.myprojects.MyProjectsScreen
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
@@ -29,12 +32,15 @@ import com.mvptest.presentation.ui.project.newproject.NewProjectScreenFirst
 import com.mvptest.presentation.ui.project.newproject.NewProjectScreenSecond
 import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsScreen
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
+import com.mvptest.presentation.ui.project.newproject.newProjectGraph
 import com.mvptest.presentation.ui.room.newroom.NavigationNewRoomItem
 import com.mvptest.presentation.ui.room.newroom.NewRoomScreenFirst
 import com.mvptest.presentation.ui.room.newroom.NewRoomScreenSecond
 import com.mvptest.presentation.ui.room.newroom.NewRoomScreenThird
 import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsViewModel
+import com.mvptest.presentation.ui.room.newroom.newRoomGraph
+import com.mvptest.presentation.ui.room.newroom.roomDetailsGraph
 import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsScreen
 import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsViewModel
 import com.mvptest.utils.isBottomBarInvisible
@@ -45,8 +51,7 @@ fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
         NavigationItem.Home,
         NavigationItem.Calculating,
-        NavigationItem.MyProjects,
-        NavigationItem.Profile
+        NavigationItem.MyProjects
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -100,12 +105,12 @@ fun NavigationGraph(
     roomDetailsViewModel: RoomDetailsViewModel
 ) {
     NavHost(navController, startDestination = NavigationItem.Home.route) {
+
+        authGraph(navController)
+
         //Bottom Navigation
         composable(NavigationItem.Home.route) {
             HomeScreen(navController)
-        }
-        composable(NavigationItem.Calculating.route) {
-            CalculatingMainScreen(onItemClicked = {})
         }
         composable(NavigationItem.MyProjects.route) {
             MyProjectsScreen(
@@ -124,164 +129,16 @@ fun NavigationGraph(
                     )
                 })
         }
-        composable(NavigationItem.Profile.route) {
 
-        }
+        newProjectGraph(newProjectViewModel, newRoomViewModel, projectDetailsViewModel, navController)
 
-        //New Project Navigation
-        composable(NavigationNewProjectItem.First.route) {
-            NewProjectScreenFirst(
-                viewModel = newProjectViewModel,
-                {
-                    navController.navigate(
-                        NavigationNewProjectItem.Second.route
-                    )
-                },
-                {
-                    navController.navigate(NavigationItem.Home.route) {
+        newRoomGraph(newProjectViewModel, newRoomViewModel, navController)
 
-                        newProjectViewModel.clearState()
-                        newRoomViewModel.clearState()
+        roomDetailsGraph(roomDetailsViewModel, newRoomViewModel, navController)
 
-                        popUpTo(NavigationItem.Home.route) {
-                            inclusive = true
-                        }
-                    }
-                })
-        }
+        calculationGraph(navController)
 
-        composable(NavigationNewProjectItem.Second.route) {
-            NewProjectScreenSecond(
-                viewModel = newProjectViewModel,
-                onBackPressed = {
-                    navController.navigate(
-                        NavigationNewProjectItem.First.route
-                    )
-                },
-                onContinueButtonClick = { projectId ->
-                    navController.navigate(
-                        NavigationNewProjectItem.ProjectDetails.route.replace(
-                            oldValue = "{projectId}",
-                            newValue = projectId
-                        )
-                    )
-                })
-        }
-
-        composable(
-            route = NavigationNewProjectItem.ProjectDetails.route
-        ) {
-            val projectId = it.arguments?.getString("projectId")
-            projectId?.let { id ->
-                ProjectDetailsScreen(
-                    projectDetailsViewModel = projectDetailsViewModel,
-                    projectId = id,
-                    onBackPressed = {
-                        newProjectViewModel.clearState()
-                        newRoomViewModel.clearState()
-
-                        navController.navigate(
-                            NavigationItem.MyProjects.route
-                        ) { popUpTo(NavigationItem.MyProjects.route) { inclusive = true } }
-                    },
-                    onAddRoomPressed = { projectId ->
-                        newProjectViewModel.initEditMode(projectId)
-                        navController.navigate(NavigationNewRoomItem.First.route)
-                    },
-                    onEditProjectInfoClicked = { projectId ->
-                        newProjectViewModel.initEditMode(projectId)
-                        navController.navigate(NavigationNewProjectItem.First.route)
-                    },
-                    onRoomItemClicked = { roomId, projectId ->
-                        newProjectViewModel.projectId = projectId
-                        navController.navigate(
-                            NavigationNewRoomItem.RoomDetails.route.replace(
-                                oldValue = "{roomId}",
-                                newValue = roomId
-                            )
-                        )
-                    })
-            }
-        }
-
-        //New Room Navigation
-        composable(NavigationNewRoomItem.First.route) {
-            NewRoomScreenFirst(
-                viewModel = newRoomViewModel,
-                onCheckButtonClick = {
-                    navController.navigate(
-                        NavigationNewRoomItem.Second.route
-                    )
-                },
-                onBackPressed = {
-                    navController.navigate(NavigationNewProjectItem.ProjectDetails.route) {
-
-                        newRoomViewModel.clearState()
-
-                        popUpTo(NavigationNewProjectItem.ProjectDetails.route) {
-                            inclusive = true
-                        }
-                    }
-                })
-        }
-
-        composable(NavigationNewRoomItem.Second.route) {
-            NewRoomScreenSecond(
-                newRoomViewModel = newRoomViewModel,
-                newProjectViewModel = newProjectViewModel,
-                onBackPressed = {
-                    navController.navigate(
-                        NavigationNewRoomItem.First.route
-                    )
-                },
-                onContinueButtonClick = { navController.navigate(NavigationNewRoomItem.Third.route) }
-            )
-        }
-
-        composable(NavigationNewRoomItem.Third.route) {
-            NewRoomScreenThird(
-                newRoomViewModel = newRoomViewModel,
-                newProjectViewModel = newProjectViewModel,
-                onBackPressed = {
-                    navController.navigate(
-                        NavigationNewRoomItem.Second.route
-                    )
-                },
-                onSaveRoomClicked = { projectId ->
-                    navController.navigate(
-                        NavigationNewProjectItem.ProjectDetails.route.replace(
-                            oldValue = "{projectId}",
-                            newValue = projectId
-                        )
-                    )
-                }
-            )
-        }
-
-        //Room Details
-        composable(route = NavigationNewRoomItem.RoomDetails.route) {
-            val roomId = it.arguments?.getString("roomId")
-            roomId?.let { id ->
-                RoomDetailsScreen(
-                    roomDetailsViewModel = roomDetailsViewModel,
-                    roomId = id,
-                    onBackPressed = {
-                        navController.navigate(
-                            NavigationNewProjectItem.ProjectDetails.route
-                        )
-                    },
-                    onEditRoomClicked = { roomId ->
-                        newRoomViewModel.initEditMode(roomId)
-                        navController.navigate(
-                            NavigationNewRoomItem.First.route.replace(
-                                oldValue = "{roomId}",
-                                newValue = roomId
-                            )
-                        )
-                    }
-                )
-            }
-        }
+        authGraph(navController)
     }
 }
 
