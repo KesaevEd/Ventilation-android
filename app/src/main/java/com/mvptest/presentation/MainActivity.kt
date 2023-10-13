@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.bottommenu.BottomNavigationBar
 import com.mvptest.presentation.ui.bottommenu.NavigationGraph
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         val myProjectsViewModel: MyProjectsViewModel = viewModel()
         val projectDetailsViewModel: ProjectDetailsViewModel = viewModel()
         val roomDetailsViewModel: RoomDetailsViewModel = viewModel()
+        val userAuthViewModel: UserAuthViewModel = viewModel()
 
         val navController = rememberNavController()
 
@@ -46,7 +48,8 @@ class MainActivity : AppCompatActivity() {
                 newRoomViewModel,
                 myProjectsViewModel,
                 projectDetailsViewModel,
-                roomDetailsViewModel
+                roomDetailsViewModel,
+                userAuthViewModel
             )
         }
     }

@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.presentation.ui.common.MyDatePickerDialog
+import com.mvptest.presentation.ui.common.RoomDestinationDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
@@ -132,7 +133,7 @@ fun NewRoomScreenSecond(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp),
-            value = roomVolume.toString(),
+            value = roomVolume,
             onValueChange = {
                     newRoomViewModel.setRoomVolume(it)
                     roomVolume = it
@@ -145,17 +146,25 @@ fun NewRoomScreenSecond(
             modifier = Modifier.padding(top = 15.dp),
             textId = R.string.room_destination
         )
-        RoundedTextField(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 5.dp),
-            value = roomDestination,
-            onValueChange = {
+                .padding(top = 5.dp)
+        ) {
+            RoomDestinationDropDown(onItemClick = {
                 newRoomViewModel.setRoomDestination(it)
                 roomDestination = it
-            },
-            hint = stringResource(id = R.string.room_destination)
-        )
+            })
+            Icon(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 25.dp),
+                painter = painterResource(id = R.drawable.ic_arrow_down),
+                contentDescription = "image",
+                tint = colorResource(
+                    id = R.color.gray
+                )
+            )
+        }
 
         TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.start_date)
         Box(modifier = Modifier.padding(top = 5.dp).clickable { isCalendarClicked.value = true }) {

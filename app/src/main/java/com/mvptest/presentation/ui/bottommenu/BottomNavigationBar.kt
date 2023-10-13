@@ -22,6 +22,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navigation
 import com.mvptest.presentation.ui.HomeScreen
+import com.mvptest.presentation.ui.auth.LoginScreen
+import com.mvptest.presentation.ui.auth.NavigationAuthItem
+import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.auth.authGraph
 import com.mvptest.presentation.ui.calculation.CalculatingMainScreen
 import com.mvptest.presentation.ui.calculation.calculationGraph
@@ -102,11 +105,27 @@ fun NavigationGraph(
     newRoomViewModel: NewRoomViewModel,
     myProjectsViewModel: MyProjectsViewModel,
     projectDetailsViewModel: ProjectDetailsViewModel,
-    roomDetailsViewModel: RoomDetailsViewModel
+    roomDetailsViewModel: RoomDetailsViewModel,
+    userAuthViewModel: UserAuthViewModel
 ) {
-    NavHost(navController, startDestination = NavigationItem.Home.route) {
 
-        authGraph(navController)
+    var startDestination = ""
+    if (userAuthViewModel.token == null) {
+        startDestination = NavigationAuthItem.Login.route
+    } else {
+        // TODO check token in remote db
+        startDestination = NavigationItem.Home.route
+    }
+
+    NavHost(navController, startDestination = startDestination) {
+
+        composable(route = NavigationAuthItem.Login.route) {
+            LoginScreen(
+                userAuthViewModel,
+                logInClick = {},
+                logUpClick = { navController.navigate(NavigationAuthItem.Registration.route) },
+                forgotPasswordClick = {})
+        }
 
         //Bottom Navigation
         composable(NavigationItem.Home.route) {
@@ -130,15 +149,20 @@ fun NavigationGraph(
                 })
         }
 
-        newProjectGraph(newProjectViewModel, newRoomViewModel, projectDetailsViewModel, navController)
+        authGraph(navController)
+
+        newProjectGraph(
+            newProjectViewModel,
+            newRoomViewModel,
+            projectDetailsViewModel,
+            navController
+        )
 
         newRoomGraph(newProjectViewModel, newRoomViewModel, navController)
 
         roomDetailsGraph(roomDetailsViewModel, newRoomViewModel, navController)
 
         calculationGraph(navController)
-
-        authGraph(navController)
     }
 }
 
