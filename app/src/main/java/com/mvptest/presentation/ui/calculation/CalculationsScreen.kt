@@ -40,43 +40,49 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun CalculatingMainScreen(onItemClicked: (itemId: Int) -> Unit) {
+fun CalculatingMainScreen(onItemClicked: (route: String) -> Unit) {
     val list = listOf(
         CalculateItem(
             type = CalculationType.AIR_EXCHANGE,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.rashod,
-            iconId = R.drawable.ic_air_exchange
+            iconId = R.drawable.ic_air_exchange,
+            route = NavigationCalculationItem.AirExchange.route
         ),
         CalculateItem(
             type = CalculationType.AERODYNAMIC,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.aerodinamika,
-            iconId = R.drawable.ic_aerodynamic
+            iconId = R.drawable.ic_aerodynamic,
+            route = NavigationCalculationItem.Aerodynamic.route
         ),
         CalculateItem(
             type = CalculationType.DUCT_CROSS_SECTIONS,
             titleId1 = R.string.selection,
             titleId = R.string.diametri,
-            iconId = R.drawable.ic_air_duct
+            iconId = R.drawable.ic_air_duct,
+            route = NavigationCalculationItem.DuctCrossSection.route
         ),
         CalculateItem(
             type = CalculationType.DIFFUSERS,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.reshetki,
-            iconId = R.drawable.ic_diffusers
+            iconId = R.drawable.ic_diffusers,
+            route = NavigationCalculationItem.Diffusers.route
         ),
         CalculateItem(
             type = CalculationType.AIR_HEATER,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.kaloriferi,
-            iconId = R.drawable.ic_air_heater
+            iconId = R.drawable.ic_air_heater,
+            route = NavigationCalculationItem.AirHeater.route
         ),
         CalculateItem(
             type = CalculationType.CONDITIONER,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.kondicioneri,
-            iconId = R.drawable.ic_conditioner
+            iconId = R.drawable.ic_conditioner,
+            route = NavigationCalculationItem.Conditioner.route
         )
     )
 
@@ -88,13 +94,13 @@ fun CalculatingMainScreen(onItemClicked: (itemId: Int) -> Unit) {
         verticalArrangement = Arrangement.spacedBy(5.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         content = {
-            items(list) { ItemCard(item = it){onItemClicked} }
+            items(list) { ItemCard(item = it){route ->  onItemClicked.invoke(route)} }
         })
 }
 
 
 @Composable
-fun ItemCard(item: CalculateItem, onItemClicked: (id: CalculationType) -> Unit = { }) {
+fun ItemCard(item: CalculateItem, onItemClicked: (route: String) -> Unit = { }) {
     Box(
         modifier = Modifier.background(
             color = colorResource(id = R.color.sand),
@@ -110,7 +116,7 @@ fun ItemCard(item: CalculateItem, onItemClicked: (id: CalculationType) -> Unit =
                     end = 15.dp,
                     bottom = 25.dp
                 )
-                .clickable { onItemClicked(item.type) }
+                .clickable { onItemClicked(item.route) }
         ) {
             Row(
                 Modifier.wrapContentHeight()

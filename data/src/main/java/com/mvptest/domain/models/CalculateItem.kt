@@ -4,7 +4,8 @@ data class CalculateItem(
     val type: CalculationType,
     val titleId1: Int,
     val titleId: Int,
-    val iconId: Int
+    val iconId: Int,
+    val route: String
 )
 
 enum class CalculationType{
