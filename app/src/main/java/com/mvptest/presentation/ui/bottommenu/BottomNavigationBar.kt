@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.bottommenu
 
+import android.content.Context
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
@@ -106,7 +107,8 @@ fun NavigationGraph(
     myProjectsViewModel: MyProjectsViewModel,
     projectDetailsViewModel: ProjectDetailsViewModel,
     roomDetailsViewModel: RoomDetailsViewModel,
-    userAuthViewModel: UserAuthViewModel
+    userAuthViewModel: UserAuthViewModel,
+    context: Context
 ) {
 
     var startDestination = ""
@@ -122,9 +124,11 @@ fun NavigationGraph(
         composable(route = NavigationAuthItem.Login.route) {
             LoginScreen(
                 userAuthViewModel,
-                logInClick = {},
+                context,
+                forgotPasswordClick = {},
+                logInClick = { navController.navigate(NavigationItem.Home.route) },
                 logUpClick = { navController.navigate(NavigationAuthItem.Registration.route) },
-                forgotPasswordClick = {})
+            )
         }
 
         //Bottom Navigation
@@ -149,7 +153,7 @@ fun NavigationGraph(
                 })
         }
 
-        authGraph(navController)
+        authGraph(navController, userAuthViewModel, context)
 
         newProjectGraph(
             newProjectViewModel,

@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
                 myProjectsViewModel,
                 projectDetailsViewModel,
                 roomDetailsViewModel,
-                userAuthViewModel
+                userAuthViewModel,
+                this
             )
         }
     }

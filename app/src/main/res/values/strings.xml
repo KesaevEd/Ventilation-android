@@ -34,6 +34,7 @@
     <string name="sign_in">Войти</string>
     <string name="email">Почта</string>
     <string name="password">Пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
     <string name="or">или</string>
     <string name="send_code_to_email">Отправили код на почту</string>
     <string name="send_code_again">Отправить код повторно</string>
