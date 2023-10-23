@@ -26,7 +26,7 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun ButtonWithText(modifier: Modifier, textId: Int, onClick: () -> Unit) {
+fun ButtonWithText(modifier: Modifier, textId: Int, buttonColor: Int? = null, onClick: () -> Unit) {
     Button(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
@@ -45,7 +45,7 @@ fun ButtonWithText(modifier: Modifier, textId: Int, onClick: () -> Unit) {
             }
         },
         onClick = { onClick() },
-        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(buttonColor ?: R.color.dark_gray_2))
     )
 }
 
