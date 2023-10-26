@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.bottommenu.BottomNavigationBar
 import com.mvptest.presentation.ui.bottommenu.NavigationGraph
+import com.mvptest.presentation.ui.home.HomeScreenViewModel
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
 import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     @Composable
     private fun App() {
 
+        val homeScreenViewModel: HomeScreenViewModel = viewModel()
         val newProjectViewModel: NewProjectViewModel = viewModel()
         val newRoomViewModel: NewRoomViewModel = viewModel()
         val myProjectsViewModel: MyProjectsViewModel = viewModel()
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         Scaffold(bottomBar = { BottomNavigationBar(navController = navController) }) {
             NavigationGraph(
                 navController = navController,
+                homeScreenViewModel,
                 newProjectViewModel,
                 newRoomViewModel,
                 myProjectsViewModel,

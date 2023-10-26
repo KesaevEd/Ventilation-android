@@ -69,6 +69,7 @@ fun RoomDetailsScreen(
             },
             onConfirmClicked = {
                 openDeleteDialog.value = false
+                roomDetailsViewModel.clearState()
                 roomDetailsViewModel.deleteRoom(roomId)
                 onBackPressed()
             })

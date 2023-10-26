@@ -27,7 +27,6 @@ class UserAuthViewModel @Inject constructor(
     val token = sharedPrefStorage.token
 
     private val codeToEmail = generateCode()
-
     var state by mutableStateOf(UserAuthViewState())
         private set
 
@@ -51,6 +50,7 @@ class UserAuthViewModel @Inject constructor(
                             isSuccessRegistration = true
                         )
                         saveUserInSharedPref(
+                            userId = response.body()!!.userId,
                             response.body()!!.token,
                             state.email!!,
                             state.password!!
@@ -125,6 +125,7 @@ class UserAuthViewModel @Inject constructor(
                             isSuccessLogin = true
                         )
                         saveUserInSharedPref(
+                            userId = userResponse.body()!!.userId,
                             userResponse.body()!!.token,
                             state.email!!,
                             state.password!!
@@ -185,7 +186,8 @@ class UserAuthViewModel @Inject constructor(
         state = state.copy(somethingWrong = false, isEmailNotFound = false, isUserNotFound = false, isPasswordInvalid = false, isCodeIncorrect = false, isEmailAlreadyExist = false)
     }
 
-    private fun saveUserInSharedPref(token: String, email: String, password: String) {
+    private fun saveUserInSharedPref(userId: String, token: String, email: String, password: String) {
+        sharedPrefStorage.userId = userId
         sharedPrefStorage.token = token
         sharedPrefStorage.email = email
         sharedPrefStorage.password = password

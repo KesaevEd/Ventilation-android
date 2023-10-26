@@ -4,7 +4,9 @@ import com.mvptest.domain.models.Project
 
 interface ProjectsRepository {
 
-    suspend fun saveProject(project: Project)
+    suspend fun fetchProjects(userId: String)
+
+    suspend fun saveProject(project: Project, userId: String)
 
     suspend fun getMyProjects(): List<Project>
 

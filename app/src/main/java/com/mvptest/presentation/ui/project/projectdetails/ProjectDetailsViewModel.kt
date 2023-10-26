@@ -43,8 +43,8 @@ class ProjectDetailsViewModel @Inject constructor(
 
     fun deleteProject(){
         viewModelScope.launch {
-            projectsRepository.deleteProject(temporalProjectId)
             roomsRepository.deleteRoomByProjectId(temporalProjectId)
+            projectsRepository.deleteProject(temporalProjectId)
         }
     }
 

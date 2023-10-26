@@ -1,33 +1,34 @@
 package com.mvptest.presentation.ui.room.newroom
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mvptest.data.SharedPrefStorage
 import com.mvptest.domain.RoomsRepository
 import com.mvptest.domain.models.HeaterType
-import com.mvptest.domain.models.RoomDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRepository) :
+class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRepository, private val sharedPrefStorage: SharedPrefStorage) :
     ViewModel() {
 
     var state by mutableStateOf(NewRoomViewState())
 
-    var roomId = ""
+    private var roomId = ""
+
+    private val userId = sharedPrefStorage.userId
 
     fun saveRoom(projectId: String) {
         viewModelScope.launch {
             if(roomId == ""){
                 roomId = UUID.randomUUID().toString()
             }
-            roomsRepository.saveRoom(room = state.toRoomDetails(roomId), projectId = projectId)
+            roomsRepository.saveRoom(room = state.toRoomDetails(roomId), projectId = projectId, userId = userId!!)
         }
     }
 

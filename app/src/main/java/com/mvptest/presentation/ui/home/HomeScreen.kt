@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui
+package com.mvptest.presentation.ui.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -29,14 +29,18 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenViewModel) {
+
+    homeScreenViewModel.fetchUserProjects()
 
     Column(modifier = Modifier.padding(start = 18.dp, top = 18.dp, end = 18.dp)) {
         HomeItem(
-            modifier = Modifier.fillMaxWidth().clickable (
-                interactionSource = MutableInteractionSource(),
-                indication = null
-            ){ navController.navigate(NavigationNewProjectItem.First.route) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null
+                ) { navController.navigate(NavigationNewProjectItem.First.route) },
             icon = R.drawable.ic_add,
             titleId = R.string.new_project,
             subTitleId = R.string.new_project_subtitle,
@@ -51,7 +55,8 @@ fun HomeScreen(navController: NavController) {
         {
             HomeItem(
                 modifier = Modifier
-                    .fillMaxWidth(0.5f).clickable(
+                    .fillMaxWidth(0.5f)
+                    .clickable(
                         interactionSource = MutableInteractionSource(),
                         indication = null
                     ) { navController.navigate(NavigationItem.Calculating.route) },
@@ -62,7 +67,8 @@ fun HomeScreen(navController: NavController) {
             )
             HomeItem(
                 modifier = Modifier
-                    .fillMaxWidth().clickable(
+                    .fillMaxWidth()
+                    .clickable(
                         interactionSource = MutableInteractionSource(),
                         indication = null
                     ) { navController.navigate(NavigationItem.MyProjects.route) },

@@ -52,6 +52,7 @@ fun NewRoomScreenFirst(
                 openDialog.value = false
             },
             onConfirmClicked = {
+                viewModel.clearState()
                 openDialog.value = false
                 onBackPressed()
             })
