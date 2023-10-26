@@ -13,35 +13,35 @@ data class RoomsResponse(
 data class RoomResponse(
     @SerializedName("id")
     val id: String,
-    @SerializedName("project_id")
+    @SerializedName("projectId")
     val projectId: String,
-    @SerializedName("user_id")
+    @SerializedName("userId")
     val userId: String,
     @SerializedName("title")
     val title: String,
-    @SerializedName("system_number")
+    @SerializedName("systemNumber")
     val systemNumber: String,
-    @SerializedName("room-volume")
+    @SerializedName("roomVolume")
     val roomVolume: String,
-    @SerializedName("room_destination")
+    @SerializedName("roomDestination")
     val roomDestination: String,
-    @SerializedName("air_exchange_performance")
+    @SerializedName("airExchangePerformance")
     val airExchangePerformance: String,
-    @SerializedName("pressure_loss")
+    @SerializedName("pressureLoss")
     val pressureLoss: String,
-    @SerializedName("air_duct_area")
+    @SerializedName("airDuctArea")
     val airDuctArea: String,
-    @SerializedName("start_date")
+    @SerializedName("startDate")
     val startDate: String,
-    @SerializedName("heater_type")
+    @SerializedName("heaterType")
     val heaterType: String,
-    @SerializedName("heater_performance")
+    @SerializedName("heaterPerformance")
     val heaterPerformance: String,
-    @SerializedName("is_air_conditioner")
+    @SerializedName("isAirConditioner")
     val isAirConditioner: Boolean,
-    @SerializedName("air_conditioner_performance")
+    @SerializedName("airConditionerPerformance")
     val airConditionerPerformance: String,
-    @SerializedName("dead_lines")
+    @SerializedName("deadLines")
     val deadLines: String,
     @SerializedName("comment")
     val comment: String
