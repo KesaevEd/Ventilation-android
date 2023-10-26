@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.project.newproject
 
+import android.content.Context
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -17,6 +18,7 @@ sealed class NavigationNewProjectItem(var route: String) {
 }
 
 fun NavGraphBuilder.newProjectGraph(
+    context: Context,
     newProjectViewModel: NewProjectViewModel,
     newRoomViewModel: NewRoomViewModel,
     projectDetailsViewModel: ProjectDetailsViewModel,
@@ -49,6 +51,7 @@ fun NavGraphBuilder.newProjectGraph(
 
         composable(NavigationNewProjectItem.Second.route) {
             NewProjectScreenSecond(
+                context = context,
                 viewModel = newProjectViewModel,
                 onBackPressed = {
                     navController.navigate(

@@ -1,19 +1,34 @@
 package com.mvptest.data
 
 import android.util.Log
+import com.mvptest.data.network.ProjectsApi
+import com.mvptest.data.network.mappers.toProject
+import com.mvptest.data.network.mappers.toProjectRequest
 import com.mvptest.domain.ProjectsRepository
 import com.mvptest.domain.ProjectsStorage
 import com.mvptest.domain.models.Project
 import javax.inject.Inject
 
-class ProjectsRepositoryImpl @Inject constructor(private val projectsStorage: ProjectsStorage):
+class ProjectsRepositoryImpl @Inject constructor(private val projectsStorage: ProjectsStorage, private val projectsApi: ProjectsApi):
     ProjectsRepository {
-    override suspend fun saveProject(project: Project) {
-        projectsStorage.saveProject(project)
+    override suspend fun fetchProjects(userId: String) {
+        val projectsResponse = projectsApi.getProjectsByUserId(userId)
+
+        if(projectsResponse.code() == 200 && projectsResponse.body() != null) {
+            Log.d("fetchProjects", "projects = ${projectsResponse.body()!!.projects}")
+            for (project in projectsResponse.body()!!.projects) {
+                projectsStorage.saveProject(project.toProject(), userId)
+            }
+        }
+    }
+
+    override suspend fun saveProject(project: Project, userId: String) {
+        projectsStorage.saveProject(project, userId)
+        projectsApi.saveProject(project.toProjectRequest(userId))
     }
 
     override suspend fun getMyProjects(): List<Project> {
-        return projectsStorage.getMyProjects()
+        return projectsStorage.getMyProjectsFromDb()
     }
 
     override suspend fun getProjectById(id: String): Project? {
@@ -21,6 +36,7 @@ class ProjectsRepositoryImpl @Inject constructor(private val projectsStorage: Pr
     }
 
     override suspend fun deleteProject(id: String) {
+        projectsApi.deleteProject(id)
         projectsStorage.deleteProject(id)
     }
 }

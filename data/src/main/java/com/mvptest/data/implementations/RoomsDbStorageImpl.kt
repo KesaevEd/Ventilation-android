@@ -25,6 +25,6 @@ class RoomsDbStorageImpl @Inject constructor(private val roomsDao: RoomsDao): Ro
     }
 
     override suspend fun deleteRoomsByProjectId(projectId: String) {
-        roomsDao.deleteRoomsBuProjectId(projectId)
+        roomsDao.deleteRoomsByProjectId(projectId)
     }
 }

@@ -5,5 +5,7 @@ data class NewProjectViewState(
     val address: String? = "",
     val startDate: String? = "",
     val contact: String? = "",
-    val contactPhone: String? = ""
+    val contactPhone: String? = "",
+    val somethingWrong: Boolean? = false,
+    val isLoading: Boolean? = false
 )

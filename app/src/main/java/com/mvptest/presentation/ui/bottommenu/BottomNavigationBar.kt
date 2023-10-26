@@ -21,31 +21,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.navigation
-import com.mvptest.presentation.ui.HomeScreen
+import com.mvptest.presentation.ui.home.HomeScreen
 import com.mvptest.presentation.ui.auth.LoginScreen
 import com.mvptest.presentation.ui.auth.NavigationAuthItem
 import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.auth.authGraph
-import com.mvptest.presentation.ui.calculation.CalculatingMainScreen
 import com.mvptest.presentation.ui.calculation.calculationGraph
+import com.mvptest.presentation.ui.home.HomeScreenViewModel
 import com.mvptest.presentation.ui.myprojects.MyProjectsScreen
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
-import com.mvptest.presentation.ui.project.newproject.NewProjectScreenFirst
-import com.mvptest.presentation.ui.project.newproject.NewProjectScreenSecond
-import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsScreen
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
 import com.mvptest.presentation.ui.project.newproject.newProjectGraph
-import com.mvptest.presentation.ui.room.newroom.NavigationNewRoomItem
-import com.mvptest.presentation.ui.room.newroom.NewRoomScreenFirst
-import com.mvptest.presentation.ui.room.newroom.NewRoomScreenSecond
-import com.mvptest.presentation.ui.room.newroom.NewRoomScreenThird
 import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsViewModel
 import com.mvptest.presentation.ui.room.newroom.newRoomGraph
 import com.mvptest.presentation.ui.room.newroom.roomDetailsGraph
-import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsScreen
 import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsViewModel
 import com.mvptest.utils.isBottomBarInvisible
 import com.mvptest.ventilation.R
@@ -102,6 +93,7 @@ fun BottomNavigationBar(navController: NavController) {
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
+    homeScreenViewModel: HomeScreenViewModel,
     newProjectViewModel: NewProjectViewModel,
     newRoomViewModel: NewRoomViewModel,
     myProjectsViewModel: MyProjectsViewModel,
@@ -133,7 +125,7 @@ fun NavigationGraph(
 
         //Bottom Navigation
         composable(NavigationItem.Home.route) {
-            HomeScreen(navController)
+            HomeScreen(navController, homeScreenViewModel)
         }
         composable(NavigationItem.MyProjects.route) {
             MyProjectsScreen(
@@ -156,6 +148,7 @@ fun NavigationGraph(
         authGraph(navController, userAuthViewModel, context)
 
         newProjectGraph(
+            context,
             newProjectViewModel,
             newRoomViewModel,
             projectDetailsViewModel,

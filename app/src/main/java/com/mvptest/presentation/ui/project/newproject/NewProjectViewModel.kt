@@ -1,10 +1,12 @@
 package com.mvptest.presentation.ui.project.newproject
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mvptest.data.SharedPrefStorage
 import com.mvptest.domain.ProjectsRepository
 import com.mvptest.domain.models.Project
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,28 +15,38 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class NewProjectViewModel @Inject constructor(private val projectsRepository: ProjectsRepository) :
+class NewProjectViewModel @Inject constructor(private val projectsRepository: ProjectsRepository, private val sharedPrefStorage: SharedPrefStorage) :
     ViewModel() {
 
     var state by mutableStateOf(NewProjectViewState())
 
     var projectId = ""
 
+    private val userId = sharedPrefStorage.userId
+
+
     fun saveProject() {
         viewModelScope.launch {
+            state = state.copy(isLoading = true)
             if(projectId == "") {
                 projectId = UUID.randomUUID().toString()
             }
-            projectsRepository.saveProject(
-                Project(
-                    id = projectId,
-                    state.title ?: "",
-                    state.address ?: "",
-                    state.startDate,
-                    state.contact,
-                    state.contactPhone
+            try {
+                projectsRepository.saveProject(
+                    project = Project(
+                        id = projectId,
+                        state.title ?: "",
+                        state.address ?: "",
+                        state.startDate,
+                        state.contact,
+                        state.contactPhone
+                    ), userId = sharedPrefStorage.userId!!
                 )
-            )
+                state = state.copy(somethingWrong = false, isLoading = false)
+            }catch (e: Exception){
+                Log.d("saveProject","Exception = $e  userId = ${sharedPrefStorage.userId}")
+                state = state.copy(somethingWrong = true, isLoading = false)
+            }
         }
     }
 
@@ -60,9 +72,14 @@ class NewProjectViewModel @Inject constructor(private val projectsRepository: Pr
             address = "",
             startDate = "",
             contact = "",
-            contactPhone = ""
+            contactPhone = "",
+            somethingWrong = false
         )
         projectId = ""
+    }
+
+    fun clearAllError(){
+        state = state.copy(somethingWrong = false)
     }
 
     fun setTitle(title: String) {

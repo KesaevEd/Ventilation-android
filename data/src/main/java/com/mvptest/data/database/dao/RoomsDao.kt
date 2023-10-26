@@ -22,5 +22,5 @@ interface RoomsDao {
     suspend fun deleteRoom(id: String)
 
     @Query("DELETE FROM rooms WHERE project_id = :projectId")
-    suspend fun deleteRoomsBuProjectId(projectId: String)
+    suspend fun deleteRoomsByProjectId(projectId: String)
 }

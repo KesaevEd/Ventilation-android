@@ -1,6 +1,8 @@
 package com.mvptest.di
 
 import com.mvptest.data.network.AuthApi
+import com.mvptest.data.network.ProjectsApi
+import com.mvptest.data.network.RoomsApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +33,16 @@ class NetworkModule {
     @Provides
     fun providesAuthApi(retrofit: Retrofit): AuthApi =
         retrofit.create(AuthApi::class.java)
+
+    @Singleton
+    @Provides
+    fun providesProjectsApi(retrofit: Retrofit): ProjectsApi =
+        retrofit.create(ProjectsApi::class.java)
+
+    @Singleton
+    @Provides
+    fun providesRoomsApi(retrofit: Retrofit): RoomsApi =
+        retrofit.create(RoomsApi::class.java)
 
     private companion object {
         private const val BASE_URL = "https://bbacj77bhkb0nbjdm7hl.containers.yandexcloud.net"
