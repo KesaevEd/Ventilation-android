@@ -13,12 +13,12 @@ import com.mvptest.presentation.ui.calculation.calculators.DiffusersScreen
 import com.mvptest.presentation.ui.calculation.calculators.DuctCrossSectionScreen
 
 sealed class NavigationCalculationItem(val route: String) {
-    object AirExchange : NavigationCalculationItem(route = "air_exchange")
-    object DuctCrossSection : NavigationCalculationItem(route = "duct_cross")
-    object AirHeater : NavigationCalculationItem(route = "air_heater")
-    object Diffusers : NavigationCalculationItem(route = "diffusers")
-    object Aerodynamic : NavigationCalculationItem(route = "aerodynamic")
-    object Conditioner : NavigationCalculationItem(route = "conditioner")
+    object AirExchange : NavigationCalculationItem(route = "air_exchange/{fromProject}")
+    object DuctCrossSection : NavigationCalculationItem(route = "duct_cross/{fromProject}")
+    object AirHeater : NavigationCalculationItem(route = "air_heater/{fromProject}")
+    object Diffusers : NavigationCalculationItem(route = "diffusers/{fromProject}")
+    object Aerodynamic : NavigationCalculationItem(route = "aerodynamic/{fromProject}")
+    object Conditioner : NavigationCalculationItem(route = "conditioner/{fromProject}")
 }
 
 fun NavGraphBuilder.calculationGraph(navController: NavController) {
@@ -40,19 +40,52 @@ fun NavGraphBuilder.calculationGraph(navController: NavController) {
             })
         }
         composable(NavigationCalculationItem.DuctCrossSection.route) {
-            DuctCrossSectionScreen()
+            val fromProject = it.arguments?.getString("fromProject")
+            DuctCrossSectionScreen(fromProject ?: "false", onBackPressed = {
+                navController.navigate(NavigationItem.Calculating.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
+            }, onSaveClicked = {
+
+            })
         }
         composable(NavigationCalculationItem.AirHeater.route) {
             AirHeaterScreen()
         }
         composable(NavigationCalculationItem.Diffusers.route) {
-            DiffusersScreen()
+            val fromProject = it.arguments?.getString("fromProject")
+            DiffusersScreen(fromProject ?: "false", onBackPressed = {
+                navController.navigate(NavigationItem.Calculating.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
+            }, onSaveClicked = {
+
+            })
         }
         composable(NavigationCalculationItem.Aerodynamic.route) {
             AerodynamicScreen()
         }
         composable(NavigationCalculationItem.Conditioner.route) {
-            ConditionerScreen()
+            val fromProject = it.arguments?.getString("fromProject")
+            ConditionerScreen(fromProject ?: "false", onBackPressed = {
+                navController.navigate(NavigationItem.Calculating.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
+            }, onSaveClicked = {
+
+            })
         }
     }
 }
