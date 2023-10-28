@@ -185,7 +185,7 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
                 shape = RoundedCornerShape(16.dp),
                 content = {
                     Row(modifier = Modifier) {
-                        if (isResult) {
+                        if (isResult && isFromProject == "true") {
                             Icon(
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)

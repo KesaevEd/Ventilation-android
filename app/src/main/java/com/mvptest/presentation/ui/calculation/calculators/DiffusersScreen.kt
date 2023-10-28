@@ -302,7 +302,7 @@ fun DiffusersScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClic
                 shape = RoundedCornerShape(16.dp),
                 content = {
                     Row(modifier = Modifier) {
-                        if (isResult) {
+                        if (isResult && isFromProject == "true") {
                             Icon(
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)

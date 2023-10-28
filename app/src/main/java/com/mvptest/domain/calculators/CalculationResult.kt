@@ -22,7 +22,7 @@ data class CalculationResult(
         }
 
         CalculationType.DIFFUSERS -> {
-            Pair(R.string.conditioner_power, R.string.kvt)
+            Pair(R.string.conditioner_power, R.string.count)
         }
 
         CalculationType.AIR_HEATER -> {
@@ -30,7 +30,7 @@ data class CalculationResult(
         }
 
         CalculationType.CONDITIONER -> {
-            Pair(R.string.conditioner_title, 0)
+            Pair(R.string.conditioner_title, R.string.kvt)
         }
     }
 

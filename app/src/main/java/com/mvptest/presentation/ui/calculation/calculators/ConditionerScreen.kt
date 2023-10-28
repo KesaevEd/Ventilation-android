@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.data.ventilationconstans.equipmentsList
+import com.mvptest.data.ventilationconstans.heatLevelList
 import com.mvptest.data.ventilationconstans.lightLevelList
 import com.mvptest.data.ventilationconstans.peopleRadiations
 import com.mvptest.data.ventilationconstans.sunRadiationList
@@ -212,7 +213,7 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
             ) {
                 PairObjectsDropDown(
                     R.string.choose_variant,
-                    lightLevelList,
+                    heatLevelList,
                     onItemClick = { text, value ->
                         isResult = false
                         isSomethingWrong = false
@@ -401,7 +402,7 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                     shape = RoundedCornerShape(16.dp),
                     content = {
                         Row(modifier = Modifier) {
-                            if (isResult) {
+                            if (isResult && isFromProject == "true") {
                                 Icon(
                                     modifier = Modifier
                                         .align(Alignment.CenterVertically)
@@ -481,13 +482,15 @@ fun EquipItem(
     onValueChange: (item: EquipItem) -> Unit,
     onDeleteClicked: (item: EquipItem) -> Unit
 ) {
+    var equipItem = item
     Row(modifier = Modifier.padding(top = 5.dp)) {
         Box(modifier = Modifier.width(250.dp)) {
             ShortPairObjectsDropDown(
                 hintId = R.string.choose_variant,
                 list = equipmentsList,
                 onItemClick = { text, value ->
-                    onValueChange(item)
+                    equipItem = item.copy(volume = value)
+                    onValueChange(equipItem)
                 }, isMaxWidth = false
             )
             Icon(
@@ -506,7 +509,8 @@ fun EquipItem(
                 .padding(start = 10.dp),
             value = item.count,
             onValueChange = { text ->
-                onValueChange(item)
+                equipItem = item.copy(count = text)
+                onValueChange(equipItem)
             },
             hint = stringResource(id = R.string.counts),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
