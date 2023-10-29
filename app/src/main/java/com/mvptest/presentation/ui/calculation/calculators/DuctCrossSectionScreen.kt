@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.calculation.calculators
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -66,7 +67,7 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
     }
 
     var ductAreaResult by remember {
-        mutableStateOf(value = CalculationResult(CalculationType.DIFFUSERS, ""))
+        mutableStateOf(value = CalculationResult(CalculationType.DUCT_CROSS_SECTIONS, ""))
     }
 
     var isSomethingWrong by remember {
@@ -221,7 +222,7 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
                     }
                 },
                 onClick = {
-                    if (!isResult) {
+                    if (!isResult || isFromProject == "false") {
                         val calculatorHelper = DuctAreaHelper(
                             airFlow = airFlow,
                             airSpeed = airSpeed
@@ -234,15 +235,17 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
                             isSomethingWrong = true
                         }
                     } else {
-                        if (isFromProject == "false") {
-                            onBackPressed()
-                        } else if (isFromProject == "true") {
+                        if (isFromProject == "true") {
                             onSaveClicked()
                         }
                     }
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
             )
+        }
+
+        BackHandler {
+            onBackPressed()
         }
 
     }

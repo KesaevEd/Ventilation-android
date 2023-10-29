@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.calculation
 
+import android.content.Context
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -21,7 +22,7 @@ sealed class NavigationCalculationItem(val route: String) {
     object Conditioner : NavigationCalculationItem(route = "conditioner/{fromProject}")
 }
 
-fun NavGraphBuilder.calculationGraph(navController: NavController) {
+fun NavGraphBuilder.calculationGraph(navController: NavController, context: Context) {
     navigation(startDestination = NavigationItem.Calculating.route, route = "calculation") {
         composable(NavigationItem.Calculating.route) {
             CalculatingMainScreen(onItemClicked = { route ->
@@ -29,7 +30,8 @@ fun NavGraphBuilder.calculationGraph(navController: NavController) {
             })
         }
         composable(NavigationCalculationItem.AirExchange.route) {
-            AirExchangeScreen(onBackPressed = {
+            val fromProject = it.arguments?.getString("fromProject")
+            AirExchangeScreen(fromProject ?: "false", onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
                     popUpTo(
                         NavigationItem.Calculating.route
@@ -37,7 +39,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController) {
                         inclusive = true
                     }
                 }
-            })
+            }, onSaveClicked = {})
         }
         composable(NavigationCalculationItem.DuctCrossSection.route) {
             val fromProject = it.arguments?.getString("fromProject")
@@ -54,7 +56,18 @@ fun NavGraphBuilder.calculationGraph(navController: NavController) {
             })
         }
         composable(NavigationCalculationItem.AirHeater.route) {
-            AirHeaterScreen()
+            val fromProject = it.arguments?.getString("fromProject")
+            AirHeaterScreen(context = context,fromProject ?: "false", onBackPressed = {
+                navController.navigate(NavigationItem.Calculating.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
+            }, onSaveClicked = {
+
+            })
         }
         composable(NavigationCalculationItem.Diffusers.route) {
             val fromProject = it.arguments?.getString("fromProject")

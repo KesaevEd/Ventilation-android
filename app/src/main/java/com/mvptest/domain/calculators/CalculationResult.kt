@@ -10,7 +10,7 @@ data class CalculationResult(
 ) {
     val firstTitleId: Pair<Int, Int> = when (type) {
         CalculationType.AIR_EXCHANGE -> {
-            Pair(0, 0)
+            Pair(R.string.supply_air_volume, R.string.m3InH)
         }
 
         CalculationType.AERODYNAMIC -> {
@@ -26,7 +26,7 @@ data class CalculationResult(
         }
 
         CalculationType.AIR_HEATER -> {
-            Pair(0, 0)
+            Pair(R.string.air_heater_result, R.string.kvt)
         }
 
         CalculationType.CONDITIONER -> {
@@ -37,7 +37,7 @@ data class CalculationResult(
 
     val secondTitleId: Pair<Int, Int> = when (type) {
         CalculationType.AIR_EXCHANGE -> {
-            Pair(0, 0)
+            Pair(R.string.exhaust_air_volume, R.string.m3InH)
         }
 
         CalculationType.AERODYNAMIC -> {

@@ -338,7 +338,7 @@ fun DiffusersScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClic
                     }
                 },
                 onClick = {
-                    if (!isResult) {
+                    if (!isResult || isFromProject == "false") {
                         val calculatorHelper = DiffusersHelper(
                             airDuctArea = airDuctSize,
                             airDuctDiameter = airDuctDiameter,
@@ -353,12 +353,8 @@ fun DiffusersScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClic
                             isSomethingWrong = true
                         }
                     } else {
-                        if (isFromProject == "false") {
-                            onBackPressed()
-                        } else if (isFromProject == "true") {
+                        if (isFromProject == "true") {
                             onSaveClicked()
-                        } else {
-                            onBackPressed()
                         }
                     }
                 },

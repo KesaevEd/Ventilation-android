@@ -58,6 +58,22 @@
     <string name="add_equipment">Добавить оборудование</string>
     <string name="conditioner_power">Мощность кондиционирования</string>
 
+    <string name="air_exchange_title">Воздухообмен</string>
+    <string name="air_exchange_choose_variant">Выберите вариант расчета</string>
+    <string name="multiplicity_variant">По кратности</string>
+    <string name="sanitary_variant">По сан. нормам</string>
+    <string name="people_behavior">Тип пребывания в помещении</string>
+    <string name="supply_air_volume">Объем приточного воздуха</string>
+    <string name="exhaust_air_volume">Объем вытяжного воздуха</string>
+
+    <string name="air_heater_title">Мощность калорифера</string>
+    <string name="temp_after_heater">Температура воздуха после калорифера, ℃</string>
+    <string name="temp_outside">Температура наружнего воздуха, ℃</string>
+    <string name="go_to_sp">Перейти в СП</string>
+    <string name="air_heater_power">Воздухообмен</string>
+    <string name="air_heater_result">Мощность\nкалорифера</string>
+    <string name="advice_sp">Вам нужна Таблица №3.1, столбец №5</string>
+
     <string name="enter">Вход</string>
     <string name="registration">Регистрация</string>
     <string name="forgot_password">Забыли пароль?</string>
@@ -146,6 +162,7 @@
 
     <string name="m2"> м2</string>
     <string name="m3"> м3</string>
+    <string name="m3InH"> м3/ч</string>
     <string name="mm"> мм</string>
     <string name="kvt"> кВт</string>
     <string name="pa"> Па</string>

@@ -304,7 +304,7 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
         }
 
         items(equipmentList) { item ->
-            EquipItem(item = item, onValueChange = {newItem ->
+            EquipItem(item = item, onValueChange = { newItem ->
                 isResult = false
                 isSomethingWrong = false
                 val index = equipmentList.indexOf(item)
@@ -438,7 +438,7 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                         }
                     },
                     onClick = {
-                        if (!isResult) {
+                        if (!isResult || isFromProject == "false") {
                             val calculatorHelper = ConditionerHelper(
                                 peopleRadiation = peopleRadiation,
                                 peopleCount = peopleCount,
@@ -448,7 +448,7 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                                 roomHeight = roomHeight,
                                 sunRadiation = sunLevel,
                                 equipments = equipmentList.map {
-                                        it.volume * it.count.toInt()
+                                    it.volume * it.count.toInt()
                                 }
                             )
                             val result = calculatorHelper.calculate()
@@ -461,9 +461,7 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                             }
 
                         } else {
-                            if (isFromProject == "false") {
-                                onBackPressed()
-                            } else if (isFromProject == "true") {
+                            if (isFromProject == "true") {
                                 onSaveClicked()
                             }
                         }
