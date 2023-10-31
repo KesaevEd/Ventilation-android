@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.calculation.calculators
+package com.mvptest.presentation.ui.calculation.calculators.ductcross
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
@@ -35,9 +35,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mvptest.data.ventilationconstans.airSpeedRectangle
-import com.mvptest.domain.calculators.CalculationResult
-import com.mvptest.domain.calculators.heplers.DuctAreaHelper
+import com.mvptest.presentation.ui.calculation.ventilationconstans.airSpeedRectangle
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.PairObjectsDropDown
@@ -122,7 +121,8 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
             modifier = Modifier
                 .padding(top = 5.dp)
         ) {
-            PairObjectsDropDown(R.string.room_destination ,airSpeedRectangle, onItemClick = { destination, speed ->
+            PairObjectsDropDown(R.string.room_destination ,
+                airSpeedRectangle, onItemClick = { destination, speed ->
                 isResult = false
                 isSomethingWrong = false
                 roomDestination = destination

@@ -1,4 +1,4 @@
-package com.mvptest.data.ventilationconstans
+package com.mvptest.presentation.ui.calculation.ventilationconstans
 
 
 val roomDestinations = arrayOf(

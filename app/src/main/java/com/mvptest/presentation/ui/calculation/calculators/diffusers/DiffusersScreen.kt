@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.calculation.calculators
+package com.mvptest.presentation.ui.calculation.calculators.diffusers
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -34,10 +34,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mvptest.data.ventilationconstans.airSpeedCircle
-import com.mvptest.data.ventilationconstans.airSpeedRectangle
-import com.mvptest.domain.calculators.CalculationResult
-import com.mvptest.domain.calculators.heplers.DiffusersHelper
+import com.mvptest.presentation.ui.calculation.ventilationconstans.airSpeedCircle
+import com.mvptest.presentation.ui.calculation.ventilationconstans.airSpeedRectangle
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
 import com.mvptest.presentation.ui.common.AirDuctSizeDropDown
 import com.mvptest.presentation.ui.common.CalculatorsResult

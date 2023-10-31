@@ -185,7 +185,6 @@ class Aerodinamica : AppCompatActivity() {
                 var Pdin = 0F
                 var r = 0F
                 var Ptren = 0F
-                var Psum: Float = 0F
 
                 for (i in 0 until count2) {
 
@@ -215,7 +214,6 @@ class Aerodinamica : AppCompatActivity() {
                         .toFloat() * Pdin) / Dekv).toFloat()
 
                     total2 += Ptren
-                    Psum += Pdin
 
                     for (a in 0 until AllList[i].size) {
                         total1 += AllList[i].get(a)

@@ -1,5 +1,7 @@
 package com.mvptest.presentation.ui.room.newroom
 
+import android.content.pm.ActivityInfo
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -27,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -50,6 +53,9 @@ fun NewRoomScreenThird(
     onBackPressed: () -> Unit,
     onSaveRoomClicked: (projectId: String) -> Unit
 ) {
+
+    val activity = LocalContext.current as AppCompatActivity
+    activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
     val heaterTypes = listOf(HeaterType.NONE, HeaterType.WATER, HeaterType.ELECTRICITY)
     val heaterNames = listOf(

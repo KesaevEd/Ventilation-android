@@ -1,82 +1,74 @@
-package com.mvptest.presentation.ui.calculation.calculators
+package com.mvptest.presentation.ui.calculation.calculators.aerodynamic
 
-import android.content.Context
-import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.Toast
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
+import android.util.Log
 import androidx.activity.compose.BackHandler
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.mvptest.domain.calculators.CalculationResult
-import com.mvptest.domain.calculators.heplers.AirHeaterHelper
-import com.mvptest.domain.calculators.heplers.DuctAreaHelper
+import com.mvptest.presentation.ui.calculation.CalculationResult
+import com.mvptest.presentation.ui.calculation.calculators.airheater.AirHeaterHelper
 import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.common.ButtonIconAndText
 import com.mvptest.presentation.ui.common.CalculatorsResult
-import com.mvptest.presentation.ui.common.RoundedTextField
+import com.mvptest.presentation.ui.common.TextMediumBlack14sp
 import com.mvptest.presentation.ui.common.TextTitle
-import com.mvptest.presentation.ui.common.TextTitleOfTextField
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun AirHeaterScreen(
-    context: Context,
+fun AerodynamicScreen(
     isFromProject: String,
+    aerodynamicViewModel: AerodynamicViewModel,
     onBackPressed: () -> Unit,
     onSaveClicked: () -> Unit
 ) {
 
-    var airFlow by remember {
-        mutableStateOf(value = "")
-    }
+    val activity = LocalContext.current as AppCompatActivity
+    activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 
-    var tempAfterHeater by remember {
-        mutableStateOf(value = "")
-    }
-
-    var tempOutside by remember {
-        mutableStateOf(value = "")
-    }
+    val configuration = LocalConfiguration.current
+    val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
     var isResult by remember {
         mutableStateOf(value = false)
     }
 
-    var airHeaterResult by remember {
+    var aerodynamicResult by remember {
         mutableStateOf(value = CalculationResult(CalculationType.AIR_HEATER, ""))
     }
 
@@ -84,19 +76,17 @@ fun AirHeaterScreen(
         mutableStateOf(value = false)
     }
 
-    var showSP by remember { mutableStateOf(false) }
+    var sectionNumber = 1
 
-    if (showSP) {
-        ShowSP(onBackPressed = { showSP = false })
-    } else {
+    val sections by remember {
+        derivedStateOf { aerodynamicViewModel.state.sections }
+    }
 
-        Column(
-            modifier = Modifier
-                .padding(18.dp)
-                .verticalScroll(
-                    rememberScrollState()
-                )
-        ) {
+    LazyColumn(
+        modifier = Modifier
+            .padding(18.dp)
+    ) {
+        item {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -107,98 +97,93 @@ fun AirHeaterScreen(
             ) {
                 TextTitle(
                     modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp),
-                    text = stringResource(id = R.string.air_heater_title),
+                    text = stringResource(id = R.string.aerodynamic_title),
                     colorId = R.color.white
                 )
             }
 
-            TextTitleOfTextField(
-                modifier = Modifier.padding(top = 20.dp),
-                textId = R.string.air_flow
-            )
-            RoundedTextField(
-                modifier = Modifier
-                    .padding(top = 5.dp)
-                    .fillMaxWidth(),
-                value = airFlow,
-                onValueChange = { text ->
-                    isResult = false
-                    isSomethingWrong = false
-                    airFlow = text
-                },
-                hint = stringResource(id = R.string.enter_value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
+            if(isPortrait) {
+                Row(modifier = Modifier.padding(top = 25.dp)) {
 
-            TextTitleOfTextField(
-                modifier = Modifier.padding(top = 20.dp),
-                textId = R.string.temp_after_heater
-            )
-            RoundedTextField(
-                modifier = Modifier
-                    .padding(top = 5.dp)
-                    .fillMaxWidth(),
-                value = tempAfterHeater,
-                onValueChange = { text ->
-                    isResult = false
-                    isSomethingWrong = false
-                    tempAfterHeater = text
-                },
-                hint = stringResource(id = R.string.enter_value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-
-            TextTitleOfTextField(
-                modifier = Modifier.padding(top = 20.dp),
-                textId = R.string.temp_outside
-            )
-            Box(
-                modifier = Modifier
-                    .padding(top = 5.dp)
-            ) {
-                RoundedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    value = tempOutside,
-                    onValueChange = { text ->
-                        isResult = false
-                        isSomethingWrong = false
-                        tempOutside = text
-                    },
-                    hint = stringResource(id = R.string.enter_value),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                )
-                Button(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 15.dp),
-                    shape = RoundedCornerShape(100.dp),
-                    onClick = {
-                        showSP = true
-                        Toast.makeText(
-                            context,
-                            R.string.advice_sp,
-                            Toast.LENGTH_LONG
-                        ).show()
-                    },
-                    content = {
-                        Text(
-                            text = stringResource(id = R.string.go_to_sp),
-                            modifier = Modifier,
-                            color = colorResource(id = R.color.white),
-                            textAlign = TextAlign.Center,
-                            fontSize = 12.sp,
-                            fontFamily = interFamily,
-                            fontWeight = FontWeight.Medium
+                    TextMediumBlack14sp(
+                        modifier = Modifier,
+                        text = stringResource(id = R.string.advice_turn_devise)
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Box(
+                        modifier = Modifier.background(
+                            color = colorResource(id = R.color.dark_gray_2),
+                            shape = RoundedCornerShape(16.dp)
                         )
-                    },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
-                )
+                    ) {
+                        Icon(
+                            modifier = Modifier.padding(10.dp),
+                            painter = painterResource(id = R.drawable.ic_turn_device),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.white)
+                        )
+                    }
+                }
             }
 
-            if (isResult) {
+
+            Row(
+                modifier = Modifier
+                    .padding(top = 34.dp)
+                    .fillMaxWidth()
+            ) {
+                TextMediumBlack14sp(
+                    modifier = Modifier.weight(0.05f),
+                    text = stringResource(id = R.string.aerodynamic_number),
+                    centerText = true
+                )
+                TextMediumBlack14sp(
+                    modifier = Modifier.weight(0.2f),
+                    text = stringResource(id = R.string.aerodynamic_air_flow),
+                    centerText = true
+                )
+                TextMediumBlack14sp(
+                    modifier = Modifier.weight(0.15f),
+                    text = stringResource(id = R.string.aerodynamic_length),
+                    centerText = true
+                )
+                TextMediumBlack14sp(
+                    modifier = Modifier.weight(0.25f),
+                    text = stringResource(id = R.string.aerodynamic_cut_area),
+                    centerText = true
+                )
+                TextMediumBlack14sp(
+                    modifier = Modifier.weight(0.35f),
+                    text = stringResource(id = R.string.aerodynamic_elements),
+                    centerText = true
+                )
+            }
+        }
+
+        items(sections) { item ->
+            SectionItem(item, aerodynamicViewModel, onRemoveSection = {
+                aerodynamicViewModel.deleteSection(it)
+                sectionNumber--
+            })
+        }
+
+        item {
+
+            ButtonIconAndText(
+                modifier = Modifier
+                    .padding(top = 15.dp)
+                    .fillMaxWidth(),
+                iconId = R.drawable.ic_add,
+                textId = R.string.add_section,
+                onClick = {
+                    aerodynamicViewModel.newSection(sectionNumber)
+                    sectionNumber++
+                }
+            )
+
+            if (isResult && !isSomethingWrong) {
                 CalculatorsResult(
-                    calculationResult = airHeaterResult
+                    calculationResult = aerodynamicResult
                 )
             }
 
@@ -279,14 +264,10 @@ fun AirHeaterScreen(
                     },
                     onClick = {
                         if (!isResult || isFromProject == "false") {
-                            val calculatorHelper = AirHeaterHelper(
-                                airFlow = airFlow,
-                                tempAfterHeater = tempAfterHeater,
-                                tempOutside = tempOutside
-                            )
-                            val result = calculatorHelper.calculate()
+
+                            val result = aerodynamicViewModel.calculate()
                             if (result != null) {
-                                airHeaterResult = result
+                                aerodynamicResult = result
                                 isResult = true
                             } else {
                                 isSomethingWrong = true
@@ -300,35 +281,11 @@ fun AirHeaterScreen(
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
                 )
             }
-
-            BackHandler {
-                onBackPressed()
-            }
-
         }
     }
-}
-
-@Composable
-fun ShowSP(onBackPressed: () -> Unit) {
-
-    //СП 131.13330.2018
-    val mUrl = "https://docs.cntd.ru/document/554402860"
-
-    AndroidView(factory = {
-        WebView(it).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            webViewClient = WebViewClient()
-            loadUrl(mUrl)
-        }
-    }, update = {
-        it.loadUrl(mUrl)
-    })
 
     BackHandler {
         onBackPressed()
     }
+
 }

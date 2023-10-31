@@ -1,4 +1,4 @@
-package com.mvptest.domain.calculators
+package com.mvptest.presentation.ui.calculation
 
 import com.mvptest.domain.models.CalculationType
 import com.mvptest.ventilation.R

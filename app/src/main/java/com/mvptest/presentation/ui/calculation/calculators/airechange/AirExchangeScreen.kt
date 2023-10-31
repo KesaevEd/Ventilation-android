@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.calculation.calculators
+package com.mvptest.presentation.ui.calculation.calculators.airechange
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
@@ -35,11 +35,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mvptest.data.ventilationconstans.airMultiplicityByDestination
-import com.mvptest.data.ventilationconstans.airSpeedRectangle
-import com.mvptest.data.ventilationconstans.peopleBehaviorList
-import com.mvptest.domain.calculators.CalculationResult
-import com.mvptest.domain.calculators.heplers.AirExchangeHelper
+import com.mvptest.presentation.ui.calculation.ventilationconstans.airMultiplicityByDestination
+import com.mvptest.presentation.ui.calculation.ventilationconstans.peopleBehaviorList
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.PairObjectsDropDown
@@ -208,7 +206,7 @@ fun AirExchangeScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                 .padding(top = 5.dp)
         ) {
             PairObjectsDropDown(
-                if (airExchangeType == AirExchangeType.MULTIPLICITY) R.string.room_destination else R.string.people_behavior,
+                R.string.choose_variant,
                 list,
                 onItemClick = { text, value ->
                     isResult = false

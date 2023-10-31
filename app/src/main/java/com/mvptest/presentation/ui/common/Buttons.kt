@@ -1,6 +1,7 @@
 package com.mvptest.presentation.ui.common
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -45,7 +46,11 @@ fun ButtonWithText(modifier: Modifier, textId: Int, buttonColor: Int? = null, on
             }
         },
         onClick = { onClick() },
-        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(buttonColor ?: R.color.dark_gray_2))
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = colorResource(
+                buttonColor ?: R.color.dark_gray_2
+            )
+        )
     )
 }
 
@@ -123,6 +128,45 @@ fun BackOrSaveRow(onBackPressed: () -> Unit, onSaveClick: () -> Unit) {
             },
             onClick = {
                 onSaveClick()
+            },
+            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+        )
+    }
+}
+
+@Composable
+fun ButtonIconAndText(modifier: Modifier, iconId: Int, textId: Int, onClick: () -> Unit) {
+    Box(modifier = modifier) {
+        Button(
+            modifier = Modifier
+                .align(Alignment.Center),
+            shape = RoundedCornerShape(8.dp),
+            content = {
+                Row(modifier = Modifier) {
+                    Icon(
+                        modifier = Modifier
+                            .padding(start = 6.dp)
+                            .align(Alignment.CenterVertically)
+                            .height(20.dp)
+                            .width(20.dp),
+                        painter = painterResource(id = iconId),
+                        contentDescription = "image",
+                        tint = Color.White,
+                    )
+                    Text(
+                        text = stringResource(id = textId),
+                        modifier = Modifier
+                            .padding(start = 15.dp, end = 6.dp),
+                        color = colorResource(id = R.color.white),
+                        textAlign = TextAlign.Center,
+                        fontFamily = interFamily,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 12.sp
+                    )
+                }
+            },
+            onClick = {
+                onClick()
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
         )

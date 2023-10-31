@@ -42,7 +42,7 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
             android:name="com.mvptest.presentation.MainActivity"
-            android:label="Вентиляция"
+            android:screenOrientation="sensor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

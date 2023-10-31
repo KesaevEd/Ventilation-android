@@ -74,6 +74,16 @@
     <string name="air_heater_result">Мощность\nкалорифера</string>
     <string name="advice_sp">Вам нужна Таблица №3.1, столбец №5</string>
 
+    <string name="aerodynamic_title">Аэродинамика</string>
+    <string name="advice_turn_devise">Для удобства рекомендуем\nиспользовать калькулятор\nв горизонтальном режиме</string>
+    <string name="aerodynamic_number">№</string>
+    <string name="aerodynamic_air_flow">L, м³\ч</string>
+    <string name="aerodynamic_length">l, м</string>
+    <string name="aerodynamic_cut_area">a*b, мм</string>
+    <string name="aerodynamic_elements">Элементы</string>
+    <string name="add_section">Добавить участок</string>
+    <string name="recommended_duct_size">Рекомендуемое сечение</string>
+
     <string name="enter">Вход</string>
     <string name="registration">Регистрация</string>
     <string name="forgot_password">Забыли пароль?</string>

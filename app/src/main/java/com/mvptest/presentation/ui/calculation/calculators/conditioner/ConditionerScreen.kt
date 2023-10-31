@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.calculation.calculators
+package com.mvptest.presentation.ui.calculation.calculators.conditioner
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -34,15 +34,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mvptest.data.ventilationconstans.equipmentsList
-import com.mvptest.data.ventilationconstans.heatLevelList
-import com.mvptest.data.ventilationconstans.lightLevelList
-import com.mvptest.data.ventilationconstans.peopleRadiations
-import com.mvptest.data.ventilationconstans.sunRadiationList
-import com.mvptest.domain.calculators.CalculationResult
-import com.mvptest.domain.calculators.heplers.ConditionerHelper
+import com.mvptest.presentation.ui.calculation.ventilationconstans.equipmentsList
+import com.mvptest.presentation.ui.calculation.ventilationconstans.heatLevelList
+import com.mvptest.presentation.ui.calculation.ventilationconstans.lightLevelList
+import com.mvptest.presentation.ui.calculation.ventilationconstans.peopleRadiations
+import com.mvptest.presentation.ui.calculation.ventilationconstans.sunRadiationList
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
-import com.mvptest.presentation.ui.calculation.NavigationCalculationItem
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.PairObjectsDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField

@@ -1,5 +1,7 @@
 package com.mvptest.presentation.ui.home
 
+import android.content.pm.ActivityInfo
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,6 +33,8 @@ import com.mvptest.ventilation.R
 
 @Composable
 fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenViewModel) {
+    val activity = LocalContext.current as AppCompatActivity
+    activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
     homeScreenViewModel.fetchUserProjects()
 

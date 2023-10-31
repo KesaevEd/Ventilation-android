@@ -1,7 +1,7 @@
-package com.mvptest.domain.calculators.heplers
+package com.mvptest.presentation.ui.calculation.calculators.diffusers
 
 import android.util.Log
-import com.mvptest.domain.calculators.CalculationResult
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
 import kotlin.math.ceil
 

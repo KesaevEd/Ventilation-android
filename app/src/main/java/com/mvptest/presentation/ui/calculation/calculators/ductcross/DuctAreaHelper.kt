@@ -1,8 +1,8 @@
-package com.mvptest.domain.calculators.heplers
+package com.mvptest.presentation.ui.calculation.calculators.ductcross
 
 import android.util.Log
-import com.mvptest.data.ventilationconstans.airDuctSizes
-import com.mvptest.domain.calculators.CalculationResult
+import com.mvptest.presentation.ui.calculation.ventilationconstans.airDuctSizes
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
 
 class DuctAreaHelper(
