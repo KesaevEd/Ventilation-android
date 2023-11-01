@@ -8,12 +8,13 @@ import androidx.navigation.navigation
 import com.mvptest.presentation.ui.bottommenu.NavigationItem
 import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicScreen
 import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicViewModel
-import com.mvptest.presentation.ui.calculation.calculators.airechange.AirExchangeScreen
+import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeScreen
 import com.mvptest.presentation.ui.calculation.calculators.airheater.AirHeaterScreen
 import com.mvptest.presentation.ui.calculation.calculators.conditioner.ConditionerScreen
 import com.mvptest.presentation.ui.calculation.calculators.diffusers.DiffusersScreen
 import com.mvptest.presentation.ui.calculation.calculators.ductcross.DuctCrossSectionScreen
 import com.mvptest.presentation.ui.room.newroom.NavigationNewRoomItem
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 
 sealed class NavigationCalculationItem(val route: String) {
     object AirExchange : NavigationCalculationItem(route = "air_exchange/{fromProject}")
@@ -24,7 +25,7 @@ sealed class NavigationCalculationItem(val route: String) {
     object Conditioner : NavigationCalculationItem(route = "conditioner/{fromProject}")
 }
 
-fun NavGraphBuilder.calculationGraph(navController: NavController, context: Context, aerodynamicViewModel: AerodynamicViewModel) {
+fun NavGraphBuilder.calculationGraph(navController: NavController, context: Context, aerodynamicViewModel: AerodynamicViewModel, newRoomViewModel: NewRoomViewModel) {
     navigation(startDestination = NavigationItem.Calculating.route, route = "calculation") {
         composable(NavigationItem.Calculating.route) {
             CalculatingMainScreen(onItemClicked = { route ->
@@ -49,7 +50,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
-            }, onSaveClicked = {})
+            }, newRoomViewModel = newRoomViewModel)
         }
         composable(NavigationCalculationItem.DuctCrossSection.route) {
             val fromProject = it.arguments?.getString("fromProject")
@@ -69,9 +70,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
-            }, onSaveClicked = {
-
-            })
+            }, newRoomViewModel)
         }
         composable(NavigationCalculationItem.AirHeater.route) {
             val fromProject = it.arguments?.getString("fromProject")
@@ -91,7 +90,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
-            }, onSaveClicked = {})
+            }, newRoomViewModel)
         }
         composable(NavigationCalculationItem.Diffusers.route) {
             val fromProject = it.arguments?.getString("fromProject")
@@ -111,9 +110,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
-            }, onSaveClicked = {
-
-            })
+            }, newRoomViewModel)
         }
         composable(NavigationCalculationItem.Aerodynamic.route) {
             val fromProject = it.arguments?.getString("fromProject")
@@ -133,9 +130,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
-            }, onSaveClicked = {
-
-            })
+            }, newRoomViewModel)
         }
         composable(NavigationCalculationItem.Conditioner.route) {
             val fromProject = it.arguments?.getString("fromProject")
@@ -155,9 +150,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
-            }, onSaveClicked = {
-
-            })
+            }, newRoomViewModel)
         }
     }
 }

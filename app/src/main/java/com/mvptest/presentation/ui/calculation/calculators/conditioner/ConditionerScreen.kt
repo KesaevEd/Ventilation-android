@@ -42,12 +42,14 @@ import com.mvptest.presentation.ui.calculation.ventilationconstans.peopleRadiati
 import com.mvptest.presentation.ui.calculation.ventilationconstans.sunRadiationList
 import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeHelper
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.PairObjectsDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.ShortPairObjectsDropDown
 import com.mvptest.presentation.ui.common.TextTitle
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -56,7 +58,7 @@ fun ConditionerScreen(
     isFromProject: String,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    onSaveClicked: () -> Unit
+    newRoomViewModel: NewRoomViewModel
 ) {
 
     var peopleBehaviors by remember { mutableStateOf("") }
@@ -442,7 +444,9 @@ fun ConditionerScreen(
                         }
                     },
                     onClick = {
-                        if (!isResult || isFromProject == "false") {
+                        if (isResult && isFromProject == "true") {
+                            onBackPressedFromProject()
+                        } else {
                             val calculatorHelper = ConditionerHelper(
                                 peopleRadiation = peopleRadiation,
                                 peopleCount = peopleCount,
@@ -460,14 +464,11 @@ fun ConditionerScreen(
                             if (result != null) {
                                 conditionerResult = result
                                 isResult = true
+                                if (isFromProject == "true") {
+                                    newRoomViewModel.setAirConditionerPerformance(result.firstResult)
+                                }
                             } else {
                                 isSomethingWrong = true
-                            }
-
-                        } else {
-                            if (isFromProject == "true") {
-                                onSaveClicked()
-                                onBackPressedFromProject()
                             }
                         }
                     },

@@ -234,7 +234,7 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = if (state.value.roomDetails?.airExchangePerformance != "") state.value.roomDetails?.airExchangePerformance.toString() + stringResource(
+                    text = if (state.value.roomDetails?.airExchangePerformance != "") state.value.roomDetails?.airExchangePerformance.toString() + " " + stringResource(
                         id = R.string.m3
                     ) else ""
                 )
@@ -254,7 +254,7 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = if (state.value.roomDetails?.pressureLoss != "") state.value.roomDetails?.pressureLoss.toString() + stringResource(
+                    text = if (state.value.roomDetails?.pressureLoss != "") state.value.roomDetails?.pressureLoss.toString() + " " + stringResource(
                         id = R.string.pa
                     ) else ""
                 )
@@ -274,7 +274,7 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = if (state.value.roomDetails?.heaterPerformance != "") state.value.roomDetails?.heaterPerformance.toString() + stringResource(
+                    text = if (state.value.roomDetails?.heaterPerformance != "") state.value.roomDetails?.heaterPerformance.toString() + " " + stringResource(
                         id = R.string.kvt
                     ) else ""
                 )
@@ -299,7 +299,7 @@ fun RoomDetailsScreen(
                     )
                     TextMediumBlack14sp(
                         modifier = Modifier.padding(top = 5.dp, bottom = 25.dp),
-                        text = if (state.value.roomDetails?.airConditionerPerformance != "") state.value.roomDetails?.airConditionerPerformance.toString() + stringResource(
+                        text = if (state.value.roomDetails?.airConditionerPerformance != "") state.value.roomDetails?.airConditionerPerformance.toString() + " " + stringResource(
                             id = R.string.kvt
                         ) else ""
                     )

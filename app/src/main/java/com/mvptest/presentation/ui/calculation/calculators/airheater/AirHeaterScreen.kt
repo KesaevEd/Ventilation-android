@@ -42,10 +42,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeHelper
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitle
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -55,7 +57,7 @@ fun AirHeaterScreen(
     isFromProject: String,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    onSaveClicked: () -> Unit
+    newRoomViewModel: NewRoomViewModel
 ) {
 
     var airFlow by remember {
@@ -276,23 +278,24 @@ fun AirHeaterScreen(
                         }
                     },
                     onClick = {
-                        if (!isResult || isFromProject == "false") {
+                        if (isResult && isFromProject == "true") {
+                            onBackPressedFromProject()
+                        } else {
                             val calculatorHelper = AirHeaterHelper(
                                 airFlow = airFlow,
                                 tempAfterHeater = tempAfterHeater,
                                 tempOutside = tempOutside
                             )
                             val result = calculatorHelper.calculate()
+
                             if (result != null) {
                                 airHeaterResult = result
                                 isResult = true
+                                if (isFromProject == "true") {
+                                    newRoomViewModel.setHeaterPerformance(result.firstResult)
+                                }
                             } else {
                                 isSomethingWrong = true
-                            }
-                        } else {
-                            if (isFromProject == "true") {
-                                onSaveClicked()
-                                onBackPressedFromProject()
                             }
                         }
                     },

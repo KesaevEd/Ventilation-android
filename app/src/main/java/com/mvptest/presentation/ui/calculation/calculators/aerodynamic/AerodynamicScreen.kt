@@ -43,10 +43,12 @@ import androidx.compose.ui.unit.sp
 import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.presentation.ui.calculation.calculators.airheater.AirHeaterHelper
 import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeHelper
 import com.mvptest.presentation.ui.common.ButtonIconAndText
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.TextMediumBlack14sp
 import com.mvptest.presentation.ui.common.TextTitle
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -56,7 +58,7 @@ fun AerodynamicScreen(
     aerodynamicViewModel: AerodynamicViewModel,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    onSaveClicked: () -> Unit
+    newRoomViewModel: NewRoomViewModel
 ) {
 
     val activity = LocalContext.current as AppCompatActivity
@@ -264,19 +266,19 @@ fun AerodynamicScreen(
                         }
                     },
                     onClick = {
-                        if (!isResult || isFromProject == "false") {
-
+                        if (isResult && isFromProject == "true") {
+                            onBackPressedFromProject()
+                        } else {
                             val result = aerodynamicViewModel.calculate()
+
                             if (result != null) {
                                 aerodynamicResult = result
                                 isResult = true
+                                if (isFromProject == "true") {
+                                    newRoomViewModel.setPressureLoss(result.firstResult)
+                                }
                             } else {
                                 isSomethingWrong = true
-                            }
-                        } else {
-                            if (isFromProject == "true") {
-                                onSaveClicked()
-                                onBackPressedFromProject()
                             }
                         }
                     },
