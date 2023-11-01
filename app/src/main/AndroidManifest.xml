@@ -7,7 +7,7 @@
 
     <application
         android:name="com.mvptest.VentilationApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="Вентиляция"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -42,7 +42,7 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
             android:name="com.mvptest.presentation.MainActivity"
-            android:label="Вентиляция"
+            android:screenOrientation="sensor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

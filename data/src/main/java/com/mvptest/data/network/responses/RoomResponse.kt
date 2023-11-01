@@ -20,29 +20,27 @@ data class RoomResponse(
     @SerializedName("title")
     val title: String,
     @SerializedName("systemNumber")
-    val systemNumber: String,
-    @SerializedName("roomVolume")
-    val roomVolume: String,
-    @SerializedName("roomDestination")
-    val roomDestination: String,
+    val systemNumber: String?,
+    @SerializedName("ventSystemDestination")
+    val ventSystemDestination: String?,
     @SerializedName("airExchangePerformance")
-    val airExchangePerformance: String,
+    val airExchangePerformance: String?,
     @SerializedName("pressureLoss")
-    val pressureLoss: String,
+    val pressureLoss: String?,
     @SerializedName("airDuctArea")
-    val airDuctArea: String,
+    val airDuctArea: String?,
     @SerializedName("startDate")
-    val startDate: String,
+    val startDate: String?,
     @SerializedName("heaterType")
-    val heaterType: String,
+    val heaterType: String?,
     @SerializedName("heaterPerformance")
-    val heaterPerformance: String,
+    val heaterPerformance: String?,
     @SerializedName("isAirConditioner")
-    val isAirConditioner: Boolean,
+    val isAirConditioner: Boolean?,
     @SerializedName("airConditionerPerformance")
-    val airConditionerPerformance: String,
+    val airConditionerPerformance: String?,
     @SerializedName("deadLines")
-    val deadLines: String,
+    val deadLines: String?,
     @SerializedName("comment")
-    val comment: String
+    val comment: String?
 )

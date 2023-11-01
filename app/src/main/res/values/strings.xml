@@ -27,6 +27,63 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="diffusers_title">Подбор решеток</string>
+    <string name="choose_diff_type">Выберите вариант для расчета</string>
+    <string name="rectangular_diff">Прямоугольные</string>
+    <string name="circle_diff">Круглые</string>
+    <string name="choose_size">Выберите размер</string>
+    <string name="diameter">Диаметр воздуховода, мм</string>
+    <string name="air_duct_size">Размер сечения воздуховода, мм</string>
+    <string name="air_duct_diameter">Диаметр воздуховода, мм</string>
+    <string name="enter_value">Укажите значение</string>
+    <string name="air_speed">Скорость воздуха, м/с</string>
+    <string name="choose_variant">Выберите вариант</string>
+    <string name="result">Результат</string>
+    <string name="diff_count">Количество решеток</string>
+    <string name="air_flow">Расход воздуха, м3/ч</string>
+
+    <string name="air_duct_title">Подбор сечения</string>
+    <string name="rectangle_area">Сечение прямоугольного\nвоздуховода</string>
+    <string name="circle_diameter">Диаметр круглого\nвоздуховода</string>
+
+    <string name="conditioner_title">Кондиционирование</string>
+    <string name="people_radiations">Тепловыделения от людей</string>
+    <string name="people_count">Количество человек</string>
+    <string name="light_level">Интенсивность искусственного освещения</string>
+    <string name="heat_level">Интенсивность отопления</string>
+    <string name="room_area">Площадь помещения, м2</string>
+    <string name="room_height">Высота помещения, м</string>
+    <string name="sun_radiations">Солнечная радиация</string>
+    <string name="equipment_radiations">Тепловыделения от оборудования</string>
+    <string name="add_equipment">Добавить оборудование</string>
+    <string name="conditioner_power">Мощность кондиционирования</string>
+
+    <string name="air_exchange_title">Воздухообмен</string>
+    <string name="air_exchange_choose_variant">Выберите вариант расчета</string>
+    <string name="multiplicity_variant">По кратности</string>
+    <string name="sanitary_variant">По сан. нормам</string>
+    <string name="people_behavior">Вариант пребывания в помещении</string>
+    <string name="supply_air_volume">Объем приточного воздуха</string>
+    <string name="exhaust_air_volume">Объем вытяжного воздуха</string>
+
+    <string name="air_heater_title">Мощность калорифера</string>
+    <string name="temp_after_heater">Температура воздуха после калорифера, ℃</string>
+    <string name="temp_outside">Температура наружнего воздуха, ℃</string>
+    <string name="go_to_sp">Перейти в СП</string>
+    <string name="air_heater_power">Воздухообмен</string>
+    <string name="air_heater_result">Мощность\nкалорифера</string>
+    <string name="advice_sp">Вам нужна Таблица №3.1, столбец №5</string>
+
+    <string name="aerodynamic_title">Аэродинамика</string>
+    <string name="advice_turn_devise">Для удобства рекомендуем\nиспользовать калькулятор\nв горизонтальном режиме</string>
+    <string name="aerodynamic_number">№</string>
+    <string name="aerodynamic_air_flow">L, м³\ч</string>
+    <string name="aerodynamic_length">l, м</string>
+    <string name="aerodynamic_cut_area">a*b, мм</string>
+    <string name="aerodynamic_elements">Элементы</string>
+    <string name="add_section">Добавить участок</string>
+    <string name="recommended_duct_size">Рекомендуемое сечение</string>
+
     <string name="enter">Вход</string>
     <string name="registration">Регистрация</string>
     <string name="forgot_password">Забыли пароль?</string>
@@ -77,15 +134,17 @@
 
     <string name="vent_system_number">№ вентиляционной системы</string>
     <string name="room_volume">Объем помещения, м3</string>
+    <string name="vent_system_destination">Назначение вентиляции</string>
     <string name="room_destination">Назначение помещения</string>
     <string name="dead_lines">Сроки выполнения работ</string>
     <string name="comment_project">Комментарии к проекту</string>
     <string name="comment_room">Комментарии к помещению</string>
     <string name="air_exchange_performance">Производительность воздухообмена, м3</string>
+    <string name="air_duct_cross">Сечение воздуховодов</string>
     <string name="pressure_loss_and_air_area">Потери давления и площадь воздуховодов</string>
     <string name="pressure_loss">Потери давления, Па</string>
     <string name="air_duct_area">Площадь воздуховодов, м2</string>
-    <string name="heater_type">Выбор калорифера</string>
+    <string name="heater_type">Тип калорифера</string>
     <string name="heater_performance">Производительность калорифера, кВт</string>
     <string name="air_conditioner">Кондиционер</string>
     <string name="air_conditioner_performance">Производительность кондиционера, кВт</string>
@@ -93,8 +152,13 @@
     <string name="water_heater">Водяной</string>
     <string name="electro_heater">Электро</string>
     <string name="no_heater">Нет</string>
+    <string name="forced">Приточная</string>
+    <string name="exhaust">Вытяжная</string>
+    <string name="forced_exhaust">Приточно-вытяжная</string>
     <string name="value_m3">Значение, м3</string>
     <string name="value_kvt">Значение, кВт</string>
+    <string name="value_pa">Значение, Па</string>
+    <string name="value">Значение</string>
 
     <string name="ask_cancel_create_project">Вы уверены, что хотите завершить создание проекта?</string>
     <string name="ask_cancel_create_room">Вы уверены, что хотите завершить создание помещения?</string>
@@ -110,10 +174,15 @@
     <string name="edit">Редактировать</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
+    <string name="counts">Кол-во</string>
+    <string name="something_wrong_calculation">"*Что то пошло не так, проверьте правильность введенных значений"</string>
 
     <string name="m2"> м2</string>
     <string name="m3"> м3</string>
+    <string name="m3InH"> м3/ч</string>
+    <string name="mm"> мм</string>
     <string name="kvt"> кВт</string>
     <string name="pa"> Па</string>
+    <string name="count"> шт</string>
 
 </resources>

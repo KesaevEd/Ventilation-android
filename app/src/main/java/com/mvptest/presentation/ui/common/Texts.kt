@@ -15,6 +15,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.utils.interFamily
@@ -105,7 +106,7 @@ fun PasswordTextField(
 }
 
 @Composable
-fun TextTitleOfTextField(modifier: Modifier, textId: Int){
+fun TextTitleOfTextField(modifier: Modifier, textId: Int) {
     Text(
         modifier = modifier,
         text = stringResource(id = textId),
@@ -116,7 +117,7 @@ fun TextTitleOfTextField(modifier: Modifier, textId: Int){
 }
 
 @Composable
-fun TextTitle(modifier: Modifier, text: String, colorId: Int){
+fun TextTitle(modifier: Modifier, text: String, colorId: Int) {
     Text(
         modifier = modifier,
         text = text,
@@ -128,7 +129,7 @@ fun TextTitle(modifier: Modifier, text: String, colorId: Int){
 }
 
 @Composable
-fun BigTextTitle(modifier: Modifier, text: String){
+fun BigTextTitle(modifier: Modifier, text: String) {
     Text(
         modifier = modifier,
         text = text,
@@ -140,7 +141,7 @@ fun BigTextTitle(modifier: Modifier, text: String){
 }
 
 @Composable
-fun TextTitleOfText(modifier: Modifier, textId: Int){
+fun TextTitleOfText(modifier: Modifier, textId: Int) {
     Text(
         modifier = modifier,
         color = colorResource(id = R.color.dark_gray_2),
@@ -152,10 +153,23 @@ fun TextTitleOfText(modifier: Modifier, textId: Int){
 }
 
 @Composable
-fun TextMediumBlack14sp(modifier: Modifier, text: String){
+fun TextMediumBlack14sp(modifier: Modifier, text: String, centerText: Boolean? = null) {
     Text(
         modifier = modifier,
         color = colorResource(id = R.color.dark_gray),
+        text = text,
+        fontFamily = interFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        textAlign = if (centerText == true) TextAlign.Center else TextAlign.Start
+    )
+}
+
+@Composable
+fun TextMediumGray14sp(modifier: Modifier, text: String) {
+    Text(
+        modifier = modifier,
+        color = colorResource(id = R.color.gray),
         text = text,
         fontFamily = interFamily,
         fontWeight = FontWeight.Medium,

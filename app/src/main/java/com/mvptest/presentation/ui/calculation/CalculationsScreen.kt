@@ -1,5 +1,7 @@
 package com.mvptest.presentation.ui.calculation
 
+import android.content.pm.ActivityInfo
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +24,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,48 +44,69 @@ import com.mvptest.ventilation.R
 
 @Composable
 fun CalculatingMainScreen(onItemClicked: (route: String) -> Unit) {
+    val activity = LocalContext.current as AppCompatActivity
+    activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
     val list = listOf(
         CalculateItem(
             type = CalculationType.AIR_EXCHANGE,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.rashod,
             iconId = R.drawable.ic_air_exchange,
-            route = NavigationCalculationItem.AirExchange.route
+            route = NavigationCalculationItem.AirExchange.route.replace(
+                oldValue = "{fromProject}",
+                newValue = "false"
+            )
         ),
         CalculateItem(
             type = CalculationType.AERODYNAMIC,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.aerodinamika,
             iconId = R.drawable.ic_aerodynamic,
-            route = NavigationCalculationItem.Aerodynamic.route
+            route = NavigationCalculationItem.Aerodynamic.route.replace(
+                oldValue = "{fromProject}",
+                newValue = "false"
+            )
         ),
         CalculateItem(
             type = CalculationType.DUCT_CROSS_SECTIONS,
             titleId1 = R.string.selection,
             titleId = R.string.diametri,
             iconId = R.drawable.ic_air_duct,
-            route = NavigationCalculationItem.DuctCrossSection.route
+            route = NavigationCalculationItem.DuctCrossSection.route.replace(
+                oldValue = "{fromProject}",
+                newValue = "false"
+            )
         ),
         CalculateItem(
             type = CalculationType.DIFFUSERS,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.reshetki,
             iconId = R.drawable.ic_diffusers,
-            route = NavigationCalculationItem.Diffusers.route
+            route = NavigationCalculationItem.Diffusers.route.replace(
+                oldValue = "{fromProject}",
+                newValue = "false"
+            )
         ),
         CalculateItem(
             type = CalculationType.AIR_HEATER,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.kaloriferi,
             iconId = R.drawable.ic_air_heater,
-            route = NavigationCalculationItem.AirHeater.route
+            route = NavigationCalculationItem.AirHeater.route.replace(
+                oldValue = "{fromProject}",
+                newValue = "false"
+            )
         ),
         CalculateItem(
             type = CalculationType.CONDITIONER,
             titleId1 = R.string.calculating_bottomnav,
             titleId = R.string.kondicioneri,
             iconId = R.drawable.ic_conditioner,
-            route = NavigationCalculationItem.Conditioner.route
+            route = NavigationCalculationItem.Conditioner.route.replace(
+                oldValue = "{fromProject}",
+                newValue = "false"
+            )
         )
     )
 

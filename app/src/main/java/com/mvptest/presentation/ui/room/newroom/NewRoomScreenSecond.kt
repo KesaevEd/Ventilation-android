@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,6 +36,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mvptest.domain.models.HeaterType
+import com.mvptest.domain.models.VentSystemDestination
 import com.mvptest.presentation.ui.common.MyDatePickerDialog
 import com.mvptest.presentation.ui.common.RoomDestinationDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
@@ -54,12 +57,22 @@ fun NewRoomScreenSecond(
     var systemNumber by remember {
         mutableStateOf(value = newRoomViewModel.state.systemNumber ?: "")
     }
-    var roomVolume by remember {
-        mutableStateOf(value = newRoomViewModel.state.roomVolume ?: "")
+
+    val ventSystemDestinationTypes = listOf(
+        VentSystemDestination.FORCED,
+        VentSystemDestination.EXHAUST,
+        VentSystemDestination.FORCED_EXHAUST
+    )
+    val ventSystemDestinationNames = listOf(
+        stringResource(id = R.string.forced),
+        stringResource(id = R.string.exhaust),
+        stringResource(id = R.string.forced_exhaust)
+    )
+    var selectedVentDestinyIndex by remember { mutableIntStateOf(0) }
+    var ventSystemDestination by remember {
+        mutableStateOf(value = newRoomViewModel.state.ventSystemDestination ?: VentSystemDestination.FORCED)
     }
-    var roomDestination by remember {
-        mutableStateOf(value = newRoomViewModel.state.roomDestination ?: "")
-    }
+
     var startDate by remember {
         mutableStateOf(value = newRoomViewModel.state.startDate ?: "")
     }
@@ -127,47 +140,59 @@ fun NewRoomScreenSecond(
 
         TextTitleOfTextField(
             modifier = Modifier.padding(top = 15.dp),
-            textId = R.string.room_volume
-        )
-        RoundedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 5.dp),
-            value = roomVolume,
-            onValueChange = {
-                    newRoomViewModel.setRoomVolume(it)
-                    roomVolume = it
-            },
-            hint = stringResource(id = R.string.room_volume),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        )
-
-        TextTitleOfTextField(
-            modifier = Modifier.padding(top = 15.dp),
-            textId = R.string.room_destination
+            textId = R.string.vent_system_destination
         )
         Box(
             modifier = Modifier
                 .padding(top = 5.dp)
-        ) {
-            RoomDestinationDropDown(onItemClick = {
-                newRoomViewModel.setRoomDestination(it)
-                roomDestination = it
-            })
-            Icon(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(end = 25.dp),
-                painter = painterResource(id = R.drawable.ic_arrow_down),
-                contentDescription = "image",
-                tint = colorResource(
-                    id = R.color.gray
+                .background(
+                    colorResource(id = R.color.light_gray),
+                    shape = RoundedCornerShape(15.dp)
                 )
-            )
+        ) {
+            Row() {
+                selectedVentDestinyIndex = ventSystemDestinationTypes.indexOf(ventSystemDestination)
+                for (index in 0..2) {
+                    Button(
+                        onClick = {
+                            ventSystemDestination = ventSystemDestinationTypes[index]
+                            newRoomViewModel.setVentSystemDestination(ventSystemDestinationTypes[index])
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(10.dp),
+                        border = BorderStroke(
+                            1.dp,
+                            color = colorResource(id = R.color.gray)
+                        ),
+                        shape = RoundedCornerShape(100.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = if (selectedVentDestinyIndex == index) colorResource(
+                                id = R.color.dark_gray_2
+                            ) else colorResource(id = R.color.light_gray),
+                            contentColor = if (selectedVentDestinyIndex == index) Color.White else colorResource(
+                                id = R.color.gray
+                            )
+                        ),
+                        content = {
+                            Text(
+                                modifier = Modifier.fillMaxHeight(),
+                                text = ventSystemDestinationNames[index],
+                                fontFamily = interFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 12.sp
+                            )
+                        }
+                    )
+                }
+            }
         }
 
+
         TextTitleOfTextField(modifier = Modifier.padding(top = 15.dp), textId = R.string.start_date)
-        Box(modifier = Modifier.padding(top = 5.dp).clickable { isCalendarClicked.value = true }) {
+        Box(modifier = Modifier
+            .padding(top = 5.dp)
+            .clickable { isCalendarClicked.value = true }) {
             RoundedTextField(
                 modifier = Modifier
                     .fillMaxWidth(),

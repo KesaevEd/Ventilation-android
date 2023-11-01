@@ -301,7 +301,7 @@ class Vozduhoobmen : AppCompatActivity() {
                 if (naznachenie[position] == "Временное пребывание человека") {
                     result.setText("20")
                 } else if (naznachenie[position] == "Длительное пребывание человека") {
-                    result.setText("40")
+                    result.setText("60")
                 } else if (naznachenie[position] == "Спортивный зал") {
                     result.setText("80")
                 }

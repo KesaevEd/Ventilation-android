@@ -1,17 +1,13 @@
 package com.mvptest.domain.models
 
-import androidx.compose.ui.res.stringResource
-import com.mvptest.data.R
-
 data class RoomDetails(
     val id: String,
     val title: String,
     val systemNumber: String,
-    val roomVolume: String,
-    val roomDestination: String,
+    val ventSystemDestination: VentSystemDestination,
     val airExchangePerformance: String,
     val pressureLoss: String,
-    val airDuctArea: String,
+    val airDuctCrossSize: String,
     val startDate: String,
     val heaterType: HeaterType,
     val heaterPerformance: String,
@@ -23,4 +19,8 @@ data class RoomDetails(
 
 enum class HeaterType(val string: String){
     NONE("Нет"), ELECTRICITY("Электро"), WATER("Водяной")
+}
+
+enum class VentSystemDestination(val string: String){
+    FORCED("Приточная"), EXHAUST("Вытяжная"), FORCED_EXHAUST("Приточно-вытяжная")
 }

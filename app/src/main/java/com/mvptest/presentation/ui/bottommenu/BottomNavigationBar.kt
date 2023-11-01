@@ -27,6 +27,7 @@ import com.mvptest.presentation.ui.auth.NavigationAuthItem
 import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.auth.authGraph
 import com.mvptest.presentation.ui.calculation.calculationGraph
+import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicViewModel
 import com.mvptest.presentation.ui.home.HomeScreenViewModel
 import com.mvptest.presentation.ui.myprojects.MyProjectsScreen
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
@@ -100,6 +101,7 @@ fun NavigationGraph(
     projectDetailsViewModel: ProjectDetailsViewModel,
     roomDetailsViewModel: RoomDetailsViewModel,
     userAuthViewModel: UserAuthViewModel,
+    aerodynamicViewModel: AerodynamicViewModel,
     context: Context
 ) {
 
@@ -159,7 +161,7 @@ fun NavigationGraph(
 
         roomDetailsGraph(roomDetailsViewModel, newRoomViewModel, navController)
 
-        calculationGraph(navController)
+        calculationGraph(navController, context, aerodynamicViewModel)
     }
 }
 

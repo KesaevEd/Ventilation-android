@@ -1,5 +1,6 @@
 package com.mvptest.data.implementations
 
+import android.util.Log
 import com.mvptest.data.database.dao.RoomsDao
 import com.mvptest.data.database.mappers.toDbEntity
 import com.mvptest.data.database.mappers.toRoomDetails
@@ -9,6 +10,7 @@ import javax.inject.Inject
 
 class RoomsDbStorageImpl @Inject constructor(private val roomsDao: RoomsDao): RoomsStorage {
     override suspend fun insertRoom(room: RoomDetails, projectId: String) {
+        Log.d("saveroom","insertRoom = ${room}  projectId = ${projectId}")
         roomsDao.insertRoom(room.toDbEntity(projectId))
     }
 

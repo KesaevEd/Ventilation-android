@@ -5,6 +5,7 @@ import com.mvptest.data.database.entities.RoomDbEntity
 import com.mvptest.domain.models.HeaterType
 import com.mvptest.domain.models.Project
 import com.mvptest.domain.models.RoomDetails
+import com.mvptest.domain.models.VentSystemDestination
 
 fun Project.toDbEntity(): ProjectDbEntity =
     ProjectDbEntity(
@@ -32,11 +33,10 @@ fun RoomDetails.toDbEntity(projectId: String): RoomDbEntity =
         projectId = projectId,
         title = title,
         systemNumber = systemNumber,
-        roomVolume = roomVolume,
-        roomDestination = roomDestination,
+        ventSystemDestination = ventSystemDestination.name,
         airExchangePerformance = airExchangePerformance,
         pressureLoss = pressureLoss,
-        airDuctArea = airDuctArea,
+        airDuctArea = airDuctCrossSize,
         heaterType = heaterType.name,
         heaterPerformance = heaterPerformance,
         isAirConditioner = isAirConditioner,
@@ -51,11 +51,10 @@ fun RoomDbEntity.toRoomDetails(): RoomDetails =
         id = id,
         title = title,
         systemNumber = systemNumber,
-        roomVolume = roomVolume,
-        roomDestination = roomDestination,
+        ventSystemDestination = VentSystemDestination.valueOf(ventSystemDestination),
         airExchangePerformance = airExchangePerformance,
         pressureLoss = pressureLoss,
-        airDuctArea = airDuctArea,
+        airDuctCrossSize = airDuctArea,
         heaterType = HeaterType.valueOf(heaterType),
         heaterPerformance = heaterPerformance,
         isAirConditioner = isAirConditioner,

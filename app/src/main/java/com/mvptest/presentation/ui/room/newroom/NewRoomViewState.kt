@@ -2,14 +2,13 @@ package com.mvptest.presentation.ui.room.newroom
 
 import com.mvptest.domain.models.HeaterType
 import com.mvptest.domain.models.RoomDetails
-import java.util.UUID
+import com.mvptest.domain.models.VentSystemDestination
 
 data class NewRoomViewState(
     val id: String? = "",
     val title: String? = "",
     val systemNumber: String? = "",
-    val roomVolume: String? = null,
-    val roomDestination: String? = "",
+    val ventSystemDestination: VentSystemDestination? = VentSystemDestination.FORCED,
     val startDate: String? = "",
     val airExchangePerformance: String? = null,
     val pressureLoss: String? = null,
@@ -27,11 +26,10 @@ fun NewRoomViewState.toRoomDetails(roomId: String): RoomDetails {
         id = roomId,
         title = title ?: "",
         systemNumber = systemNumber ?: "",
-        roomVolume = roomVolume ?: "",
-        roomDestination = roomDestination ?: "",
+        ventSystemDestination = ventSystemDestination ?: VentSystemDestination.FORCED,
         airExchangePerformance = airExchangePerformance ?: "",
         pressureLoss = pressureLoss ?: "",
-        airDuctArea = airDuctArea ?: "",
+        airDuctCrossSize = airDuctArea ?: "",
         heaterType = heaterType ?: HeaterType.NONE,
         heaterPerformance = heaterPerformance ?: "",
         isAirConditioner = isAirConditioner ?: false,
@@ -47,11 +45,10 @@ fun RoomDetails.toRoomViewState(id: String): NewRoomViewState {
         id = id,
         title = title ?: "",
         systemNumber = systemNumber ?: "",
-        roomVolume = roomVolume ?: "",
-        roomDestination = roomDestination ?: "",
+        ventSystemDestination = ventSystemDestination,
         airExchangePerformance = airExchangePerformance ?: "",
         pressureLoss = pressureLoss ?: "",
-        airDuctArea = airDuctArea ?: "",
+        airDuctArea = airDuctCrossSize ?: "",
         heaterType = heaterType ?: HeaterType.NONE,
         heaterPerformance = heaterPerformance ?: "",
         isAirConditioner = isAirConditioner ?: false,

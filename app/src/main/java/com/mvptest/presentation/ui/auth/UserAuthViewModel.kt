@@ -116,7 +116,7 @@ class UserAuthViewModel @Inject constructor(
                         password = state.password!!
                     )
                 )
-                Log.d("login", "userResponse = $userResponse")
+
                 when (userResponse.code()) {
                     200 -> {
                         state = state.copy(

@@ -1,6 +1,7 @@
 package com.mvptest.presentation
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
@@ -11,6 +12,8 @@ import androidx.navigation.compose.rememberNavController
 import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.bottommenu.BottomNavigationBar
 import com.mvptest.presentation.ui.bottommenu.NavigationGraph
+import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicScreen
+import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicViewModel
 import com.mvptest.presentation.ui.home.HomeScreenViewModel
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
@@ -40,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         val projectDetailsViewModel: ProjectDetailsViewModel = viewModel()
         val roomDetailsViewModel: RoomDetailsViewModel = viewModel()
         val userAuthViewModel: UserAuthViewModel = viewModel()
+        val aerodynamicViewModel: AerodynamicViewModel = viewModel()
 
         val navController = rememberNavController()
 
@@ -53,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 projectDetailsViewModel,
                 roomDetailsViewModel,
                 userAuthViewModel,
+                aerodynamicViewModel,
                 this
             )
         }
