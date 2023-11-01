@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.calculation.calculators.airechange
+package com.mvptest.presentation.ui.calculation.calculators.airexchange
 
 import android.util.Log
 import com.mvptest.presentation.ui.calculation.CalculationResult

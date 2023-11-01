@@ -38,11 +38,13 @@ import androidx.compose.ui.unit.sp
 import com.mvptest.presentation.ui.calculation.ventilationconstans.airSpeedRectangle
 import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeHelper
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.PairObjectsDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitle
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -51,7 +53,7 @@ fun DuctCrossSectionScreen(
     isFromProject: String,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    onSaveClicked: () -> Unit
+    newRoomViewModel: NewRoomViewModel
 ) {
 
     var airFlow by remember {
@@ -227,22 +229,23 @@ fun DuctCrossSectionScreen(
                     }
                 },
                 onClick = {
-                    if (!isResult || isFromProject == "false") {
+                    if (isResult && isFromProject == "true") {
+                        onBackPressedFromProject()
+                    } else {
                         val calculatorHelper = DuctAreaHelper(
                             airFlow = airFlow,
                             airSpeed = airSpeed
                         )
                         val result = calculatorHelper.calculate()
+
                         if (result != null) {
                             ductAreaResult = result
                             isResult = true
+                            if (isFromProject == "true") {
+                                newRoomViewModel.setAirDuctCross(result.firstResult.split(" ")[0] + " / " + "Ø" + result.secondResult!!.split(" ")[0])
+                            }
                         } else {
                             isSomethingWrong = true
-                        }
-                    } else {
-                        if (isFromProject == "true") {
-                            onSaveClicked()
-                            onBackPressedFromProject()
                         }
                     }
                 },

@@ -39,12 +39,14 @@ import com.mvptest.presentation.ui.calculation.ventilationconstans.airSpeedCircl
 import com.mvptest.presentation.ui.calculation.ventilationconstans.airSpeedRectangle
 import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeHelper
 import com.mvptest.presentation.ui.common.AirDuctSizeDropDown
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.PairObjectsDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitle
 import com.mvptest.presentation.ui.common.TextTitleOfTextField
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -53,7 +55,7 @@ fun DiffusersScreen(
     isFromProject: String,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    onSaveClicked: () -> Unit
+    newRoomViewModel: NewRoomViewModel
 ) {
 
     val diffTypes = listOf(DiffusersType.RECTANGULAR, DiffusersType.CIRCULAR)
@@ -346,7 +348,9 @@ fun DiffusersScreen(
                     }
                 },
                 onClick = {
-                    if (!isResult || isFromProject == "false") {
+                    if (isResult && isFromProject == "true") {
+                        onBackPressedFromProject()
+                    } else {
                         val calculatorHelper = DiffusersHelper(
                             airDuctArea = airDuctSize,
                             airDuctDiameter = airDuctDiameter,
@@ -354,16 +358,15 @@ fun DiffusersScreen(
                             airSpeed = airSpeed
                         )
                         val result = calculatorHelper.calculate()
+
                         if (result != null) {
                             diffResult = result
                             isResult = true
+                            if (isFromProject == "true") {
+                                newRoomViewModel.setAirExchangePerformance(result.firstResult)
+                            }
                         } else {
                             isSomethingWrong = true
-                        }
-                    } else {
-                        if (isFromProject == "true") {
-                            onSaveClicked()
-                            onBackPressedFromProject()
                         }
                     }
                 },

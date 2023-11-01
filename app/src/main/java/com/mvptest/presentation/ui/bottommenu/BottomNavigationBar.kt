@@ -161,7 +161,7 @@ fun NavigationGraph(
 
         roomDetailsGraph(roomDetailsViewModel, newRoomViewModel, navController)
 
-        calculationGraph(navController, context, aerodynamicViewModel)
+        calculationGraph(navController, context, aerodynamicViewModel, newRoomViewModel)
     }
 }
 
