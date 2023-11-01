@@ -44,10 +44,6 @@ class AerodynamicViewModel() : ViewModel() {
                 totalMestsopr = totalMestsopr * Pdin
                 val result = Ptren + totalMestsopr
 
-                val aerodynamicHelper = AerodynamicHelper()
-                val calculateCut = aerodynamicHelper.calculateCut(section.airFlow, 4)
-                setCalculatedDuctSize(index, calculateCut)
-
                 return CalculationResult(CalculationType.AERODYNAMIC, result.toInt().toString())
             }
 
@@ -67,7 +63,6 @@ class AerodynamicViewModel() : ViewModel() {
                 "",
                 "",
                 "",
-                null,
                 listOf(AerodynamicElement("", 0, 0.0))
             )
         )
@@ -95,12 +90,6 @@ class AerodynamicViewModel() : ViewModel() {
     fun setDuctSize(index: Int, ductSize: String) {
         val list = state.sections
         list.get(index).ductSize = ductSize
-        state = state.copy(sections = list)
-    }
-
-    private fun setCalculatedDuctSize(index: Int, ductSize: String) {
-        val list = state.sections
-        list.get(index).calculateDuctSize = ductSize
         state = state.copy(sections = list)
     }
 
@@ -154,7 +143,7 @@ class AerodynamicViewModel() : ViewModel() {
 data class AerodynamicViewState(
     var sections: List<AerodynamicSection> = listOf(
         AerodynamicSection(
-            0, "", "", "", null, listOf(
+            0, "", "", "",  listOf(
                 AerodynamicElement("", 0, 0.0)
             )
         )
@@ -166,7 +155,6 @@ data class AerodynamicSection(
     var airFlow: String,
     var length: String,
     var ductSize: String,
-    var calculateDuctSize: String? = null,
     var elements: List<AerodynamicElement>
 )
 

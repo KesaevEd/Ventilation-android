@@ -54,6 +54,7 @@ fun AirHeaterScreen(
     context: Context,
     isFromProject: String,
     onBackPressed: () -> Unit,
+    onBackPressedFromProject: () -> Unit,
     onSaveClicked: () -> Unit
 ) {
 
@@ -215,7 +216,7 @@ fun AirHeaterScreen(
                     modifier = Modifier
                         .width(60.dp)
                         .height(60.dp),
-                    onClick = { onBackPressed() },
+                    onClick = { if (isFromProject == "true") onBackPressedFromProject() else onBackPressed() },
                     border = BorderStroke(1.dp, color = colorResource(id = R.color.dark_gray_2)),
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.white)),
@@ -291,6 +292,7 @@ fun AirHeaterScreen(
                         } else {
                             if (isFromProject == "true") {
                                 onSaveClicked()
+                                onBackPressedFromProject()
                             }
                         }
                     },
@@ -299,7 +301,7 @@ fun AirHeaterScreen(
             }
 
             BackHandler {
-                onBackPressed()
+                if (isFromProject == "true") onBackPressedFromProject() else onBackPressed()
             }
 
         }

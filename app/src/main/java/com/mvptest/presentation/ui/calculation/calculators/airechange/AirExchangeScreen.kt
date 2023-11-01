@@ -48,7 +48,12 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun AirExchangeScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClicked: () -> Unit) {
+fun AirExchangeScreen(
+    isFromProject: String,
+    onBackPressed: () -> Unit,
+    onBackPressedFromProject: () -> Unit,
+    onSaveClicked: () -> Unit
+) {
 
     val airExchangeTypes = listOf(AirExchangeType.MULTIPLICITY, AirExchangeType.SANITARY)
     var airExchangeType by remember {
@@ -211,7 +216,7 @@ fun AirExchangeScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                 onItemClick = { text, value ->
                     isResult = false
                     isSomethingWrong = false
-                    if(airExchangeType == AirExchangeType.MULTIPLICITY) {
+                    if (airExchangeType == AirExchangeType.MULTIPLICITY) {
                         airMultiplicity = value
                     } else {
                         airFlowForOneHuman = value
@@ -251,7 +256,7 @@ fun AirExchangeScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                 modifier = Modifier
                     .width(60.dp)
                     .height(60.dp),
-                onClick = { onBackPressed() },
+                onClick = { if (isFromProject == "true") onBackPressedFromProject() else onBackPressed() },
                 border = BorderStroke(1.dp, color = colorResource(id = R.color.dark_gray_2)),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.white)),
@@ -329,6 +334,7 @@ fun AirExchangeScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                     } else {
                         if (isFromProject == "true") {
                             onSaveClicked()
+                            onBackPressedFromProject()
                         }
                     }
                 },
@@ -338,7 +344,7 @@ fun AirExchangeScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
     }
 
     BackHandler {
-        onBackPressed()
+        if (isFromProject == "true") onBackPressedFromProject() else onBackPressed()
     }
 }
 

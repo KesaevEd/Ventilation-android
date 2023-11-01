@@ -47,7 +47,12 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClicked: () -> Unit) {
+fun DuctCrossSectionScreen(
+    isFromProject: String,
+    onBackPressed: () -> Unit,
+    onBackPressedFromProject: () -> Unit,
+    onSaveClicked: () -> Unit
+) {
 
     var airFlow by remember {
         mutableStateOf(value = "")
@@ -121,13 +126,13 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
             modifier = Modifier
                 .padding(top = 5.dp)
         ) {
-            PairObjectsDropDown(R.string.room_destination ,
+            PairObjectsDropDown(R.string.room_destination,
                 airSpeedRectangle, onItemClick = { destination, speed ->
-                isResult = false
-                isSomethingWrong = false
-                roomDestination = destination
-                airSpeed = speed
-            })
+                    isResult = false
+                    isSomethingWrong = false
+                    roomDestination = destination
+                    airSpeed = speed
+                })
             Icon(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
@@ -162,7 +167,7 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
                 modifier = Modifier
                     .width(60.dp)
                     .height(60.dp),
-                onClick = { onBackPressed() },
+                onClick = { if (isFromProject == "true") onBackPressedFromProject() else onBackPressed() },
                 border = BorderStroke(1.dp, color = colorResource(id = R.color.dark_gray_2)),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.white)),
@@ -237,6 +242,7 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
                     } else {
                         if (isFromProject == "true") {
                             onSaveClicked()
+                            onBackPressedFromProject()
                         }
                     }
                 },
@@ -245,7 +251,7 @@ fun DuctCrossSectionScreen(isFromProject: String, onBackPressed: () -> Unit, onS
         }
 
         BackHandler {
-            onBackPressed()
+            if (isFromProject == "true") onBackPressedFromProject() else onBackPressed()
         }
 
     }

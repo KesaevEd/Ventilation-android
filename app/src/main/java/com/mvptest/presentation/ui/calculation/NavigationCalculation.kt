@@ -13,6 +13,7 @@ import com.mvptest.presentation.ui.calculation.calculators.airheater.AirHeaterSc
 import com.mvptest.presentation.ui.calculation.calculators.conditioner.ConditionerScreen
 import com.mvptest.presentation.ui.calculation.calculators.diffusers.DiffusersScreen
 import com.mvptest.presentation.ui.calculation.calculators.ductcross.DuctCrossSectionScreen
+import com.mvptest.presentation.ui.room.newroom.NavigationNewRoomItem
 
 sealed class NavigationCalculationItem(val route: String) {
     object AirExchange : NavigationCalculationItem(route = "air_exchange/{fromProject}")
@@ -40,12 +41,28 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
+            }, onBackPressedFromProject = {
+                navController.navigate(NavigationNewRoomItem.Third.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
             }, onSaveClicked = {})
         }
         composable(NavigationCalculationItem.DuctCrossSection.route) {
             val fromProject = it.arguments?.getString("fromProject")
             DuctCrossSectionScreen(fromProject ?: "false", onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
+            }, onBackPressedFromProject = {
+                navController.navigate(NavigationNewRoomItem.Third.route) {
                     popUpTo(
                         NavigationItem.Calculating.route
                     ) {
@@ -66,14 +83,28 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
-            }, onSaveClicked = {
-
-            })
+            }, onBackPressedFromProject = {
+                navController.navigate(NavigationNewRoomItem.Third.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
+            }, onSaveClicked = {})
         }
         composable(NavigationCalculationItem.Diffusers.route) {
             val fromProject = it.arguments?.getString("fromProject")
             DiffusersScreen(fromProject ?: "false", onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
+            }, onBackPressedFromProject = {
+                navController.navigate(NavigationNewRoomItem.Third.route) {
                     popUpTo(
                         NavigationItem.Calculating.route
                     ) {
@@ -94,6 +125,14 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
                         inclusive = true
                     }
                 }
+            }, onBackPressedFromProject = {
+                navController.navigate(NavigationNewRoomItem.Third.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
             }, onSaveClicked = {
 
             })
@@ -102,6 +141,14 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
             val fromProject = it.arguments?.getString("fromProject")
             ConditionerScreen(fromProject ?: "false", onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
+                    popUpTo(
+                        NavigationItem.Calculating.route
+                    ) {
+                        inclusive = true
+                    }
+                }
+            }, onBackPressedFromProject = {
+                navController.navigate(NavigationNewRoomItem.Third.route) {
                     popUpTo(
                         NavigationItem.Calculating.route
                     ) {

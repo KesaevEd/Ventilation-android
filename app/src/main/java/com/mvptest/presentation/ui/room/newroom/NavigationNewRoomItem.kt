@@ -70,7 +70,8 @@ fun NavGraphBuilder.newRoomGraph(
                         newValue = projectId
                     )
                 )
-            }
+            },
+            navController
         )
     }
 }

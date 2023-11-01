@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.calculation.calculators.diffusers
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -48,7 +49,12 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun DiffusersScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClicked: () -> Unit) {
+fun DiffusersScreen(
+    isFromProject: String,
+    onBackPressed: () -> Unit,
+    onBackPressedFromProject: () -> Unit,
+    onSaveClicked: () -> Unit
+) {
 
     val diffTypes = listOf(DiffusersType.RECTANGULAR, DiffusersType.CIRCULAR)
 
@@ -237,12 +243,15 @@ fun DiffusersScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClic
             modifier = Modifier
                 .padding(top = 5.dp)
         ) {
-            PairObjectsDropDown(R.string.room_destination,airSpeedList, onItemClick = { destination, speed ->
-                isResult = false
-                isSomethingWrong = false
-                roomDestination = destination
-                airSpeed = speed
-            })
+            PairObjectsDropDown(
+                R.string.room_destination,
+                airSpeedList,
+                onItemClick = { destination, speed ->
+                    isResult = false
+                    isSomethingWrong = false
+                    roomDestination = destination
+                    airSpeed = speed
+                })
             Icon(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
@@ -277,7 +286,7 @@ fun DiffusersScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClic
                 modifier = Modifier
                     .width(60.dp)
                     .height(60.dp),
-                onClick = { onBackPressed() },
+                onClick = { if (isFromProject == "true") onBackPressedFromProject() else onBackPressed() },
                 border = BorderStroke(1.dp, color = colorResource(id = R.color.dark_gray_2)),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.white)),
@@ -354,12 +363,16 @@ fun DiffusersScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClic
                     } else {
                         if (isFromProject == "true") {
                             onSaveClicked()
+                            onBackPressedFromProject()
                         }
                     }
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
             )
         }
+    }
+    BackHandler {
+        if (isFromProject == "true") onBackPressedFromProject() else onBackPressed()
     }
 }
 

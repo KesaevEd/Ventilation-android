@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.domain.models.HeaterType
+import com.mvptest.domain.models.VentSystemDestination
 import com.mvptest.presentation.ui.common.MyAlertDialog
 import com.mvptest.presentation.ui.common.TextMediumBlack14sp
 import com.mvptest.presentation.ui.common.TextTitle
@@ -193,23 +194,11 @@ fun RoomDetailsScreen(
 
                 TextTitleOfText(
                     modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.room_volume
+                    textId = R.string.vent_system_destination
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = if (state.value.roomDetails?.roomVolume != "") state.value.roomDetails?.roomVolume.toString() + stringResource(
-                        id = R.string.m3
-                    ) else ""
-
-                )
-
-                TextTitleOfText(
-                    modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.room_destination
-                )
-                TextMediumBlack14sp(
-                    modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.roomDestination ?: ""
+                    text = state.value.roomDetails?.ventSystemDestination?.string ?: VentSystemDestination.FORCED.string
                 )
 
                 TextTitleOfText(
@@ -252,23 +241,21 @@ fun RoomDetailsScreen(
 
                 TextTitleOfText(
                     modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.pressure_loss
+                    textId = R.string.air_duct_cross
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = if(state.value.roomDetails?.pressureLoss != "") state.value.roomDetails?.pressureLoss.toString() + stringResource(
-                        id = R.string.pa
-                    ) else ""
+                    text = if (state.value.roomDetails?.airDuctCrossSize != "") state.value.roomDetails?.airDuctCrossSize.toString() else ""
                 )
 
                 TextTitleOfText(
                     modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.air_duct_area
+                    textId = R.string.pressure_loss
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = if(state.value.roomDetails?.airDuctArea != "") state.value.roomDetails?.airDuctArea.toString() + stringResource(
-                        id = R.string.m2
+                    text = if (state.value.roomDetails?.pressureLoss != "") state.value.roomDetails?.pressureLoss.toString() + stringResource(
+                        id = R.string.pa
                     ) else ""
                 )
 
@@ -287,7 +274,7 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = if(state.value.roomDetails?.heaterPerformance != "") state.value.roomDetails?.heaterPerformance.toString() + stringResource(
+                    text = if (state.value.roomDetails?.heaterPerformance != "") state.value.roomDetails?.heaterPerformance.toString() + stringResource(
                         id = R.string.kvt
                     ) else ""
                 )
@@ -312,7 +299,7 @@ fun RoomDetailsScreen(
                     )
                     TextMediumBlack14sp(
                         modifier = Modifier.padding(top = 5.dp, bottom = 25.dp),
-                        text = if(state.value.roomDetails?.airConditionerPerformance != "") state.value.roomDetails?.airConditionerPerformance.toString() + stringResource(
+                        text = if (state.value.roomDetails?.airConditionerPerformance != "") state.value.roomDetails?.airConditionerPerformance.toString() + stringResource(
                             id = R.string.kvt
                         ) else ""
                     )

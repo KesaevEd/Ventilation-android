@@ -62,7 +62,7 @@
     <string name="air_exchange_choose_variant">Выберите вариант расчета</string>
     <string name="multiplicity_variant">По кратности</string>
     <string name="sanitary_variant">По сан. нормам</string>
-    <string name="people_behavior">Тип пребывания в помещении</string>
+    <string name="people_behavior">Вариант пребывания в помещении</string>
     <string name="supply_air_volume">Объем приточного воздуха</string>
     <string name="exhaust_air_volume">Объем вытяжного воздуха</string>
 
@@ -134,15 +134,17 @@
 
     <string name="vent_system_number">№ вентиляционной системы</string>
     <string name="room_volume">Объем помещения, м3</string>
+    <string name="vent_system_destination">Назначение вентиляции</string>
     <string name="room_destination">Назначение помещения</string>
     <string name="dead_lines">Сроки выполнения работ</string>
     <string name="comment_project">Комментарии к проекту</string>
     <string name="comment_room">Комментарии к помещению</string>
     <string name="air_exchange_performance">Производительность воздухообмена, м3</string>
+    <string name="air_duct_cross">Сечение воздуховодов</string>
     <string name="pressure_loss_and_air_area">Потери давления и площадь воздуховодов</string>
     <string name="pressure_loss">Потери давления, Па</string>
     <string name="air_duct_area">Площадь воздуховодов, м2</string>
-    <string name="heater_type">Выбор калорифера</string>
+    <string name="heater_type">Тип калорифера</string>
     <string name="heater_performance">Производительность калорифера, кВт</string>
     <string name="air_conditioner">Кондиционер</string>
     <string name="air_conditioner_performance">Производительность кондиционера, кВт</string>
@@ -150,8 +152,13 @@
     <string name="water_heater">Водяной</string>
     <string name="electro_heater">Электро</string>
     <string name="no_heater">Нет</string>
+    <string name="forced">Приточная</string>
+    <string name="exhaust">Вытяжная</string>
+    <string name="forced_exhaust">Приточно-вытяжная</string>
     <string name="value_m3">Значение, м3</string>
     <string name="value_kvt">Значение, кВт</string>
+    <string name="value_pa">Значение, Па</string>
+    <string name="value">Значение</string>
 
     <string name="ask_cancel_create_project">Вы уверены, что хотите завершить создание проекта?</string>
     <string name="ask_cancel_create_room">Вы уверены, что хотите завершить создание помещения?</string>

@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.calculation.calculators.conditioner
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -51,7 +52,12 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveClicked: () -> Unit) {
+fun ConditionerScreen(
+    isFromProject: String,
+    onBackPressed: () -> Unit,
+    onBackPressedFromProject: () -> Unit,
+    onSaveClicked: () -> Unit
+) {
 
     var peopleBehaviors by remember { mutableStateOf("") }
 
@@ -373,7 +379,7 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                     modifier = Modifier
                         .width(60.dp)
                         .height(60.dp),
-                    onClick = { onBackPressed() },
+                    onClick = { if (isFromProject == "true") onBackPressedFromProject() else onBackPressed() },
                     border = BorderStroke(
                         1.dp,
                         color = colorResource(id = R.color.dark_gray_2)
@@ -461,6 +467,7 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                         } else {
                             if (isFromProject == "true") {
                                 onSaveClicked()
+                                onBackPressedFromProject()
                             }
                         }
                     },
@@ -468,6 +475,9 @@ fun ConditionerScreen(isFromProject: String, onBackPressed: () -> Unit, onSaveCl
                 )
             }
         }
+    }
+    BackHandler {
+        if (isFromProject == "true") onBackPressedFromProject() else onBackPressed()
     }
 }
 

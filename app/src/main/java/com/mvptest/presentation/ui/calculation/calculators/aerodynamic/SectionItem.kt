@@ -24,13 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.mvptest.presentation.ui.common.AerodynamicElementsDropDown
 import com.mvptest.presentation.ui.common.AirDuctSizeAerodynamicDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
-import com.mvptest.presentation.ui.common.TextMediumBlack14sp
 import com.mvptest.presentation.ui.common.TextMediumGray14sp
 import com.mvptest.ventilation.R
 
@@ -53,10 +51,6 @@ fun SectionItem(
 
     var size by remember {
         mutableStateOf(value = aerodynamicViewModel.state.sections[sectionIndex].ductSize)
-    }
-
-    var calculatedDuctSize by remember {
-        mutableStateOf(value = aerodynamicViewModel.state.sections[sectionIndex].calculateDuctSize)
     }
 
     var elements by remember {
@@ -134,36 +128,35 @@ fun SectionItem(
             }
         }
 
-        Row() {
-            if( calculatedDuctSize != null) {
-                TextMediumBlack14sp(modifier = Modifier, text = stringResource(id = R.string.recommended_duct_size) + " " + calculatedDuctSize!!)
+        Row(modifier = Modifier
+            .padding(top = 5.dp)) {
+            Spacer(modifier = Modifier.weight(0.65f))
+            Box(modifier = Modifier.weight(0.35f)) {
+                Button(
+                    modifier = Modifier.align(Alignment.Center),
+                    shape = RoundedCornerShape(8.dp),
+                    content = {
+                        Row(modifier = Modifier) {
+                            Icon(
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .height(20.dp)
+                                    .width(20.dp),
+                                painter = painterResource(id = R.drawable.ic_add),
+                                contentDescription = "image",
+                                tint = Color.White,
+                            )
+                        }
+                    },
+                    onClick = {
+                        val newList = elements.toMutableList()
+                        newList.add(AerodynamicElement("", 0, 0.0))
+                        elements = newList
+                        aerodynamicViewModel.addElement(sectionIndex)
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                )
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Button(
-                modifier = Modifier
-                    .padding(top = 5.dp, end = 34.dp),
-                shape = RoundedCornerShape(8.dp),
-                content = {
-                    Row(modifier = Modifier) {
-                        Icon(
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .height(20.dp)
-                                .width(20.dp),
-                            painter = painterResource(id = R.drawable.ic_add),
-                            contentDescription = "image",
-                            tint = Color.White,
-                        )
-                    }
-                },
-                onClick = {
-                    val newList = elements.toMutableList()
-                    newList.add(AerodynamicElement("", 0, 0.0))
-                    elements = newList
-                    aerodynamicViewModel.addElement(sectionIndex)
-                },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
-            )
         }
     }
 }

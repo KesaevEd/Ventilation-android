@@ -1,5 +1,6 @@
 package com.mvptest.data
 
+import android.util.Log
 import com.mvptest.data.network.RoomsApi
 import com.mvptest.data.network.mappers.toProject
 import com.mvptest.data.network.mappers.toRoomDetails
@@ -16,7 +17,9 @@ class RoomsRepositoryImpl @Inject constructor(private val roomsStorage: RoomsSto
         val roomsResponse = roomsApi.getRoomsByUserId(userId)
 
         if(roomsResponse.code() == 200 && roomsResponse.body() != null) {
+            Log.d("saveroom","fetchRooms = ${roomsResponse.body()}")
             for (room in roomsResponse.body()!!.rooms) {
+                Log.d("saveroom","room = $room")
                 roomsStorage.insertRoom(room.toRoomDetails(), room.projectId)
             }
         }

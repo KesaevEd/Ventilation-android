@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.room.newroom
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.mvptest.data.SharedPrefStorage
 import com.mvptest.domain.RoomsRepository
 import com.mvptest.domain.models.HeaterType
+import com.mvptest.domain.models.VentSystemDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -21,13 +23,13 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
 
     private var roomId = ""
 
-    private val userId = sharedPrefStorage.userId
-
     fun saveRoom(projectId: String) {
         viewModelScope.launch {
+            val userId = sharedPrefStorage.userId
             if(roomId == ""){
                 roomId = UUID.randomUUID().toString()
             }
+            Log.d("saveroom","save projectId = $projectId   userId = $userId   room = ${state.toRoomDetails(roomId)}")
             roomsRepository.saveRoom(room = state.toRoomDetails(roomId), projectId = projectId, userId = userId!!)
         }
     }
@@ -47,8 +49,7 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
             id = null,
             title = null,
             systemNumber = null,
-            roomVolume = null,
-            roomDestination = null,
+            ventSystemDestination = null,
             startDate = null,
             airExchangePerformance = null,
             pressureLoss = null,
@@ -71,12 +72,8 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
         state = state.copy(systemNumber = systemNumber)
     }
 
-    fun setRoomVolume(roomVolume: String) {
-        state = state.copy(roomVolume = roomVolume)
-    }
-
-    fun setRoomDestination(roomDestination: String) {
-        state = state.copy(roomDestination = roomDestination)
+    fun setVentSystemDestination(ventSystemDestination: VentSystemDestination) {
+        state = state.copy(ventSystemDestination = ventSystemDestination)
     }
 
     fun setStartDate(startDate: String) {
@@ -91,7 +88,7 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
         state = state.copy(pressureLoss = pressureLoss)
     }
 
-    fun setAirDuctArea(airDuctArea: String) {
+    fun setAirDuctCross(airDuctArea: String) {
         state = state.copy(airDuctArea = airDuctArea)
     }
 
