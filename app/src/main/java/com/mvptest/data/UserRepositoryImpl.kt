@@ -24,6 +24,14 @@ class UserRepositoryImpl @Inject constructor(private val authApi: AuthApi, priva
         return userResponse
     }
 
+    override suspend fun sendCodeToEmailChangePassword(sendCodeRequest: SendCodeRequest): Response<Unit> {
+        return authApi.sendCodeChangePassword(sendCodeRequest)
+    }
+
+    override suspend fun changePassword(loginRequest: LoginRequest): Response<Unit> {
+        return authApi.changePassword(loginRequest)
+    }
+
     override suspend fun hello(): String {
         return authApi.hello()
     }

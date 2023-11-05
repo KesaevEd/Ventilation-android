@@ -30,6 +30,16 @@ interface AuthApi {
         @Body loginRequest: LoginRequest
     ): Response<UserResponse>
 
+    @POST("/change_password")
+    suspend fun changePassword(
+        @Body loginRequest: LoginRequest
+    ): Response<Unit>
+
+    @POST("/send_code_change_password")
+    suspend fun sendCodeChangePassword(
+        @Body sendCodeRequest: SendCodeRequest
+    ): Response<Unit>
+
     @GET("/")
     suspend fun hello(): String
 }
