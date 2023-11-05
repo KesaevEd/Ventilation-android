@@ -58,7 +58,8 @@ class MainActivity : AppCompatActivity() {
                 roomDetailsViewModel,
                 userAuthViewModel,
                 aerodynamicViewModel,
-                this
+                this,
+                this@MainActivity
             )
         }
     }

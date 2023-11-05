@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.bottommenu
 
+import android.app.Activity
 import android.content.Context
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -102,7 +103,8 @@ fun NavigationGraph(
     roomDetailsViewModel: RoomDetailsViewModel,
     userAuthViewModel: UserAuthViewModel,
     aerodynamicViewModel: AerodynamicViewModel,
-    context: Context
+    context: Context,
+    activity: Activity
 ) {
 
     var startDestination = ""
@@ -157,7 +159,7 @@ fun NavigationGraph(
             navController
         )
 
-        newRoomGraph(newProjectViewModel, newRoomViewModel, navController)
+        newRoomGraph(newProjectViewModel, newRoomViewModel, navController, activity)
 
         roomDetailsGraph(roomDetailsViewModel, newRoomViewModel, navController)
 
