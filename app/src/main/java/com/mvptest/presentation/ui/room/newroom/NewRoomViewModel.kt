@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.room.newroom
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +11,7 @@ import com.mvptest.data.SharedPrefStorage
 import com.mvptest.domain.RoomsRepository
 import com.mvptest.domain.models.HeaterType
 import com.mvptest.domain.models.VentSystemDestination
+import com.mvptest.utils.showInAppReview
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -62,6 +64,12 @@ class NewRoomViewModel @Inject constructor(private val roomsRepository: RoomsRep
             comment = null
         )
         roomId = ""
+    }
+
+    fun showInAppReviewDialog(activity: Activity) {
+        viewModelScope.launch {
+            showInAppReview(sharedPrefStorage, activity)
+        }
     }
 
     fun setTitle(title: String) {

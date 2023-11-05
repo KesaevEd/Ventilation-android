@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.room.newroom
 
+import android.app.Activity
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -19,7 +20,8 @@ sealed class NavigationNewRoomItem(val route: String) {
 fun NavGraphBuilder.newRoomGraph(
     newProjectViewModel: NewProjectViewModel,
     newRoomViewModel: NewRoomViewModel,
-    navController: NavController
+    navController: NavController,
+    activity: Activity
 ){
     composable(NavigationNewRoomItem.First.route) {
         NewRoomScreenFirst(
@@ -70,6 +72,7 @@ fun NavGraphBuilder.newRoomGraph(
                         newValue = projectId
                     )
                 )
+                newRoomViewModel.showInAppReviewDialog(activity)
             },
             navController
         )

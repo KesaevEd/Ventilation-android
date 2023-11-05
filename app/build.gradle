@@ -105,4 +105,7 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.23.1"
+
+    //Google Play In-App Review API
+    implementation 'com.google.android.play:core-ktx:1.8.1'
 }

@@ -11,6 +11,7 @@ class SharedPrefStorage(@ApplicationContext context: Context) {
     private val prefUserId = context.getSharedPreferences(USER_ID, Context.MODE_PRIVATE)
     private val prefEmail = context.getSharedPreferences(USER_EMAIL, Context.MODE_PRIVATE)
     private val prefPassword = context.getSharedPreferences(USER_PASSWORD, Context.MODE_PRIVATE)
+    private val prefCreateRoomCounter = context.getSharedPreferences(CREATE_ROOM_COUNTER, Context.MODE_PRIVATE)
 
     var token: String?
         get() {
@@ -59,10 +60,24 @@ class SharedPrefStorage(@ApplicationContext context: Context) {
                     .apply()
             }
         }
+
+    var createRoomCounter: Int
+        get() {
+            return prefCreateRoomCounter.getInt(CREATE_ROOM_COUNTER, 0)
+        }
+        set(value) {
+            value.let {
+                prefCreateRoomCounter.edit()
+                    .putInt(CREATE_ROOM_COUNTER, it)
+                    .apply()
+            }
+        }
+
     private companion object {
         private const val USER_TOKEN = "user_token"
         private const val USER_ID = "user_id"
         private const val USER_EMAIL = "user_token"
         private const val USER_PASSWORD = "user_token"
+        private const val CREATE_ROOM_COUNTER = "create_room_counter"
     }
 }
