@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.mvptest.data.SharedPrefStorage
 import com.mvptest.data.network.mappers.toUser
 import com.mvptest.data.network.requests.LoginRequest
@@ -78,6 +79,7 @@ class UserAuthViewModel @Inject constructor(
                         codeToEmail
                     )
                 )
+                Log.d("sendCode", "response = ${response.code()}")
 
                 when (response.code()) {
                     200 -> {
@@ -89,6 +91,41 @@ class UserAuthViewModel @Inject constructor(
 
                     409 -> {
                         state = state.copy(isLoading = false, isEmailAlreadyExist = true)
+                    }
+
+                    500 -> {
+                        state = state.copy(isLoading = false, isEmailNotFound = true)
+                    }
+
+                    else -> {
+                        state = state.copy(isLoading = false, somethingWrong = true)
+                    }
+                }
+            } catch (e: Exception) {
+                state = state.copy(isLoading = false, somethingWrong = true)
+                Log.d("registrationScreen", "sendCodeToEmail Exception = $e")
+            }
+        }
+    }
+
+    fun sendCodeToEmailChangePassword() {
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            try {
+                val response = userRepository.sendCodeToEmailChangePassword(
+                    sendCodeRequest = SendCodeRequest(
+                        state.email!!,
+                        codeToEmail
+                    )
+                )
+                Log.d("sendCode", "response = ${response.code()}")
+
+                when (response.code()) {
+                    200 -> {
+                        state = state.copy(
+                            isLoading = false,
+                            isSuccessSendCode = true
+                        )
                     }
 
                     500 -> {
@@ -131,9 +168,11 @@ class UserAuthViewModel @Inject constructor(
                             state.password!!
                         )
                     }
+
                     400 -> {
                         state = state.copy(isLoading = false, isPasswordInvalid = true)
                     }
+
                     404 -> {
                         state = state.copy(isLoading = false, isUserNotFound = true)
                     }
@@ -142,7 +181,37 @@ class UserAuthViewModel @Inject constructor(
                         state = state.copy(isLoading = false, somethingWrong = true)
                     }
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
+                state = state.copy(isLoading = false, somethingWrong = true)
+                Log.d("registrationScreen", "registration Exception = $e")
+            }
+        }
+    }
+
+    fun changePassword(password: String) {
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            try {
+                val userResponse = userRepository.changePassword(
+                    loginRequest = LoginRequest(
+                        email = state.email!!,
+                        password = password
+                    )
+                )
+
+                when (userResponse.code()) {
+                    200 -> {
+                        state = state.copy(
+                            isLoading = false,
+                            isSuccessChangePassword = true
+                        )
+                    }
+
+                    else -> {
+                        state = state.copy(isLoading = false, somethingWrong = true)
+                    }
+                }
+            } catch (e: Exception) {
                 state = state.copy(isLoading = false, somethingWrong = true)
                 Log.d("registrationScreen", "registration Exception = $e")
             }
@@ -154,12 +223,20 @@ class UserAuthViewModel @Inject constructor(
         return random.toString()
     }
 
-    fun checkEmailCode(inputCode: String) {
+    fun checkEmailCode(inputCode: String, fromForgotPassword: String, navController: NavController) {
         if (inputCode != codeToEmail) {
             state = state.copy(isCodeIncorrect = true)
         } else {
-            registration()
+            if(fromForgotPassword == "false") {
+                registration()
+            }else{
+                navigateToChangePassword(navController)
+            }
         }
+    }
+
+    private fun navigateToChangePassword(navController: NavController){
+        navController.navigate(NavigationAuthItem.RestorePassword.route)
     }
 
     fun setEmail(email: String) {
@@ -170,23 +247,59 @@ class UserAuthViewModel @Inject constructor(
         state = state.copy(password = password)
     }
 
+    fun passwordsNotSame() {
+        state = state.copy(isPasswordNotSame = true)
+    }
+
     fun stopSuccessRegister() {
         state = state.copy(isSuccessRegistration = false, somethingWrong = false)
     }
 
+    fun stopSuccessChangePassword(){
+        state = state.copy(
+            isSuccessChangePassword = false,
+            somethingWrong = false,
+            isEmailNotFound = false,
+            isUserNotFound = false
+        )
+    }
+
     fun stopSuccessSendCode() {
-        state = state.copy(isSuccessSendCode = false, somethingWrong = false, isEmailNotFound = false, isUserNotFound = false)
+        state = state.copy(
+            isSuccessSendCode = false,
+            somethingWrong = false,
+            isEmailNotFound = false,
+            isUserNotFound = false
+        )
     }
 
     fun stopSuccessLogin() {
-        state = state.copy(isSuccessLogin = false, somethingWrong = false, isUserNotFound = false, isPasswordInvalid = false)
+        state = state.copy(
+            isSuccessLogin = false,
+            somethingWrong = false,
+            isUserNotFound = false,
+            isPasswordInvalid = false
+        )
     }
 
-    fun clearAllError(){
-        state = state.copy(somethingWrong = false, isEmailNotFound = false, isUserNotFound = false, isPasswordInvalid = false, isCodeIncorrect = false, isEmailAlreadyExist = false)
+    fun clearAllError() {
+        state = state.copy(
+            somethingWrong = false,
+            isEmailNotFound = false,
+            isUserNotFound = false,
+            isPasswordInvalid = false,
+            isCodeIncorrect = false,
+            isEmailAlreadyExist = false,
+            isPasswordNotSame = false
+        )
     }
 
-    private fun saveUserInSharedPref(userId: String, token: String, email: String, password: String) {
+    private fun saveUserInSharedPref(
+        userId: String,
+        token: String,
+        email: String,
+        password: String
+    ) {
         sharedPrefStorage.userId = userId
         sharedPrefStorage.token = token
         sharedPrefStorage.email = email

@@ -29,6 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.mvptest.presentation.ui.bottommenu.NavigationItem
 import com.mvptest.presentation.ui.common.BigTextTitle
 import com.mvptest.presentation.ui.common.ButtonWithText
 import com.mvptest.presentation.ui.common.RoundedTextField
@@ -40,7 +42,8 @@ import kotlinx.coroutines.delay
 fun EmailCodeScreen(
     userAuthViewModel: UserAuthViewModel,
     context: Context,
-    logUpClick: () -> Unit
+    navController: NavController,
+    fromForgotPassword: String
 ) {
     var emailCode by remember { mutableStateOf("") }
     var sendRepeatTextColor by remember { mutableIntStateOf(R.color.gray) }
@@ -70,7 +73,7 @@ fun EmailCodeScreen(
         ) {
             BigTextTitle(
                 modifier = Modifier.align(Alignment.CenterHorizontally), text = stringResource(
-                    id = R.string.registration
+                    id = if(fromForgotPassword == "false") R.string.registration else R.string.restore_password
                 )
             )
             RoundedTextField(
@@ -93,15 +96,26 @@ fun EmailCodeScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
+            if (userAuthViewModel.state.isCodeIncorrect == true) {
+                Text(
+                    modifier = Modifier.padding(top = 20.dp),
+                    text = stringResource(id = R.string.password_not_same),
+                    fontFamily = interFamily,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Light,
+                    color = colorResource(id = R.color.red)
+                )
+            }
+
             ButtonWithText(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 30.dp),
-                textId = R.string.sign_up,
+                textId = if(fromForgotPassword == "true") R.string.do_restore_password else R.string.sign_up,
                 buttonColor = registerButtonColor,
                 onClick = {
                     if (canRegister) {
-                        userAuthViewModel.checkEmailCode(emailCode)
+                        userAuthViewModel.checkEmailCode(emailCode, fromForgotPassword, navController)
                     }
                 }
             )
@@ -137,20 +151,14 @@ fun EmailCodeScreen(
         }
 
         if (userAuthViewModel.state.isSuccessRegistration == true) {
-            Toast.makeText(context, "Регистрация прошла успешно", Toast.LENGTH_SHORT)
-                .show()
-            logUpClick()
             userAuthViewModel.stopSuccessRegister()
-        }
-
-        if (userAuthViewModel.state.isCodeIncorrect == true) {
-            Toast.makeText(
-                context,
-                "Неверный код",
-                Toast.LENGTH_SHORT
-            )
-                .show()
-            userAuthViewModel.clearAllError()
+            if (fromForgotPassword == "false") {
+                navController.navigate(NavigationItem.Home.route)
+                Toast.makeText(context, "Регистрация прошла успешно", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                navController.navigate(NavigationAuthItem.RestorePassword.route)
+            }
         }
 
         if (userAuthViewModel.state.somethingWrong == true) {

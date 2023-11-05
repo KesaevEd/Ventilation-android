@@ -15,6 +15,8 @@ data class UserAuthViewState(
     val isEmailNotFound: Boolean? = false,
     val isEmailAlreadyExist: Boolean? = false,
     val isUserNotFound: Boolean? = false,
+    val isSuccessChangePassword: Boolean? = false,
+    val isPasswordNotSame: Boolean? = false,
     val user: User? = null,
     val somethingWrong: Boolean? = false,
     val email: String? = null,

@@ -10,6 +10,8 @@ interface UserRepository {
     suspend fun sendCodeToEmail(sendCodeRequest: SendCodeRequest): Response<Unit>
     suspend fun registration(registerRequest: RegisterRequest): Response<UserResponse>
     suspend fun login(loginRequest: LoginRequest): Response<UserResponse>
+    suspend fun sendCodeToEmailChangePassword(sendCodeRequest: SendCodeRequest): Response<Unit>
+    suspend fun changePassword(loginRequest: LoginRequest): Response<Unit>
     suspend fun hello(): String
 
 }

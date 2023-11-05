@@ -1,4 +1,4 @@
-package com.mvptest.presentation.ui.auth
+package com.mvptest.presentation.ui.auth.restorepassword
 
 import android.content.Context
 import android.widget.Toast
@@ -18,11 +18,9 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,8 +36,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mvptest.data.network.requests.RegisterRequest
-import com.mvptest.data.network.requests.SendCodeRequest
+import androidx.navigation.NavController
+import com.mvptest.presentation.ui.auth.NavigationAuthItem
+import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.common.BigTextTitle
 import com.mvptest.presentation.ui.common.ButtonWithText
 import com.mvptest.presentation.ui.common.PasswordTextField
@@ -48,17 +47,15 @@ import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun RegistrationScreen(
-    logUpClick: () -> Unit,
+fun RestorePasswordScreen(
+    navController: NavController,
     userAuthViewModel: UserAuthViewModel,
     context: Context
 ) {
-    var email by remember { mutableStateOf(value = userAuthViewModel.state.email) }
     var password by remember { mutableStateOf(value = userAuthViewModel.state.password) }
     var passwordRepeat by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var passwordRepeatVisible by remember { mutableStateOf(false) }
-    var checkBoxChecked by remember { mutableStateOf(true) }
 
     Box(
         modifier = Modifier
@@ -70,24 +67,10 @@ fun RegistrationScreen(
         ) {
             BigTextTitle(
                 modifier = Modifier.align(Alignment.CenterHorizontally), text = stringResource(
-                    id = R.string.registration
+                    id = R.string.restore_password
                 )
             )
-            RoundedTextField(
-                modifier = Modifier
-                    .padding(top = 30.dp)
-                    .fillMaxWidth(),
-                value = email ?: "",
-                onValueChange = { text ->
-                    userAuthViewModel.clearAllError()
-                    userAuthViewModel.setEmail(text)
-                    email = text
-                },
-                hint = stringResource(
-                    id = R.string.email
-                ),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-            )
+
             Box(
                 modifier = Modifier.padding(top = 20.dp)
             ) {
@@ -96,7 +79,6 @@ fun RegistrationScreen(
                     value = password ?: "",
                     onValueChange = {
                         userAuthViewModel.clearAllError()
-                        userAuthViewModel.setPassword(it)
                         password = it
                     },
                     hint = stringResource(id = R.string.password),
@@ -124,8 +106,8 @@ fun RegistrationScreen(
                     modifier = Modifier.fillMaxWidth(),
                     value = passwordRepeat,
                     onValueChange = {
-                        userAuthViewModel.clearAllError()
                         passwordRepeat = it
+                        userAuthViewModel.clearAllError()
                     },
                     hint = stringResource(id = R.string.repeat_password),
                     visualTransformation = if (passwordRepeatVisible) VisualTransformation.None else PasswordVisualTransformation()
@@ -156,72 +138,36 @@ fun RegistrationScreen(
                 )
             }
 
-            if (userAuthViewModel.state.isEmailNotFound == true) {
-                Text(
-                    modifier = Modifier.padding(top = 20.dp),
-                    text = stringResource(id = R.string.email_not_found),
-                    fontFamily = interFamily,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Light,
-                    color = colorResource(id = R.color.red)
-                )
-            }
-
-            if (userAuthViewModel.state.isEmailAlreadyExist == true) {
-                Text(
-                    modifier = Modifier.padding(top = 20.dp),
-                    text = stringResource(id = R.string.email_already_exist),
-                    fontFamily = interFamily,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Light,
-                    color = colorResource(id = R.color.red)
-                )
-            }
-
-            Row(modifier = Modifier.padding(top = 26.dp)) {
-                Checkbox(
-                    modifier = Modifier
-                        .height(16.dp)
-                        .width(16.dp)
-                        .padding(top = 8.dp),
-                    checked = checkBoxChecked,
-                    onCheckedChange = { checkBoxChecked = !checkBoxChecked },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = colorResource(id = R.color.gray),
-                        uncheckedColor = colorResource(id = R.color.gray),
-                        checkmarkColor = colorResource(id = R.color.dark_gray_2)
-                    )
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(start = 8.dp),
-                    text = stringResource(id = R.string.agreement),
-                    fontFamily = interFamily,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Light,
-                    color = colorResource(id = R.color.dark_gray_2)
-                )
-            }
-
             ButtonWithText(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 30.dp),
-                textId = R.string.sign_up,
+                textId = R.string.do_restore_password,
                 onClick = {
-                    if (password == passwordRepeat && password != "") {
-                        userAuthViewModel.sendCodeToEmail()
+                    if(password == passwordRepeat && password != ""){
+                    userAuthViewModel.changePassword(password!!)
                     } else {
                         userAuthViewModel.passwordsNotSame()
                     }
                 }
             )
 
-            if (userAuthViewModel.state.isSuccessSendCode == true) {
-                logUpClick()
-                userAuthViewModel.stopSuccessSendCode()
+            if (userAuthViewModel.state.isSuccessChangePassword == true) {
+                userAuthViewModel.stopSuccessChangePassword()
+                navController.navigate(NavigationAuthItem.Login.route)
             }
 
+            if (userAuthViewModel.state.isEmailNotFound == true) {
+                Toast.makeText(context, "Проверьте введенный email адрес", Toast.LENGTH_SHORT)
+                    .show()
+                userAuthViewModel.clearAllError()
+            }
+
+            if (userAuthViewModel.state.isEmailAlreadyExist == true) {
+                Toast.makeText(context, "Такой email уже существует", Toast.LENGTH_SHORT)
+                    .show()
+                userAuthViewModel.clearAllError()
+            }
             if (userAuthViewModel.state.somethingWrong == true) {
                 Toast.makeText(
                     context,
@@ -234,11 +180,9 @@ fun RegistrationScreen(
         }
 
         if (userAuthViewModel.state.isLoading == true) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
-            ) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.5f))) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.Center)

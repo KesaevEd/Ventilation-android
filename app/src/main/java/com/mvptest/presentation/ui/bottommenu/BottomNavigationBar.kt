@@ -119,7 +119,7 @@ fun NavigationGraph(
             LoginScreen(
                 userAuthViewModel,
                 context,
-                forgotPasswordClick = {},
+                forgotPasswordClick = { navController.navigate(NavigationAuthItem.EnterEmail.route) },
                 logInClick = { navController.navigate(NavigationItem.Home.route) },
                 logUpClick = { navController.navigate(NavigationAuthItem.Registration.route) },
             )

@@ -16,7 +16,8 @@ fun isBottomBarInvisible(route: String): Boolean = when (route) {
     NavigationAuthItem.Login.route -> true
     NavigationAuthItem.Registration.route -> true
     NavigationAuthItem.EmailCode.route -> true
-    NavigationAuthItem.ForgotPassword.route -> true
+    NavigationAuthItem.EnterEmail.route -> true
+    NavigationAuthItem.RestorePassword.route -> true
     NavigationCalculationItem.DuctCrossSection.route -> true
     NavigationCalculationItem.AirExchange.route -> true
     NavigationCalculationItem.AirHeater.route -> true
