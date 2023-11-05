@@ -36,7 +36,8 @@ import com.mvptest.ventilation.R
 fun SectionItem(
     item: AerodynamicSection,
     aerodynamicViewModel: AerodynamicViewModel,
-    onRemoveSection: (sectionIndex: Int) -> Unit
+    onRemoveSection: (sectionIndex: Int) -> Unit,
+    onValueChanged: () -> Unit
 ) {
 
     val sectionIndex = aerodynamicViewModel.state.sections.indexOf(item)
@@ -74,6 +75,7 @@ fun SectionItem(
                     .weight(0.2f)
                     .padding(end = 2.dp),
                 value = airFlow, onValueChange = { text ->
+                    onValueChanged()
                     airFlow = text
                     aerodynamicViewModel.setAirFlow(sectionIndex, text)
                 }, hint = "",
@@ -84,6 +86,7 @@ fun SectionItem(
                     .weight(0.15f)
                     .padding(end = 2.dp),
                 value = length, onValueChange = { text ->
+                    onValueChanged()
                     length = text
                     aerodynamicViewModel.setLength(sectionIndex, text)
                 }, hint = "",
@@ -96,6 +99,7 @@ fun SectionItem(
             ) {
                 AirDuctSizeAerodynamicDropDown(
                     modifier = Modifier, selected = size, onItemClick = { text ->
+                        onValueChanged()
                         size = text
                         aerodynamicViewModel.setDuctSize(sectionIndex, text)
                     })
@@ -113,6 +117,7 @@ fun SectionItem(
             Column(modifier = Modifier.weight(0.35f)) {
                 elements.forEachIndexed { index, aerodynamicElement ->
                     ElementItem(aerodynamicElement, onItemClicked = { newItem ->
+                        onValueChanged()
                         aerodynamicViewModel.setElement(sectionIndex, index, newItem)
                     }, onRemoveClicked = {
                         if (index > 0) {

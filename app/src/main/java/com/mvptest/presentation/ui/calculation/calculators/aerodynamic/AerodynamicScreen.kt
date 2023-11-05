@@ -167,11 +167,13 @@ fun AerodynamicScreen(
             SectionItem(item, aerodynamicViewModel, onRemoveSection = {
                 aerodynamicViewModel.deleteSection(it)
                 sectionNumber--
+            }, onValueChanged = {
+                isResult = false
+                isSomethingWrong = false
             })
         }
 
         item {
-
             ButtonIconAndText(
                 modifier = Modifier
                     .padding(top = 15.dp)

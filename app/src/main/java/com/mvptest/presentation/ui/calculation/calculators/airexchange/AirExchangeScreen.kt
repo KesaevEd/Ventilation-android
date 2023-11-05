@@ -174,6 +174,7 @@ fun AirExchangeScreen(
                     .padding(top = 5.dp),
                 value = roomVolume,
                 onValueChange = {
+                    isSomethingWrong = false
                     roomVolume = it
                 },
                 hint = stringResource(id = R.string.room_volume),

@@ -71,7 +71,11 @@ fun NavGraphBuilder.newRoomGraph(
                         oldValue = "{projectId}",
                         newValue = projectId
                     )
-                )
+                ){
+                    popUpTo(NavigationNewProjectItem.ProjectDetails.route) {
+                        inclusive = true
+                    }
+                }
                 newRoomViewModel.showInAppReviewDialog(activity)
             },
             navController
