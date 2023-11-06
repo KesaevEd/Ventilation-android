@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.mvptest.ventilation">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,33 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Ploshad"
-            android:label="Площадь"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
-        <activity
-            android:name=".Kalorifer"
-            android:label="Калорифер"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
-        <activity
-            android:name=".Sechenie"
-            android:label="Подбор сечения"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
-        <activity
-            android:name=".Reshetki"
-            android:label="Подбор решеток"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
-        <activity
-            android:name=".Conditional"
-            android:label="Кондиционирование"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
-        <activity
-            android:name=".Aerodinamica"
-            android:label="Аэродинамика"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
-        <activity
-            android:name=".Vozduhoobmen"
-            android:label="Воздухообмен"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity
             android:name="com.mvptest.presentation.MainActivity"
             android:screenOrientation="sensor"
