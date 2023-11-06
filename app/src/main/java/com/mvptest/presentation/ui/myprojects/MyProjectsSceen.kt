@@ -1,7 +1,9 @@
 package com.mvptest.presentation.ui.myprojects
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +19,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -41,44 +44,48 @@ fun MyProjectsScreen(
 
     viewModel.getMyProjects()
 
-    Column(Modifier.padding(top = 10.dp)) {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp, start = 18.dp, end = 18.dp, bottom = 10.dp)
-                .align(CenterHorizontally),
-            shape = RoundedCornerShape(16.dp),
-            content = {
-                Row(modifier = Modifier) {
-                    Icon(
-                        modifier = Modifier
-                            .align(CenterVertically)
-                            .height(20.dp)
-                            .width(20.dp),
-                        painter = painterResource(id = R.drawable.ic_add),
-                        contentDescription = "image",
-                        tint = Color.White,
-                    )
-                    Text(
-                        text = stringResource(id = R.string.create_project),
-                        modifier = Modifier
-                            .padding(17.dp),
-                        color = colorResource(id = R.color.white),
-                        textAlign = TextAlign.Center,
-                        fontFamily = interFamily,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-            },
-            onClick = { onCreateNewProjectClicked() },
-            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
-        )
+    Column(
+        Modifier.padding(top = 10.dp)
+    ) {
+        if (viewModel.state.projects != null && viewModel.state.projects!!.isNotEmpty()) {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp, start = 18.dp, end = 18.dp, bottom = 10.dp)
+                    .align(CenterHorizontally),
+                shape = RoundedCornerShape(16.dp),
+                content = {
+                    Row(modifier = Modifier) {
+                        Icon(
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .height(20.dp)
+                                .width(20.dp),
+                            painter = painterResource(id = R.drawable.ic_add),
+                            contentDescription = "image",
+                            tint = Color.White,
+                        )
+                        Text(
+                            text = stringResource(id = R.string.create_project),
+                            modifier = Modifier
+                                .padding(17.dp),
+                            color = colorResource(id = R.color.white),
+                            textAlign = TextAlign.Center,
+                            fontFamily = interFamily,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                },
+                onClick = { onCreateNewProjectClicked() },
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+            )
+        }
         if (viewModel.state.projects != null && viewModel.state.projects!!.isEmpty()) {
             Text(
                 modifier = Modifier
                     .align(alignment = CenterHorizontally)
-                    .padding(top = 150.dp),
+                    .padding(top = 200.dp),
                 text = stringResource(id = R.string.empty_projects),
                 fontSize = 16.sp,
                 fontFamily = interFamily,
@@ -86,6 +93,38 @@ fun MyProjectsScreen(
                 color = colorResource(
                     id = R.color.dark_gray
                 )
+            )
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 30.dp, start = 18.dp, end = 18.dp)
+                    .align(CenterHorizontally),
+                shape = RoundedCornerShape(16.dp),
+                content = {
+                    Row(modifier = Modifier) {
+                        Icon(
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .height(20.dp)
+                                .width(20.dp),
+                            painter = painterResource(id = R.drawable.ic_add),
+                            contentDescription = "image",
+                            tint = Color.White,
+                        )
+                        Text(
+                            text = stringResource(id = R.string.create_project),
+                            modifier = Modifier
+                                .padding(17.dp),
+                            color = colorResource(id = R.color.white),
+                            textAlign = TextAlign.Center,
+                            fontFamily = interFamily,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                },
+                onClick = { onCreateNewProjectClicked() },
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
             )
         } else {
             ListContent(
