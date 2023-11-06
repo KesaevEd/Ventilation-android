@@ -132,25 +132,25 @@ fun RoomDetailsScreen(
                             tint = colorResource(id = R.color.gray)
                         )
                     }
-                    Box(
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .clickable { openSendDialog.value = true }) {
-                        Icon(
-                            modifier = Modifier
-                                .height(50.dp)
-                                .width(50.dp),
-                            tint = Color.White,
-                            painter = painterResource(id = R.drawable.ic_ellipse_white),
-                            contentDescription = "image"
-                        )
-                        Icon(
-                            modifier = Modifier.align(Alignment.Center),
-                            painter = painterResource(id = R.drawable.ic_send),
-                            contentDescription = "image",
-                            tint = colorResource(id = R.color.gray)
-                        )
-                    }
+//                    Box(
+//                        modifier = Modifier
+//                            .padding(top = 10.dp)
+//                            .clickable { openSendDialog.value = true }) {
+//                        Icon(
+//                            modifier = Modifier
+//                                .height(50.dp)
+//                                .width(50.dp),
+//                            tint = Color.White,
+//                            painter = painterResource(id = R.drawable.ic_ellipse_white),
+//                            contentDescription = "image"
+//                        )
+//                        Icon(
+//                            modifier = Modifier.align(Alignment.Center),
+//                            painter = painterResource(id = R.drawable.ic_send),
+//                            contentDescription = "image",
+//                            tint = colorResource(id = R.color.gray)
+//                        )
+//                    }
                     Box(
                         modifier = Modifier
                             .padding(top = 10.dp)

@@ -206,24 +206,37 @@ fun AirExchangeScreen(
             modifier = Modifier.padding(top = 15.dp),
             textId = if (airExchangeType == AirExchangeType.MULTIPLICITY) R.string.room_destination else R.string.people_behavior
         )
-        val list =
-            if (airExchangeType == AirExchangeType.MULTIPLICITY) airMultiplicityByDestination else peopleBehaviorList
         Box(
             modifier = Modifier
                 .padding(top = 5.dp)
         ) {
-            PairObjectsDropDown(
-                R.string.choose_variant,
-                list,
-                onItemClick = { text, value ->
-                    isResult = false
-                    isSomethingWrong = false
-                    if (airExchangeType == AirExchangeType.MULTIPLICITY) {
-                        airMultiplicity = value
-                    } else {
-                        airFlowForOneHuman = value
-                    }
-                })
+            if(airExchangeType == AirExchangeType.MULTIPLICITY) {
+                PairObjectsDropDown(
+                    R.string.choose_variant,
+                    airMultiplicityByDestination,
+                    onItemClick = { text, value ->
+                        isResult = false
+                        isSomethingWrong = false
+                        if (airExchangeType == AirExchangeType.MULTIPLICITY) {
+                            airMultiplicity = value
+                        } else {
+                            airFlowForOneHuman = value
+                        }
+                    })
+            } else {
+                PairObjectsDropDown(
+                    R.string.choose_variant,
+                    peopleBehaviorList,
+                    onItemClick = { text, value ->
+                        isResult = false
+                        isSomethingWrong = false
+                        if (airExchangeType == AirExchangeType.MULTIPLICITY) {
+                            airMultiplicity = value
+                        } else {
+                            airFlowForOneHuman = value
+                        }
+                    })
+            }
             Icon(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
