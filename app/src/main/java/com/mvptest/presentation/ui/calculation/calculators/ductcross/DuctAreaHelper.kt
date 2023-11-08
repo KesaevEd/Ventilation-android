@@ -15,36 +15,42 @@ class DuctAreaHelper(
         var circleCut = ""
 
         try {
-            val calculatingCutArea = airFlow.toFloat() / (3600 * airSpeed.toFloat())
+            if (airSpeed != 0) {
+                val calculatingCutArea = airFlow.toFloat() / (3600 * airSpeed.toFloat())
 
-            for (size in airDuctSizes) {
-                val currentCutArea = getCutArea(size)
+                for (size in airDuctSizes) {
+                    val currentCutArea = getCutArea(size)
 
-                if (airDuctSizes.indexOf(size) == 0 && calculatingCutArea < currentCutArea) {
+                    if (airDuctSizes.indexOf(size) == 0 && calculatingCutArea < currentCutArea) {
 
-                    rectCut = airDuctSizes[0]
-                    circleCut = fromRectToCircleArea(rectCut)
+                        rectCut = airDuctSizes[0]
+                        circleCut = fromRectToCircleArea(rectCut)
 
-                } else if (size == airDuctSizes.last() && (calculatingCutArea > currentCutArea)) {
+                    } else if (size == airDuctSizes.last() && (calculatingCutArea > currentCutArea)) {
 
-                    rectCut = airDuctSizes.last()
-                    circleCut = fromRectToCircleArea(rectCut)
+                        rectCut = airDuctSizes.last()
+                        circleCut = fromRectToCircleArea(rectCut)
 
-                } else if (currentCutArea < calculatingCutArea && calculatingCutArea < getNextSize(size)
-                ) {
-                    if ((calculatingCutArea - currentCutArea) < (getNextSize(size) - calculatingCutArea)
+                    } else if (currentCutArea < calculatingCutArea && calculatingCutArea < getNextSize(
+                            size
+                        )
                     ) {
-                        rectCut = size
-                        circleCut = fromRectToCircleArea(rectCut)
-                    } else {
-                        rectCut = airDuctSizes[airDuctSizes.indexOf(size) + 1]
-                        circleCut = fromRectToCircleArea(rectCut)
+                        if ((calculatingCutArea - currentCutArea) < (getNextSize(size) - calculatingCutArea)
+                        ) {
+                            rectCut = size
+                            circleCut = fromRectToCircleArea(rectCut)
+                        } else {
+                            rectCut = airDuctSizes[airDuctSizes.indexOf(size) + 1]
+                            circleCut = fromRectToCircleArea(rectCut)
 
+                        }
                     }
                 }
-            }
 
-            return CalculationResult(CalculationType.DUCT_CROSS_SECTIONS, rectCut, circleCut)
+                return CalculationResult(CalculationType.DUCT_CROSS_SECTIONS, rectCut, circleCut)
+            } else {
+                return null
+            }
 
         } catch (e: Exception) {
             Log.e("error", "Diffusers Error = $e")

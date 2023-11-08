@@ -128,7 +128,7 @@ fun ConditionerScreen(
             ) {
                 TextTitle(
                     modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp),
-                    text = stringResource(id = R.string.diffusers_title),
+                    text = stringResource(id = R.string.conditioner_title),
                     colorId = R.color.white
                 )
             }
@@ -455,9 +455,7 @@ fun ConditionerScreen(
                                 roomArea = roomArea,
                                 roomHeight = roomHeight,
                                 sunRadiation = sunLevel,
-                                equipments = equipmentList.map {
-                                    it.volume * it.count.toInt()
-                                }
+                                equipments = equipmentList
                             )
                             val result = calculatorHelper.calculate()
 

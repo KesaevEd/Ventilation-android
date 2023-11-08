@@ -24,6 +24,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -79,7 +80,9 @@ fun AerodynamicScreen(
         mutableStateOf(value = false)
     }
 
-    var sectionNumber = 1
+    var sectionNumber by remember {
+        mutableIntStateOf(value = aerodynamicViewModel.sectionNumber)
+    }
 
     val sections by remember {
         derivedStateOf { aerodynamicViewModel.state.sections }
@@ -105,7 +108,7 @@ fun AerodynamicScreen(
                 )
             }
 
-            if(isPortrait) {
+            if (isPortrait) {
                 Row(modifier = Modifier.padding(top = 25.dp)) {
 
                     TextMediumBlack14sp(
@@ -165,8 +168,9 @@ fun AerodynamicScreen(
 
         items(sections) { item ->
             SectionItem(item, aerodynamicViewModel, onRemoveSection = {
-                aerodynamicViewModel.deleteSection(it)
+                aerodynamicViewModel.deleteSection(item)
                 sectionNumber--
+                aerodynamicViewModel.sectionNumber--
             }, onValueChanged = {
                 isResult = false
                 isSomethingWrong = false
@@ -183,6 +187,7 @@ fun AerodynamicScreen(
                 onClick = {
                     aerodynamicViewModel.newSection(sectionNumber)
                     sectionNumber++
+                    aerodynamicViewModel.sectionNumber++
                 }
             )
 
@@ -208,7 +213,7 @@ fun AerodynamicScreen(
                     modifier = Modifier
                         .width(60.dp)
                         .height(60.dp),
-                    onClick = { if(isFromProject == "true") onBackPressedFromProject() else onBackPressed() },
+                    onClick = { if (isFromProject == "true") onBackPressedFromProject() else onBackPressed() },
                     border = BorderStroke(1.dp, color = colorResource(id = R.color.dark_gray_2)),
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.white)),

@@ -6,21 +6,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,7 +26,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -42,7 +36,6 @@ import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.common.BigTextTitle
 import com.mvptest.presentation.ui.common.ButtonWithText
 import com.mvptest.presentation.ui.common.PasswordTextField
-import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -52,10 +45,12 @@ fun RestorePasswordScreen(
     userAuthViewModel: UserAuthViewModel,
     context: Context
 ) {
-    var password by remember { mutableStateOf(value = userAuthViewModel.state.password) }
+    var password by remember { mutableStateOf("") }
     var passwordRepeat by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var passwordRepeatVisible by remember { mutableStateOf(false) }
+    var canRestorePassword by remember { mutableStateOf(false) }
+    var registerButtonColor by remember { mutableIntStateOf(R.color.gray) }
 
     Box(
         modifier = Modifier
@@ -63,7 +58,7 @@ fun RestorePasswordScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(start = 18.dp, end = 18.dp, top = 35.dp)
+                .padding(start = 18.dp, end = 18.dp, top = 150.dp)
         ) {
             BigTextTitle(
                 modifier = Modifier.align(Alignment.CenterHorizontally), text = stringResource(
@@ -78,10 +73,17 @@ fun RestorePasswordScreen(
                     modifier = Modifier.fillMaxWidth(),
                     value = password ?: "",
                     onValueChange = {
+                        if (it.length < 6 || passwordRepeat.length < 6) {
+                            canRestorePassword = false
+                            registerButtonColor = R.color.gray
+                        } else {
+                            canRestorePassword = true
+                            registerButtonColor = R.color.dark_gray_2
+                        }
                         userAuthViewModel.clearAllError()
                         password = it
                     },
-                    hint = stringResource(id = R.string.password),
+                    hint = stringResource(id = R.string.password_registration),
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
                 )
                 Icon(
@@ -106,6 +108,13 @@ fun RestorePasswordScreen(
                     modifier = Modifier.fillMaxWidth(),
                     value = passwordRepeat,
                     onValueChange = {
+                        if (it.length < 6 || password.length < 6) {
+                            canRestorePassword = false
+                            registerButtonColor = R.color.gray
+                        } else {
+                            canRestorePassword = true
+                            registerButtonColor = R.color.dark_gray_2
+                        }
                         passwordRepeat = it
                         userAuthViewModel.clearAllError()
                     },
@@ -144,12 +153,15 @@ fun RestorePasswordScreen(
                     .padding(top = 30.dp),
                 textId = R.string.do_restore_password,
                 onClick = {
-                    if(password == passwordRepeat && password != ""){
-                    userAuthViewModel.changePassword(password!!)
-                    } else {
-                        userAuthViewModel.passwordsNotSame()
+                    if(canRestorePassword) {
+                        if (password == passwordRepeat) {
+                            userAuthViewModel.changePassword(password)
+                        } else {
+                            userAuthViewModel.passwordsNotSame()
+                        }
                     }
-                }
+                },
+                buttonColor = registerButtonColor
             )
 
             if (userAuthViewModel.state.isSuccessChangePassword == true) {

@@ -11,7 +11,7 @@ class ConditionerHelper(
     val roomArea: String? = null,
     val roomHeight: String? = null,
     val sunRadiation: Int? = null,
-    val equipments: List<Int>? = emptyList()
+    val equipments: List<EquipItem>? = emptyList()
 ) {
 
 
@@ -22,7 +22,9 @@ class ConditionerHelper(
             val heatLevel = heatLevel!!.toFloat() * roomArea.toFloat()
             val sunRadiation =
                 sunRadiation!!.toFloat() * roomArea.toFloat() * roomHeight!!.toFloat()
-            val equipments = equipments!!.sum()
+            val equipments = equipments!!.sumOf {
+                it.volume * it.count.toInt()
+            }
 
             val result =
                 (peopleRadiations + lightLevel + heatLevel + sunRadiation + equipments) / 1000

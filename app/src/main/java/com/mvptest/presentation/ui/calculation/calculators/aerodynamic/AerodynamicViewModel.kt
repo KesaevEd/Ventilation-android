@@ -13,6 +13,8 @@ class AerodynamicViewModel() : ViewModel() {
 
     var state by mutableStateOf(AerodynamicViewState())
 
+    var sectionNumber = 1
+
     fun calculate(): CalculationResult? {
         try {
             var totalMestsopr = 0.0F
@@ -69,9 +71,12 @@ class AerodynamicViewModel() : ViewModel() {
         state = state.copy(sections = mutableList)
     }
 
-    fun deleteSection(sectionIndex: Int) {
+    fun deleteSection(section: AerodynamicSection) {
         val newList = state.sections.toMutableList()
-        newList.removeAt(sectionIndex)
+        newList.remove(section)
+        newList.forEachIndexed { index, item ->
+            item.number = index
+        }
         state = state.copy(sections = newList)
     }
 
@@ -151,7 +156,7 @@ data class AerodynamicViewState(
 )
 
 data class AerodynamicSection(
-    val number: Int,
+    var number: Int,
     var airFlow: String,
     var length: String,
     var ductSize: String,

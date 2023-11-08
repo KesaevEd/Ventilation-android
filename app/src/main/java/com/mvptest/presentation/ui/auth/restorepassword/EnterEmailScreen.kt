@@ -42,7 +42,7 @@ fun EnterEmailScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(start = 18.dp, end = 18.dp, top = 35.dp)
+                .padding(start = 18.dp, end = 18.dp, top = 150.dp)
         ) {
             BigTextTitle(
                 modifier = Modifier.align(Alignment.CenterHorizontally), text = stringResource(

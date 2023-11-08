@@ -91,7 +91,7 @@ fun EmailCodeScreen(
                     }
                 },
                 hint = stringResource(
-                    id = R.string.send_code_to_email
+                    id = R.string.check_code
                 ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -99,7 +99,7 @@ fun EmailCodeScreen(
             if (userAuthViewModel.state.isCodeIncorrect == true) {
                 Text(
                     modifier = Modifier.padding(top = 20.dp),
-                    text = stringResource(id = R.string.password_not_same),
+                    text = stringResource(id = R.string.code_invalid),
                     fontFamily = interFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light,

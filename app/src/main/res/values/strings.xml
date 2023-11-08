@@ -91,19 +91,21 @@
     <string name="sign_in">Войти</string>
     <string name="email">Почта</string>
     <string name="password">Пароль</string>
+    <string name="password_registration">Пароль (не менее 6 символов)</string>
     <string name="repeat_password">Повторите пароль</string>
     <string name="password_not_same">*Пароли не совпадают</string>
     <string name="email_not_found">*Email не найден, проверьте правильность ввода</string>
     <string name="email_already_exist">*Такой email уже существует</string>
     <string name="or">или</string>
-    <string name="send_code_to_email">Отправили код на почту</string>
+    <string name="check_code">Код подтверждения (проверьте спам)</string>
     <string name="send_code_again">Отправить код повторно</string>
     <string name="seconds">сек</string>
-    <string name="agreement">Я согласен на обработку персональных данных и прочее.</string>
+    <string name="agreement">Я согласен на обработку персональных данных.</string>
 
     <string name="restore_password">Восстановление пароля</string>
     <string name="do_restore_password">Восстановить пароль</string>
     <string name="send_code">Выслать код подтверждения</string>
+    <string name="code_invalid">Код неверный</string>
 
     <string name="calculating_bottomnav">Расчет</string>
     <string name="selection">Подбор</string>

@@ -134,9 +134,11 @@ fun TextFieldWithCheckButton(
             modifier = modifier,
             value = textValue ?: "",
             onValueChange = { newValue ->
-                viewModel.setTitle(newValue)
-                textValue = newValue
-                onTextChanged(newValue)
+                if (newValue.length < 27) {
+                    viewModel.setTitle(newValue)
+                    textValue = newValue
+                    onTextChanged(newValue)
+                }
             },
             hint = stringResource(id = R.string.write_project_name)
         )

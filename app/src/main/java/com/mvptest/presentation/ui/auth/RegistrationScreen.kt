@@ -18,7 +18,6 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,8 +37,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mvptest.data.network.requests.RegisterRequest
-import com.mvptest.data.network.requests.SendCodeRequest
 import com.mvptest.presentation.ui.common.BigTextTitle
 import com.mvptest.presentation.ui.common.ButtonWithText
 import com.mvptest.presentation.ui.common.PasswordTextField
@@ -53,12 +50,14 @@ fun RegistrationScreen(
     userAuthViewModel: UserAuthViewModel,
     context: Context
 ) {
-    var email by remember { mutableStateOf(value = userAuthViewModel.state.email) }
-    var password by remember { mutableStateOf(value = userAuthViewModel.state.password) }
+    var email by remember { mutableStateOf(value = userAuthViewModel.state.email ?: "") }
+    var password by remember { mutableStateOf(value = userAuthViewModel.state.password ?: "") }
     var passwordRepeat by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var passwordRepeatVisible by remember { mutableStateOf(false) }
     var checkBoxChecked by remember { mutableStateOf(true) }
+    var canRegister by remember { mutableStateOf(false) }
+    var registerButtonColor by remember { mutableIntStateOf(R.color.gray) }
 
     Box(
         modifier = Modifier
@@ -77,8 +76,15 @@ fun RegistrationScreen(
                 modifier = Modifier
                     .padding(top = 30.dp)
                     .fillMaxWidth(),
-                value = email ?: "",
+                value = email,
                 onValueChange = { text ->
+                    if (text.isEmpty() || password.length < 6  || passwordRepeat.length < 6  || !checkBoxChecked) {
+                        canRegister = false
+                        registerButtonColor = R.color.gray
+                    } else {
+                        canRegister = true
+                        registerButtonColor = R.color.dark_gray_2
+                    }
                     userAuthViewModel.clearAllError()
                     userAuthViewModel.setEmail(text)
                     email = text
@@ -93,13 +99,20 @@ fun RegistrationScreen(
             ) {
                 PasswordTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = password ?: "",
+                    value = password,
                     onValueChange = {
+                        if (it.length < 6 || email.isEmpty() || passwordRepeat.length < 6 || !checkBoxChecked) {
+                            canRegister = false
+                            registerButtonColor = R.color.gray
+                        } else {
+                            canRegister = true
+                            registerButtonColor = R.color.dark_gray_2
+                        }
                         userAuthViewModel.clearAllError()
                         userAuthViewModel.setPassword(it)
                         password = it
                     },
-                    hint = stringResource(id = R.string.password),
+                    hint = stringResource(id = R.string.password_registration),
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
                 )
                 Icon(
@@ -124,6 +137,13 @@ fun RegistrationScreen(
                     modifier = Modifier.fillMaxWidth(),
                     value = passwordRepeat,
                     onValueChange = {
+                        if (it.length < 6 || email.isEmpty() || password.length < 6 || !checkBoxChecked) {
+                            canRegister = false
+                            registerButtonColor = R.color.gray
+                        } else {
+                            canRegister = true
+                            registerButtonColor = R.color.dark_gray_2
+                        }
                         userAuthViewModel.clearAllError()
                         passwordRepeat = it
                     },
@@ -185,7 +205,16 @@ fun RegistrationScreen(
                         .width(16.dp)
                         .padding(top = 8.dp),
                     checked = checkBoxChecked,
-                    onCheckedChange = { checkBoxChecked = !checkBoxChecked },
+                    onCheckedChange = {
+                        checkBoxChecked = !checkBoxChecked
+                        if (!checkBoxChecked || email.isEmpty() || password.length < 6 || passwordRepeat.length < 6) {
+                            canRegister = false
+                            registerButtonColor = R.color.gray
+                        } else {
+                            canRegister = true
+                            registerButtonColor = R.color.dark_gray_2
+                        }
+                    },
                     colors = CheckboxDefaults.colors(
                         checkedColor = colorResource(id = R.color.gray),
                         uncheckedColor = colorResource(id = R.color.gray),
@@ -209,12 +238,15 @@ fun RegistrationScreen(
                     .padding(top = 30.dp),
                 textId = R.string.sign_up,
                 onClick = {
-                    if (password == passwordRepeat && password != "") {
-                        userAuthViewModel.sendCodeToEmail()
-                    } else {
-                        userAuthViewModel.passwordsNotSame()
+                    if (canRegister) {
+                        if (password == passwordRepeat) {
+                            userAuthViewModel.sendCodeToEmail()
+                        } else {
+                            userAuthViewModel.passwordsNotSame()
+                        }
                     }
-                }
+                },
+                buttonColor = registerButtonColor
             )
 
             if (userAuthViewModel.state.isSuccessSendCode == true) {
