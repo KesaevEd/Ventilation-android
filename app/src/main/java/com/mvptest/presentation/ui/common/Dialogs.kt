@@ -1,7 +1,9 @@
 package com.mvptest.presentation.ui.common
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
@@ -17,10 +19,12 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.utils.interFamily
@@ -138,6 +142,76 @@ fun MyDatePickerDialog(
             state = datePickerState
         )
     }
+}
+
+@Composable
+fun RegisterOfferDialog(onConfirmClicked: () -> Unit, onCancelClicked: () -> Unit){
+    AlertDialog(
+        modifier = Modifier,
+        title = {
+            Text(
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Medium,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                text = stringResource(id = R.string.register_offer)
+            )
+        },
+        shape = RoundedCornerShape(20.dp),
+        backgroundColor = Color.White,
+        onDismissRequest = {  onCancelClicked() },
+        buttons = {
+            Column {
+                Button(
+                    modifier = Modifier.fillMaxWidth().padding(top = 10.dp, start = 20.dp, end = 20.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    content = {
+                        Row(modifier = Modifier) {
+                            Text(
+                                text = stringResource(id = R.string.register_or_login),
+                                modifier = Modifier
+                                    .padding(top = 10.dp, bottom = 10.dp),
+                                color = colorResource(id = R.color.white),
+                                textAlign = TextAlign.Center,
+                                fontFamily = interFamily,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                    },
+                    onClick = { onConfirmClicked() },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = colorResource(
+                            R.color.dark_gray_2
+                        )
+                    )
+                )
+                Button(
+                    modifier = Modifier.fillMaxWidth().padding(top = 10.dp, start = 20.dp, end = 20.dp, bottom = 25.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    content = {
+                        Row(modifier = Modifier) {
+                            Text(
+                                text = stringResource(id = R.string.not_now),
+                                modifier = Modifier
+                                    .padding(top = 10.dp, bottom = 10.dp),
+                                color = colorResource(id = R.color.dark_gray),
+                                textAlign = TextAlign.Center,
+                                fontFamily = interFamily,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                    },
+                    onClick = { onCancelClicked() },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = colorResource(
+                            R.color.light_gray
+                        )
+                    )
+                )
+            }
+        })
 }
 
 private fun convertMillisToDate(millis: Long): String {

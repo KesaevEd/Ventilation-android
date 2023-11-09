@@ -25,8 +25,6 @@ class UserAuthViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    val token = sharedPrefStorage.token
-
     private val codeToEmail = generateCode()
     var state by mutableStateOf(UserAuthViewState())
         private set

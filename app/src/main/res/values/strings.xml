@@ -109,7 +109,11 @@
 
     <string name="calculating_bottomnav">Расчет</string>
     <string name="selection">Подбор</string>
-    <string name="calculator_subtitile">Калькулятор для расчета</string>
+    <string name="calculators_subtitile">Калькуляторы для расчета</string>
+
+    <string name="register_offer">Для расширенного доступа, войдите в учетную запись</string>
+    <string name="register_or_login">Вход | Регистрация</string>
+    <string name="not_now">Не сейчас</string>
 
     <string name="projects_title">Проекты</string>
     <string name="projects_subtitle">Мои готовые\nпроекты</string>

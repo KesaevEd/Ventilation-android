@@ -107,22 +107,18 @@ fun NavigationGraph(
     activity: Activity
 ) {
 
-    var startDestination = ""
-    if (userAuthViewModel.token == null) {
-        startDestination = NavigationAuthItem.Login.route
-    } else {
-        // TODO check token in remote db
-        startDestination = NavigationItem.Home.route
-    }
-
-    NavHost(navController, startDestination = startDestination) {
+    NavHost(navController, startDestination = NavigationItem.Home.route) {
 
         composable(route = NavigationAuthItem.Login.route) {
             LoginScreen(
                 userAuthViewModel,
                 context,
                 forgotPasswordClick = { navController.navigate(NavigationAuthItem.EnterEmail.route) },
-                logInClick = { navController.navigate(NavigationItem.Home.route) },
+                logInClick = { navController.navigate(NavigationItem.Home.route) {
+                    popUpTo(NavigationItem.Home.route) {
+                        inclusive = true
+                    }
+                } },
                 logUpClick = { navController.navigate(NavigationAuthItem.Registration.route) },
             )
         }
@@ -133,6 +129,8 @@ fun NavigationGraph(
         }
         composable(NavigationItem.MyProjects.route) {
             MyProjectsScreen(
+                homeScreenViewModel,
+                navController,
                 myProjectsViewModel,
                 onCreateNewProjectClicked = {
                     navController.navigate(

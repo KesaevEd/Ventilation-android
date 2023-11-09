@@ -1,6 +1,7 @@
 package com.mvptest.presentation.ui.calculation
 
 import android.content.pm.ActivityInfo
+import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,11 +40,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.navigation
 import com.mvptest.domain.models.CalculateItem
 import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.bottommenu.NavigationItem
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
-fun CalculatingMainScreen(onItemClicked: (route: String) -> Unit) {
+fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: String) -> Unit) {
     val activity = LocalContext.current as AppCompatActivity
     activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -120,6 +122,14 @@ fun CalculatingMainScreen(onItemClicked: (route: String) -> Unit) {
         content = {
             items(list) { ItemCard(item = it){route ->  onItemClicked.invoke(route)} }
         })
+
+    BackHandler {
+        navController.navigate(NavigationItem.Home.route) {
+            popUpTo(NavigationItem.Home.route) {
+                inclusive = true
+            }
+        }
+    }
 }
 
 

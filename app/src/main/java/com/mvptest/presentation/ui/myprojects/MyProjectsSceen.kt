@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.myprojects
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -31,18 +34,39 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.mvptest.domain.models.Project
+import com.mvptest.presentation.ui.auth.NavigationAuthItem
+import com.mvptest.presentation.ui.bottommenu.NavigationItem
+import com.mvptest.presentation.ui.common.RegisterOfferDialog
+import com.mvptest.presentation.ui.home.HomeScreenViewModel
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
 @Composable
 fun MyProjectsScreen(
+    homeScreenViewModel: HomeScreenViewModel,
+    navController: NavController,
     viewModel: MyProjectsViewModel,
     onCreateNewProjectClicked: () -> Unit,
     onItemClicked: (id: String) -> Unit
 ) {
+    val token = homeScreenViewModel.getToken()
 
     viewModel.getMyProjects()
+
+    val openDialog = remember { mutableStateOf(false) }
+    if (openDialog.value) {
+        RegisterOfferDialog(
+            onConfirmClicked = {
+                openDialog.value = false
+                navController.navigate(NavigationAuthItem.Login.route)
+            },
+            onCancelClicked = {
+                openDialog.value = false
+            }
+        )
+    }
 
     Column(
         Modifier.padding(top = 10.dp)
@@ -107,7 +131,9 @@ fun MyProjectsScreen(
                                 .align(CenterVertically)
                                 .height(20.dp)
                                 .width(20.dp),
-                            painter = painterResource(id = R.drawable.ic_add),
+                            painter = if (token != null) painterResource(id = R.drawable.ic_add) else painterResource(
+                                id = R.drawable.ic_lock
+                            ),
                             contentDescription = "image",
                             tint = Color.White,
                         )
@@ -115,7 +141,9 @@ fun MyProjectsScreen(
                             text = stringResource(id = R.string.create_project),
                             modifier = Modifier
                                 .padding(17.dp),
-                            color = colorResource(id = R.color.white),
+                            color = if (token != null) colorResource(id = R.color.white) else colorResource(
+                                id = R.color.lock_gray1
+                            ),
                             textAlign = TextAlign.Center,
                             fontFamily = interFamily,
                             fontSize = 16.sp,
@@ -123,13 +151,27 @@ fun MyProjectsScreen(
                         )
                     }
                 },
-                onClick = { onCreateNewProjectClicked() },
+                onClick = {
+                    if(token != null) {
+                        onCreateNewProjectClicked()
+                    } else {
+                        openDialog.value = true
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
             )
         } else {
             ListContent(
                 projectsList = viewModel.state.projects ?: emptyList()
             ) { itemId -> onItemClicked.invoke(itemId) }
+        }
+    }
+
+    BackHandler {
+        navController.navigate(NavigationItem.Home.route) {
+            popUpTo(NavigationItem.Home.route) {
+                inclusive = true
+            }
         }
     }
 }

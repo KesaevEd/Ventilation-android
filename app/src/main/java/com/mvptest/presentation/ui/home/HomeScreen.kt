@@ -15,6 +15,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +28,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.mvptest.presentation.ui.auth.NavigationAuthItem
 import com.mvptest.presentation.ui.bottommenu.NavigationItem
+import com.mvptest.presentation.ui.common.MyAlertDialog
+import com.mvptest.presentation.ui.common.RegisterOfferDialog
 import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
@@ -35,6 +40,21 @@ import com.mvptest.ventilation.R
 fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenViewModel) {
     val activity = LocalContext.current as AppCompatActivity
     activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+    val openDialog = remember { mutableStateOf(false) }
+    if (openDialog.value) {
+        RegisterOfferDialog(
+            onConfirmClicked = {
+                openDialog.value = false
+                navController.navigate(NavigationAuthItem.Login.route)
+            },
+            onCancelClicked = {
+                openDialog.value = false
+            }
+        )
+    }
+
+    val token = homeScreenViewModel.getToken()
 
     homeScreenViewModel.fetchUserProjects()
 
@@ -45,11 +65,19 @@ fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenView
                 .clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null
-                ) { navController.navigate(NavigationNewProjectItem.First.route) },
-            icon = R.drawable.ic_add,
+                ) {
+                    if (token != null) {
+                        navController.navigate(NavigationNewProjectItem.First.route)
+                    } else {
+                        openDialog.value = true
+                    }
+                },
+            icon = if (token != null) R.drawable.ic_add else R.drawable.ic_lock,
             titleId = R.string.new_project,
             subTitleId = R.string.new_project_subtitle,
-            backgroundColorId = R.color.dark_gray
+            backgroundColorId = R.color.dark_gray,
+            token == null,
+            isNewProject = true
         )
         Row(
             modifier = Modifier
@@ -67,8 +95,10 @@ fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenView
                     ) { navController.navigate(NavigationItem.Calculating.route) },
                 icon = R.drawable.ic_calculator,
                 titleId = R.string.calculating_bottomnav,
-                subTitleId = R.string.calculator_subtitile,
-                backgroundColorId = R.color.sand
+                subTitleId = R.string.calculators_subtitile,
+                backgroundColorId = R.color.sand,
+                false,
+                isNewProject = false
             )
             HomeItem(
                 modifier = Modifier
@@ -76,18 +106,34 @@ fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenView
                     .clickable(
                         interactionSource = MutableInteractionSource(),
                         indication = null
-                    ) { navController.navigate(NavigationItem.MyProjects.route) },
-                icon = R.drawable.ic_notes,
+                    ) {
+                        if (token != null) {
+                            navController.navigate(NavigationItem.MyProjects.route)
+                        } else {
+                          openDialog.value = true
+                        }
+                    },
+                icon = if (token != null) R.drawable.ic_notes else R.drawable.ic_lock,
                 titleId = R.string.projects_title,
                 subTitleId = R.string.projects_subtitle,
-                backgroundColorId = R.color.dark_blue
+                backgroundColorId = R.color.dark_blue,
+                token == null,
+                false
             )
         }
     }
 }
 
 @Composable
-fun HomeItem(modifier: Modifier, icon: Int, titleId: Int, subTitleId: Int, backgroundColorId: Int) {
+fun HomeItem(
+    modifier: Modifier,
+    icon: Int,
+    titleId: Int,
+    subTitleId: Int,
+    backgroundColorId: Int,
+    isLock: Boolean,
+    isNewProject: Boolean
+) {
     Card(
         modifier = modifier,
         backgroundColor = colorResource(id = backgroundColorId),
@@ -112,7 +158,9 @@ fun HomeItem(modifier: Modifier, icon: Int, titleId: Int, subTitleId: Int, backg
                 modifier = Modifier.padding(top = 70.dp),
                 text = stringResource(id = titleId),
                 fontSize = 22.sp,
-                color = Color.White,
+                color = if (isLock && isNewProject) colorResource(id = R.color.lock_gray1) else if (isLock && !isNewProject) colorResource(
+                    id = R.color.lock_gray2
+                ) else Color.White,
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Bold
             )
@@ -120,7 +168,9 @@ fun HomeItem(modifier: Modifier, icon: Int, titleId: Int, subTitleId: Int, backg
                 modifier = Modifier.padding(top = 10.dp),
                 text = stringResource(id = subTitleId),
                 fontSize = 14.sp,
-                color = Color.White,
+                color = if (isLock && isNewProject) colorResource(id = R.color.lock_gray1) else if (isLock && !isNewProject) colorResource(
+                    id = R.color.lock_gray2
+                ) else Color.White,
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Light
             )

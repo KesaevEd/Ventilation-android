@@ -17,6 +17,9 @@ class HomeScreenViewModel @Inject constructor(
     private val roomsRepository: RoomsRepository
 ): ViewModel() {
 
+    fun getToken(): String?{
+        return sharedPrefStorage.token
+    }
 
     fun fetchUserProjects(){
         viewModelScope.launch {

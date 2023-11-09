@@ -28,7 +28,7 @@ sealed class NavigationCalculationItem(val route: String) {
 fun NavGraphBuilder.calculationGraph(navController: NavController, context: Context, aerodynamicViewModel: AerodynamicViewModel, newRoomViewModel: NewRoomViewModel) {
     navigation(startDestination = NavigationItem.Calculating.route, route = "calculation") {
         composable(NavigationItem.Calculating.route) {
-            CalculatingMainScreen(onItemClicked = { route ->
+            CalculatingMainScreen(navController, onItemClicked = { route ->
                 navController.navigate(route)
             })
         }
