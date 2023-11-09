@@ -198,7 +198,8 @@ fun RoomDetailsScreen(
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.ventSystemDestination?.string ?: VentSystemDestination.FORCED.string
+                    text = state.value.roomDetails?.ventSystemDestination?.string
+                        ?: VentSystemDestination.FORCED.string
                 )
 
                 TextTitleOfText(
@@ -253,58 +254,60 @@ fun RoomDetailsScreen(
                     textId = R.string.pressure_loss
                 )
                 TextMediumBlack14sp(
-                    modifier = Modifier.padding(top = 5.dp),
+                    modifier = Modifier.padding(top = 5.dp, bottom = 15.dp),
                     text = if (state.value.roomDetails?.pressureLoss != "") state.value.roomDetails?.pressureLoss.toString() + " " + stringResource(
                         id = R.string.pa
                     ) else ""
                 )
 
-                TextTitleOfText(
-                    modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.heater_type
-                )
-                TextMediumBlack14sp(
-                    modifier = Modifier.padding(top = 5.dp),
-                    text = state.value.roomDetails?.heaterType?.string ?: HeaterType.NONE.string
-                )
-
-                TextTitleOfText(
-                    modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.heater_performance
-                )
-                TextMediumBlack14sp(
-                    modifier = Modifier.padding(top = 5.dp),
-                    text = if (state.value.roomDetails?.heaterPerformance != "") state.value.roomDetails?.heaterPerformance.toString() + " " + stringResource(
-                        id = R.string.kvt
-                    ) else ""
-                )
-
-                TextTitleOfText(
-                    modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.air_conditioner
-                )
-                val isConditioner: String =
-                    if (state.value.roomDetails?.isAirConditioner == true) stringResource(id = R.string.yes) else stringResource(
-                        id = R.string.no
-                    )
-                TextMediumBlack14sp(
-                    modifier = Modifier.padding(top = 5.dp),
-                    text = isConditioner
-                )
-
-                if (state.value.roomDetails?.isAirConditioner == true) {
+                if (state.value.roomDetails?.ventSystemDestination != VentSystemDestination.EXHAUST) {
                     TextTitleOfText(
-                        modifier = Modifier.padding(top = 15.dp),
-                        textId = R.string.air_conditioner_performance
+                        modifier = Modifier,
+                        textId = R.string.heater_type
                     )
                     TextMediumBlack14sp(
-                        modifier = Modifier.padding(top = 5.dp, bottom = 25.dp),
-                        text = if (state.value.roomDetails?.airConditionerPerformance != "") state.value.roomDetails?.airConditionerPerformance.toString() + " " + stringResource(
+                        modifier = Modifier.padding(top = 5.dp),
+                        text = state.value.roomDetails?.heaterType?.string ?: HeaterType.NONE.string
+                    )
+
+                    TextTitleOfText(
+                        modifier = Modifier.padding(top = 15.dp),
+                        textId = R.string.heater_performance
+                    )
+                    TextMediumBlack14sp(
+                        modifier = Modifier.padding(top = 5.dp),
+                        text = if (state.value.roomDetails?.heaterPerformance != "") state.value.roomDetails?.heaterPerformance.toString() + " " + stringResource(
                             id = R.string.kvt
                         ) else ""
                     )
-                } else {
-                    Spacer(modifier = Modifier.height(25.dp))
+
+                    TextTitleOfText(
+                        modifier = Modifier.padding(top = 15.dp),
+                        textId = R.string.air_conditioner
+                    )
+                    val isConditioner: String =
+                        if (state.value.roomDetails?.isAirConditioner == true) stringResource(id = R.string.yes) else stringResource(
+                            id = R.string.no
+                        )
+                    TextMediumBlack14sp(
+                        modifier = Modifier.padding(top = 5.dp),
+                        text = isConditioner
+                    )
+
+                    if (state.value.roomDetails?.isAirConditioner == true) {
+                        TextTitleOfText(
+                            modifier = Modifier.padding(top = 15.dp),
+                            textId = R.string.air_conditioner_performance
+                        )
+                        TextMediumBlack14sp(
+                            modifier = Modifier.padding(top = 5.dp, bottom = 25.dp),
+                            text = if (state.value.roomDetails?.airConditionerPerformance != "") state.value.roomDetails?.airConditionerPerformance.toString() + " " + stringResource(
+                                id = R.string.kvt
+                            ) else ""
+                        )
+                    } else {
+                        Spacer(modifier = Modifier.height(25.dp))
+                    }
                 }
             }
         }

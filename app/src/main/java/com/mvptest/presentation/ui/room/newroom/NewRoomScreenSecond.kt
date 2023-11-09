@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +19,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.RadioButton
+import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -150,40 +154,32 @@ fun NewRoomScreenSecond(
                     shape = RoundedCornerShape(15.dp)
                 )
         ) {
-            Row() {
+            Column(modifier = Modifier.fillMaxWidth().padding(top = 20.dp, bottom = 20.dp)) {
                 selectedVentDestinyIndex = ventSystemDestinationTypes.indexOf(ventSystemDestination)
                 for (index in 0..2) {
-                    Button(
-                        onClick = {
-                            ventSystemDestination = ventSystemDestinationTypes[index]
-                            newRoomViewModel.setVentSystemDestination(ventSystemDestinationTypes[index])
-                        },
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(10.dp),
-                        border = BorderStroke(
-                            1.dp,
-                            color = colorResource(id = R.color.gray)
-                        ),
-                        shape = RoundedCornerShape(100.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = if (selectedVentDestinyIndex == index) colorResource(
-                                id = R.color.dark_gray_2
-                            ) else colorResource(id = R.color.light_gray),
-                            contentColor = if (selectedVentDestinyIndex == index) Color.White else colorResource(
-                                id = R.color.gray
-                            )
-                        ),
-                        content = {
-                            Text(
-                                modifier = Modifier.fillMaxHeight(),
-                                text = ventSystemDestinationNames[index],
-                                fontFamily = interFamily,
-                                fontWeight = FontWeight.Medium,
-                                fontSize = 12.sp
-                            )
-                        }
-                    )
+                    Row {
+                        Text(
+                            modifier = Modifier.align(Alignment.CenterVertically).padding(start = 25.dp),
+                            text = ventSystemDestinationNames[index],
+                            fontFamily = interFamily,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 14.sp
+                        )
+                        Spacer(Modifier.weight(1f))
+                        RadioButton(
+                            modifier = Modifier.padding(end = 25.dp).align(Alignment.CenterVertically),
+                            colors = RadioButtonDefaults.colors(
+                                unselectedColor = colorResource(id = R.color.dark_gray),
+                                selectedColor = colorResource(
+                                    id = R.color.dark_gray
+                                )
+                            ),
+                            selected = ventSystemDestination == ventSystemDestinationTypes[index],
+                            onClick = {
+                                ventSystemDestination = ventSystemDestinationTypes[index]
+                                newRoomViewModel.setVentSystemDestination(ventSystemDestinationTypes[index])
+                            })
+                    }
                 }
             }
         }
