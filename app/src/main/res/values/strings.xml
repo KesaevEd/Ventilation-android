@@ -102,6 +102,9 @@
     <string name="seconds">сек</string>
     <string name="agreement">Я согласен на обработку персональных данных.</string>
 
+    <string name="password_invalid">*Пароль неверный</string>
+    <string name="user_not_found">*Пользователь не найден, проверьте правильность ввода</string>
+
     <string name="restore_password">Восстановление пароля</string>
     <string name="do_restore_password">Восстановить пароль</string>
     <string name="send_code">Выслать код подтверждения</string>

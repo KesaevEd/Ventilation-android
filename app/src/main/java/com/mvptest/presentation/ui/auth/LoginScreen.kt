@@ -77,6 +77,7 @@ fun LoginScreen(
                     .fillMaxWidth(),
                 value = email,
                 onValueChange = { text ->
+                    userAuthViewModel.clearAllError()
                     userAuthViewModel.setEmail(text)
                     email = text
                 },
@@ -92,6 +93,7 @@ fun LoginScreen(
                     modifier = Modifier.fillMaxWidth(),
                     value = password,
                     onValueChange = {
+                        userAuthViewModel.clearAllError()
                         userAuthViewModel.setPassword(it)
                         password = it
                     },
@@ -110,6 +112,28 @@ fun LoginScreen(
                     tint = colorResource(
                         id = R.color.gray
                     )
+                )
+            }
+
+            if (userAuthViewModel.state.isPasswordInvalid == true) {
+                Text(
+                    modifier = Modifier.padding(top = 15.dp),
+                    text = stringResource(id = R.string.password_invalid),
+                    fontFamily = interFamily,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Light,
+                    color = colorResource(id = R.color.red)
+                )
+            }
+
+            if (userAuthViewModel.state.isUserNotFound == true) {
+                Text(
+                    modifier = Modifier.padding(top = 15.dp),
+                    text = stringResource(id = R.string.user_not_found),
+                    fontFamily = interFamily,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Light,
+                    color = colorResource(id = R.color.red)
                 )
             }
 
@@ -173,17 +197,6 @@ fun LoginScreen(
                 userAuthViewModel.stopSuccessLogin()
             }
 
-            if (userAuthViewModel.state.isUserNotFound == true) {
-                Toast.makeText(context, "Такого пользователя не существует", Toast.LENGTH_SHORT)
-                    .show()
-                userAuthViewModel.clearAllError()
-            }
-
-            if (userAuthViewModel.state.isPasswordInvalid == true) {
-                Toast.makeText(context, "Неверный пароль", Toast.LENGTH_SHORT)
-                    .show()
-                userAuthViewModel.clearAllError()
-            }
             if (userAuthViewModel.state.somethingWrong == true) {
                 Toast.makeText(
                     context,
