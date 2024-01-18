@@ -22,19 +22,23 @@ class ShareProjectHelper(val context: Context) {
     private lateinit var canvas: Canvas
     private var currentY = 20f
 
-    fun createPdfFromObject(project: Project, rooms: List<RoomDetails>) {
-        val pdfDocument = PdfDocument()
+    private val pdfDocument = PdfDocument()
+    private lateinit var pageInfo: PdfDocument.PageInfo
+    private lateinit var page: PdfDocument.Page
 
+    private var pageNumber = 1
+
+    fun createPdfFromObject(project: Project, rooms: List<RoomDetails>) {
         // Создаем страницу
-        val pageInfo = PdfDocument.PageInfo.Builder(300, 600, 1).create()
-        val page = pdfDocument.startPage(pageInfo)
+        pageInfo = PdfDocument.PageInfo.Builder(300, 600, pageNumber).create()
+        page = pdfDocument.startPage(pageInfo)
         canvas = page.canvas
 
         increaseY = { currentY += 50f }
 
         // Рисуем на странице
         paint = Paint()
-        paint.textSize = 15f
+        paint.textSize = 17f
         canvas.drawText(project.title, 120f, currentY, paint)
         currentY += 30f
 
@@ -62,8 +66,8 @@ class ShareProjectHelper(val context: Context) {
         if (rooms.isNotEmpty()) {
             for (room in rooms) {
                 paint.textSize = 15f
-                canvas.drawText(room.title, 60f, currentY, paint)
-                currentY += 30f
+                canvas.drawText(room.title, 30f, currentY, paint)
+                currentY += 40f
 
                 descANdName(
                     desc = R.string.vent_system_number,
@@ -156,6 +160,7 @@ class ShareProjectHelper(val context: Context) {
         desc: Int,
         name: String?,
     ) {
+        checkPageFilling()
         if (name != null && name != "") {
             paint.textSize = 10f
             paint.color = Color.GRAY
@@ -164,6 +169,19 @@ class ShareProjectHelper(val context: Context) {
             paint.color = Color.BLACK
             canvas.drawText(name, 20f, currentY + 20f, paint)
             increaseY()
+        }
+    }
+
+    private fun checkPageFilling() {
+        if (600 - currentY < 60) {
+            pdfDocument.finishPage(page)
+            pageNumber++
+            currentY = 40f
+
+            pageInfo = PdfDocument.PageInfo.Builder(300, 600, pageNumber).create()
+            page = pdfDocument.startPage(pageInfo)
+
+            canvas = page.canvas
         }
     }
 }
