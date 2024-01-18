@@ -22,23 +22,22 @@ fun NavGraphBuilder.newProjectGraph(
     newProjectViewModel: NewProjectViewModel,
     newRoomViewModel: NewRoomViewModel,
     projectDetailsViewModel: ProjectDetailsViewModel,
-    navController: NavController
+    navController: NavController,
 ) {
     navigation(
         startDestination = NavigationNewProjectItem.First.route,
-        route = "new_project"
+        route = "new_project",
     ) {
         composable(NavigationNewProjectItem.First.route) {
             NewProjectScreenFirst(
                 viewModel = newProjectViewModel,
                 {
                     navController.navigate(
-                        NavigationNewProjectItem.Second.route
+                        NavigationNewProjectItem.Second.route,
                     )
                 },
                 {
                     navController.navigate(NavigationItem.Home.route) {
-
                         newProjectViewModel.clearState()
                         newRoomViewModel.clearState()
 
@@ -46,7 +45,8 @@ fun NavGraphBuilder.newProjectGraph(
                             inclusive = true
                         }
                     }
-                })
+                },
+            )
         }
 
         composable(NavigationNewProjectItem.Second.route) {
@@ -55,25 +55,27 @@ fun NavGraphBuilder.newProjectGraph(
                 viewModel = newProjectViewModel,
                 onBackPressed = {
                     navController.navigate(
-                        NavigationNewProjectItem.First.route
+                        NavigationNewProjectItem.First.route,
                     )
                 },
                 onContinueButtonClick = { projectId ->
                     navController.navigate(
                         NavigationNewProjectItem.ProjectDetails.route.replace(
                             oldValue = "{projectId}",
-                            newValue = projectId
-                        )
+                            newValue = projectId,
+                        ),
                     )
-                })
+                },
+            )
         }
 
         composable(
-            route = NavigationNewProjectItem.ProjectDetails.route
+            route = NavigationNewProjectItem.ProjectDetails.route,
         ) {
             val projectId = it.arguments?.getString("projectId")
             projectId?.let { id ->
                 ProjectDetailsScreen(
+                    context = context,
                     projectDetailsViewModel = projectDetailsViewModel,
                     projectId = id,
                     onBackPressed = {
@@ -81,7 +83,7 @@ fun NavGraphBuilder.newProjectGraph(
                         newRoomViewModel.clearState()
 
                         navController.navigate(
-                            NavigationItem.MyProjects.route
+                            NavigationItem.MyProjects.route,
                         ) { popUpTo(NavigationItem.MyProjects.route) { inclusive = true } }
                     },
                     onAddRoomPressed = { projectId ->
@@ -97,10 +99,11 @@ fun NavGraphBuilder.newProjectGraph(
                         navController.navigate(
                             NavigationNewRoomItem.RoomDetails.route.replace(
                                 oldValue = "{roomId}",
-                                newValue = roomId
-                            )
+                                newValue = roomId,
+                            ),
                         )
-                    })
+                    },
+                )
             }
         }
     }

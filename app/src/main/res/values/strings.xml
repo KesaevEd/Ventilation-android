@@ -193,6 +193,8 @@
     <string name="counts">Кол-во</string>
     <string name="something_wrong_calculation">"*Что то пошло не так, проверьте правильность введенных значений"</string>
 
+    <string name="send_project">"Отправить проект"</string>
+
     <string name="m2"> м2</string>
     <string name="m3"> м3</string>
     <string name="m3InH"> м3/ч</string>

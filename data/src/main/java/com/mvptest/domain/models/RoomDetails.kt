@@ -17,10 +17,10 @@ data class RoomDetails(
     val comment: String,
 )
 
-enum class HeaterType(val string: String){
+enum class HeaterType(val string: String) {
     NONE("Нет"), ELECTRICITY("Электро"), WATER("Водяной")
 }
 
-enum class VentSystemDestination(val string: String){
+enum class VentSystemDestination(val string: String) {
     FORCED("Приточная"), EXHAUST("Вытяжная"), FORCED_EXHAUST("Приточно-вытяжная")
 }
