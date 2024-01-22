@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
-import android.util.Log
 import androidx.core.content.FileProvider
 import com.mvptest.domain.models.Project
 import com.mvptest.domain.models.RoomDetails
@@ -62,12 +61,13 @@ class ShareProjectHelper(val context: Context) {
             project.contactPhone,
         )
 
-        Log.d("rooms", "project.rooms = $rooms")
         if (rooms.isNotEmpty()) {
+            horizontalLine()
             for (room in rooms) {
+                currentY += 30f
                 paint.textSize = 15f
-                canvas.drawText(room.title, 30f, currentY, paint)
-                currentY += 40f
+                canvas.drawText(room.title, 20f, currentY, paint)
+                currentY += 30f
 
                 descANdName(
                     desc = R.string.vent_system_number,
@@ -113,6 +113,8 @@ class ShareProjectHelper(val context: Context) {
                     desc = R.string.air_conditioner_performance,
                     name = room.airConditionerPerformance,
                 )
+
+                horizontalLine()
             }
         }
 
@@ -173,7 +175,7 @@ class ShareProjectHelper(val context: Context) {
     }
 
     private fun checkPageFilling() {
-        if (600 - currentY < 60) {
+        if (600 - currentY < 50) {
             pdfDocument.finishPage(page)
             pageNumber++
             currentY = 40f
@@ -183,5 +185,11 @@ class ShareProjectHelper(val context: Context) {
 
             canvas = page.canvas
         }
+    }
+
+    private fun horizontalLine() {
+        paint.color = Color.BLACK
+        paint.strokeWidth = 1f
+        canvas.drawLine(20f, currentY, 280f, currentY, paint)
     }
 }
