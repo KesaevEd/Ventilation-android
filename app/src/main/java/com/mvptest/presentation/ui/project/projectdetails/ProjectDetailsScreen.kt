@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.project.projectdetails
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,14 +39,14 @@ import com.mvptest.ventilation.R
 
 @Composable
 fun ProjectDetailsScreen(
+    context: Context,
     projectDetailsViewModel: ProjectDetailsViewModel,
     projectId: String,
     onBackPressed: () -> Unit,
     onAddRoomPressed: (projectId: String) -> Unit,
     onEditProjectInfoClicked: (projectId: String) -> Unit,
-    onRoomItemClicked: (roomId: String, projectId: String) -> Unit
+    onRoomItemClicked: (roomId: String, projectId: String) -> Unit,
 ) {
-
     var tempProjectId = ""
 
     if (projectId != "{projectId}") {
@@ -71,7 +72,8 @@ fun ProjectDetailsScreen(
                 openDeleteDialog.value = false
                 projectDetailsViewModel.deleteProject()
                 onBackPressed()
-            })
+            },
+        )
     }
 
     LazyColumn() {
@@ -82,84 +84,91 @@ fun ProjectDetailsScreen(
                     .padding(start = 18.dp, end = 18.dp, top = 18.dp)
                     .background(
                         color = colorResource(id = R.color.dark_blue),
-                        shape = RoundedCornerShape(25.dp)
-                    )
+                        shape = RoundedCornerShape(25.dp),
+                    ),
             ) {
                 Column(
                     modifier = Modifier
                         .align(TopEnd)
-                        .padding(top = 16.dp, end = 25.dp)
+                        .padding(top = 16.dp, end = 25.dp),
                 ) {
                     Box(
                         modifier = Modifier
-                            .clickable { openMore.value = !openMore.value }) {
+                            .clickable { openMore.value = !openMore.value },
+                    ) {
                         Icon(
                             modifier = Modifier
                                 .height(50.dp)
                                 .width(50.dp),
                             painter = painterResource(id = R.drawable.ic_ellipse),
-                            contentDescription = "image"
+                            contentDescription = "image",
                         )
                         Icon(
                             modifier = Modifier.align(Alignment.Center),
                             painter = painterResource(id = R.drawable.ic_more),
                             contentDescription = "image",
-                            tint = colorResource(id = R.color.gray)
+                            tint = colorResource(id = R.color.gray),
                         )
                     }
                     if (openMore.value) {
                         Box(
                             modifier = Modifier
                                 .padding(top = 10.dp)
-                                .clickable { onEditProjectInfoClicked.invoke(projectId) }) {
+                                .clickable { onEditProjectInfoClicked.invoke(projectId) },
+                        ) {
                             Icon(
                                 modifier = Modifier
                                     .height(50.dp)
                                     .width(50.dp),
                                 painter = painterResource(id = R.drawable.ic_ellipse),
-                                contentDescription = "image"
+                                contentDescription = "image",
                             )
                             Icon(
                                 modifier = Modifier.align(Alignment.Center),
                                 painter = painterResource(id = R.drawable.ic_edit),
                                 contentDescription = "image",
-                                tint = colorResource(id = R.color.gray)
+                                tint = colorResource(id = R.color.gray),
                             )
                         }
-//                        Box(
-//                            modifier = Modifier
-//                                .padding(top = 10.dp)
-//                                .clickable { openSendDialog.value = true }) {
-//                            Icon(
-//                                modifier = Modifier
-//                                    .height(50.dp)
-//                                    .width(50.dp),
-//                                painter = painterResource(id = R.drawable.ic_ellipse),
-//                                contentDescription = "image"
-//                            )
-//                            Icon(
-//                                modifier = Modifier.align(Alignment.Center),
-//                                painter = painterResource(id = R.drawable.ic_send),
-//                                contentDescription = "image",
-//                                tint = colorResource(id = R.color.gray)
-//                            )
-//                        }
                         Box(
                             modifier = Modifier
                                 .padding(top = 10.dp)
-                                .clickable { openDeleteDialog.value = true }) {
+                                .clickable {
+//                                    openSendDialog.value = true
+                                    projectDetailsViewModel.shareProjectPdfFile(context)
+                                },
+                        ) {
                             Icon(
                                 modifier = Modifier
                                     .height(50.dp)
                                     .width(50.dp),
                                 painter = painterResource(id = R.drawable.ic_ellipse),
-                                contentDescription = "image"
+                                contentDescription = "image",
+                            )
+                            Icon(
+                                modifier = Modifier.align(Alignment.Center),
+                                painter = painterResource(id = R.drawable.ic_send),
+                                contentDescription = "image",
+                                tint = colorResource(id = R.color.gray),
+                            )
+                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(top = 10.dp)
+                                .clickable { openDeleteDialog.value = true },
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .height(50.dp)
+                                    .width(50.dp),
+                                painter = painterResource(id = R.drawable.ic_ellipse),
+                                contentDescription = "image",
                             )
                             Icon(
                                 modifier = Modifier.align(Alignment.Center),
                                 painter = painterResource(id = R.drawable.ic_delete),
                                 contentDescription = "image",
-                                tint = colorResource(id = R.color.gray)
+                                tint = colorResource(id = R.color.gray),
                             )
                         }
                     }
@@ -171,7 +180,7 @@ fun ProjectDetailsScreen(
                         fontSize = 22.sp,
                         fontFamily = interFamily,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = Color.White,
                     )
 
                     Text(
@@ -180,7 +189,7 @@ fun ProjectDetailsScreen(
                         fontSize = 12.sp,
                         color = colorResource(id = R.color.gray),
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
                     )
 
                     Text(
@@ -189,7 +198,7 @@ fun ProjectDetailsScreen(
                         fontSize = 14.sp,
                         color = Color.White,
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
                     )
 
                     Text(
@@ -198,7 +207,7 @@ fun ProjectDetailsScreen(
                         fontSize = 12.sp,
                         color = colorResource(id = R.color.gray),
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
                     )
 
                     Text(
@@ -207,7 +216,7 @@ fun ProjectDetailsScreen(
                         fontSize = 14.sp,
                         color = Color.White,
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
                     )
 
                     Text(
@@ -216,7 +225,7 @@ fun ProjectDetailsScreen(
                         fontSize = 12.sp,
                         color = colorResource(id = R.color.gray),
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
                     )
 
                     Text(
@@ -225,7 +234,7 @@ fun ProjectDetailsScreen(
                         fontSize = 14.sp,
                         color = Color.White,
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
                     )
 
                     Text(
@@ -234,7 +243,7 @@ fun ProjectDetailsScreen(
                         fontSize = 12.sp,
                         color = colorResource(id = R.color.gray),
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
                     )
 
                     Text(
@@ -243,7 +252,7 @@ fun ProjectDetailsScreen(
                         fontSize = 14.sp,
                         color = Color.White,
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Light
+                        fontWeight = FontWeight.Light,
                     )
                 }
             }
@@ -257,10 +266,9 @@ fun ProjectDetailsScreen(
                         text = stringResource(id = R.string.empty_rooms),
                         fontSize = 16.sp,
                         fontFamily = interFamily,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
                     )
                 }
-
             }
         }
 
@@ -268,7 +276,8 @@ fun ProjectDetailsScreen(
             items(projectDetailsViewModel.state.rooms!!) { item ->
                 ProjectDetailsItem(
                     project = item,
-                    onItemClicked = { roomId -> onRoomItemClicked.invoke(roomId, projectId) })
+                    onItemClicked = { roomId -> onRoomItemClicked.invoke(roomId, projectId) },
+                )
             }
         }
 
@@ -294,7 +303,7 @@ fun ProjectDetailsScreen(
                             contentDescription = "image",
                             tint = colorResource(id = R.color.dark_gray_2),
                         )
-                    }
+                    },
                 )
 
                 Button(
@@ -324,7 +333,7 @@ fun ProjectDetailsScreen(
                         }
                     },
                     onClick = { onAddRoomPressed.invoke(tempProjectId) },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
         }
@@ -334,7 +343,7 @@ fun ProjectDetailsScreen(
 @Composable
 fun ProjectDetailsItem(
     project: RoomItemUiEntity,
-    onItemClicked: (roomId: String) -> Unit = { }
+    onItemClicked: (roomId: String) -> Unit = { },
 ) {
     ProjectDetailsItemCard(item = project, onItemClicked = onItemClicked)
 }
@@ -342,26 +351,26 @@ fun ProjectDetailsItem(
 @Composable
 fun ProjectDetailsItemCard(
     item: RoomItemUiEntity,
-    onItemClicked: (roomId: String) -> Unit = { }
+    onItemClicked: (roomId: String) -> Unit = { },
 ) {
     Box(
         modifier = Modifier
             .padding(top = 15.dp, start = 18.dp, end = 18.dp)
             .background(
                 colorResource(id = R.color.light_gray),
-                shape = RoundedCornerShape(15.dp)
-            )
+                shape = RoundedCornerShape(15.dp),
+            ),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = item.title,
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
-                modifier = Modifier.padding(start = 25.dp, top = 29.dp, bottom = 29.dp)
+                modifier = Modifier.padding(start = 25.dp, top = 29.dp, bottom = 29.dp),
             )
             Spacer(Modifier.weight(1f))
             Button(
@@ -375,9 +384,9 @@ fun ProjectDetailsItemCard(
                         color = Color.White,
                         fontFamily = interFamily,
                         fontWeight = FontWeight.Light,
-                        fontSize = 12.sp
+                        fontSize = 12.sp,
                     )
-                }
+                },
             )
         }
     }

@@ -40,9 +40,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.domain.models.CalculationType
-import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeHelper
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.RoundedTextField
 import com.mvptest.presentation.ui.common.TextTitle
@@ -57,9 +56,8 @@ fun AirHeaterScreen(
     isFromProject: String,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    newRoomViewModel: NewRoomViewModel
+    newRoomViewModel: NewRoomViewModel,
 ) {
-
     var airFlow by remember {
         mutableStateOf(value = "")
     }
@@ -89,32 +87,31 @@ fun AirHeaterScreen(
     if (showSP) {
         ShowSP(onBackPressed = { showSP = false })
     } else {
-
         Column(
             modifier = Modifier
                 .padding(18.dp)
                 .verticalScroll(
-                    rememberScrollState()
-                )
+                    rememberScrollState(),
+                ),
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
                         color = colorResource(id = R.color.sand),
-                        shape = RoundedCornerShape(25.dp)
-                    )
+                        shape = RoundedCornerShape(25.dp),
+                    ),
             ) {
                 TextTitle(
                     modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp),
                     text = stringResource(id = R.string.air_heater_title),
-                    colorId = R.color.white
+                    colorId = R.color.white,
                 )
             }
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 20.dp),
-                textId = R.string.air_flow
+                textId = R.string.air_flow,
             )
             RoundedTextField(
                 modifier = Modifier
@@ -127,12 +124,12 @@ fun AirHeaterScreen(
                     airFlow = text
                 },
                 hint = stringResource(id = R.string.enter_value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 20.dp),
-                textId = R.string.temp_after_heater
+                textId = R.string.temp_after_heater,
             )
             RoundedTextField(
                 modifier = Modifier
@@ -145,16 +142,16 @@ fun AirHeaterScreen(
                     tempAfterHeater = text
                 },
                 hint = stringResource(id = R.string.enter_value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 20.dp),
-                textId = R.string.temp_outside
+                textId = R.string.temp_outside,
             )
             Box(
                 modifier = Modifier
-                    .padding(top = 5.dp)
+                    .padding(top = 5.dp),
             ) {
                 RoundedTextField(
                     modifier = Modifier
@@ -166,7 +163,7 @@ fun AirHeaterScreen(
                         tempOutside = text
                     },
                     hint = stringResource(id = R.string.enter_value),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 )
                 Button(
                     modifier = Modifier
@@ -178,7 +175,7 @@ fun AirHeaterScreen(
                         Toast.makeText(
                             context,
                             R.string.advice_sp,
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_LONG,
                         ).show()
                     },
                     content = {
@@ -189,16 +186,16 @@ fun AirHeaterScreen(
                             textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             fontFamily = interFamily,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
                         )
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
 
             if (isResult) {
                 CalculatorsResult(
-                    calculationResult = airHeaterResult
+                    calculationResult = airHeaterResult,
                 )
             }
 
@@ -209,7 +206,7 @@ fun AirHeaterScreen(
                     fontFamily = interFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light,
-                    color = colorResource(id = R.color.red)
+                    color = colorResource(id = R.color.red),
                 )
             }
 
@@ -231,7 +228,7 @@ fun AirHeaterScreen(
                             contentDescription = "image",
                             tint = colorResource(id = R.color.dark_gray_2),
                         )
-                    }
+                    },
                 )
 
                 Button(
@@ -264,16 +261,20 @@ fun AirHeaterScreen(
                                 )
                             }
                             Text(
-                                text = if (isResult && isFromProject == "true") stringResource(id = R.string.save_button) else stringResource(
-                                    id = R.string.calculating
-                                ),
+                                text = if (isResult && isFromProject == "true") {
+                                    stringResource(id = R.string.save_button)
+                                } else {
+                                    stringResource(
+                                        id = R.string.calculating,
+                                    )
+                                },
                                 modifier = Modifier
                                     .padding(start = 15.dp),
                                 color = colorResource(id = R.color.white),
                                 textAlign = TextAlign.Center,
                                 fontSize = 16.sp,
                                 fontFamily = interFamily,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
                             )
                         }
                     },
@@ -284,7 +285,7 @@ fun AirHeaterScreen(
                             val calculatorHelper = AirHeaterHelper(
                                 airFlow = airFlow,
                                 tempAfterHeater = tempAfterHeater,
-                                tempOutside = tempOutside
+                                tempOutside = tempOutside,
                             )
                             val result = calculatorHelper.calculate()
 
@@ -299,29 +300,27 @@ fun AirHeaterScreen(
                             }
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
 
             BackHandler {
                 if (isFromProject == "true") onBackPressedFromProject() else onBackPressed()
             }
-
         }
     }
 }
 
 @Composable
 fun ShowSP(onBackPressed: () -> Unit) {
-
-    //СП 131.13330.2018
+    // СП 131.13330.2018
     val mUrl = "https://docs.cntd.ru/document/554402860"
 
     AndroidView(factory = {
         WebView(it).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.MATCH_PARENT,
             )
             webViewClient = WebViewClient()
             loadUrl(mUrl)
