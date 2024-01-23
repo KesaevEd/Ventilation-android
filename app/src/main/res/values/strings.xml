@@ -182,6 +182,8 @@
     <string name="ask_delete_room">Вы уверены, что хотите удалить помещение?</string>
     <string name="yes_delete">Да, удалить</string>
     <string name="yes_stop">Да, завершить</string>
+    <string name="enter_added_user_email">Введите email пользователя, которого хотите добавить в проект</string>
+    <string name="add">Добавить</string>
 
     <string name="forward">Далее</string>
     <string name="cancel">Отмена</string>
@@ -192,6 +194,7 @@
     <string name="yes">Да</string>
     <string name="counts">Кол-во</string>
     <string name="something_wrong_calculation">"*Что то пошло не так, проверьте правильность введенных значений"</string>
+    <string name="something_wrong">"*Что то пошло не так, попробуйте позже"</string>
 
     <string name="send_project">"Отправить проект"</string>
 

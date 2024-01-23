@@ -22,22 +22,22 @@ import javax.inject.Inject
 @HiltViewModel
 class UserAuthViewModel @Inject constructor(
     private val sharedPrefStorage: SharedPrefStorage,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     private val codeToEmail = generateCode()
     var state by mutableStateOf(UserAuthViewState())
         private set
 
-    fun registration() {
+    private fun registration() {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             try {
                 val response = userRepository.registration(
                     registerRequest = RegisterRequest(
                         email = state.email!!,
-                        password = state.password!!
-                    )
+                        password = state.password!!,
+                    ),
                 )
                 Log.d("registrationScreen", "response = $response")
 
@@ -46,13 +46,13 @@ class UserAuthViewModel @Inject constructor(
                         state = state.copy(
                             user = response.body()?.toUser(),
                             isLoading = false,
-                            isSuccessRegistration = true
+                            isSuccessRegistration = true,
                         )
                         saveUserInSharedPref(
                             userId = response.body()!!.userId,
                             response.body()!!.token,
                             state.email!!,
-                            state.password!!
+                            state.password!!,
                         )
                     }
 
@@ -74,8 +74,8 @@ class UserAuthViewModel @Inject constructor(
                 val response = userRepository.sendCodeToEmail(
                     sendCodeRequest = SendCodeRequest(
                         state.email!!,
-                        codeToEmail
-                    )
+                        codeToEmail,
+                    ),
                 )
                 Log.d("sendCode", "response = ${response.code()}")
 
@@ -83,7 +83,7 @@ class UserAuthViewModel @Inject constructor(
                     200 -> {
                         state = state.copy(
                             isLoading = false,
-                            isSuccessSendCode = true
+                            isSuccessSendCode = true,
                         )
                     }
 
@@ -113,8 +113,8 @@ class UserAuthViewModel @Inject constructor(
                 val response = userRepository.sendCodeToEmailChangePassword(
                     sendCodeRequest = SendCodeRequest(
                         state.email!!,
-                        codeToEmail
-                    )
+                        codeToEmail,
+                    ),
                 )
                 Log.d("sendCode", "response = ${response.code()}")
 
@@ -122,7 +122,7 @@ class UserAuthViewModel @Inject constructor(
                     200 -> {
                         state = state.copy(
                             isLoading = false,
-                            isSuccessSendCode = true
+                            isSuccessSendCode = true,
                         )
                     }
 
@@ -148,8 +148,8 @@ class UserAuthViewModel @Inject constructor(
                 val userResponse = userRepository.login(
                     loginRequest = LoginRequest(
                         email = state.email!!,
-                        password = state.password!!
-                    )
+                        password = state.password!!,
+                    ),
                 )
 
                 when (userResponse.code()) {
@@ -157,13 +157,13 @@ class UserAuthViewModel @Inject constructor(
                         state = state.copy(
                             user = userResponse.body()?.toUser(),
                             isLoading = false,
-                            isSuccessLogin = true
+                            isSuccessLogin = true,
                         )
                         saveUserInSharedPref(
                             userId = userResponse.body()!!.userId,
                             userResponse.body()!!.token,
                             state.email!!,
-                            state.password!!
+                            state.password!!,
                         )
                     }
 
@@ -193,15 +193,15 @@ class UserAuthViewModel @Inject constructor(
                 val userResponse = userRepository.changePassword(
                     loginRequest = LoginRequest(
                         email = state.email!!,
-                        password = password
-                    )
+                        password = password,
+                    ),
                 )
 
                 when (userResponse.code()) {
                     200 -> {
                         state = state.copy(
                             isLoading = false,
-                            isSuccessChangePassword = true
+                            isSuccessChangePassword = true,
                         )
                     }
 
@@ -211,7 +211,7 @@ class UserAuthViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 state = state.copy(isLoading = false, somethingWrong = true)
-                Log.d("registrationScreen", "registration Exception = $e")
+                Log.e("registrationScreen", "registration Exception = $e")
             }
         }
     }
@@ -225,15 +225,15 @@ class UserAuthViewModel @Inject constructor(
         if (inputCode != codeToEmail) {
             state = state.copy(isCodeIncorrect = true)
         } else {
-            if(fromForgotPassword == "false") {
+            if (fromForgotPassword == "false") {
                 registration()
-            }else{
+            } else {
                 navigateToChangePassword(navController)
             }
         }
     }
 
-    private fun navigateToChangePassword(navController: NavController){
+    private fun navigateToChangePassword(navController: NavController) {
         navController.navigate(NavigationAuthItem.RestorePassword.route)
     }
 
@@ -253,12 +253,12 @@ class UserAuthViewModel @Inject constructor(
         state = state.copy(isSuccessRegistration = false, somethingWrong = false)
     }
 
-    fun stopSuccessChangePassword(){
+    fun stopSuccessChangePassword() {
         state = state.copy(
             isSuccessChangePassword = false,
             somethingWrong = false,
             isEmailNotFound = false,
-            isUserNotFound = false
+            isUserNotFound = false,
         )
     }
 
@@ -267,7 +267,7 @@ class UserAuthViewModel @Inject constructor(
             isSuccessSendCode = false,
             somethingWrong = false,
             isEmailNotFound = false,
-            isUserNotFound = false
+            isUserNotFound = false,
         )
     }
 
@@ -276,7 +276,7 @@ class UserAuthViewModel @Inject constructor(
             isSuccessLogin = false,
             somethingWrong = false,
             isUserNotFound = false,
-            isPasswordInvalid = false
+            isPasswordInvalid = false,
         )
     }
 
@@ -288,7 +288,7 @@ class UserAuthViewModel @Inject constructor(
             isPasswordInvalid = false,
             isCodeIncorrect = false,
             isEmailAlreadyExist = false,
-            isPasswordNotSame = false
+            isPasswordNotSame = false,
         )
     }
 
@@ -296,7 +296,7 @@ class UserAuthViewModel @Inject constructor(
         userId: String,
         token: String,
         email: String,
-        password: String
+        password: String,
     ) {
         sharedPrefStorage.userId = userId
         sharedPrefStorage.token = token

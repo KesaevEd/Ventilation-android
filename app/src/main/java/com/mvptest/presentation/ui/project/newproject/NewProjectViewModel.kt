@@ -24,11 +24,10 @@ class NewProjectViewModel @Inject constructor(private val projectsRepository: Pr
 
     private val userId = sharedPrefStorage.userId
 
-
     fun saveProject() {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
-            if(projectId == "") {
+            if (projectId == "") {
                 projectId = UUID.randomUUID().toString()
             }
             try {
@@ -39,12 +38,13 @@ class NewProjectViewModel @Inject constructor(private val projectsRepository: Pr
                         state.address ?: "",
                         state.startDate,
                         state.contact,
-                        state.contactPhone
-                    ), userId = sharedPrefStorage.userId!!
+                        state.contactPhone,
+                    ),
+                    userId = sharedPrefStorage.userId!!,
                 )
                 state = state.copy(somethingWrong = false, isLoading = false)
-            }catch (e: Exception){
-                Log.d("saveProject","Exception = $e  userId = ${sharedPrefStorage.userId}")
+            } catch (e: Exception) {
+                Log.e("saveProject", "Exception = $e  userId = ${sharedPrefStorage.userId}")
                 state = state.copy(somethingWrong = true, isLoading = false)
             }
         }
@@ -54,13 +54,13 @@ class NewProjectViewModel @Inject constructor(private val projectsRepository: Pr
         viewModelScope.launch {
             projectId = id
             val project = projectsRepository.getProjectById(projectId)
-            if(project != null) {
+            if (project != null) {
                 state = state.copy(
                     title = project.title,
                     address = project.address,
                     startDate = project.startDate,
                     contact = project.contact,
-                    contactPhone = project.contactPhone
+                    contactPhone = project.contactPhone,
                 )
             }
         }
@@ -73,12 +73,12 @@ class NewProjectViewModel @Inject constructor(private val projectsRepository: Pr
             startDate = "",
             contact = "",
             contactPhone = "",
-            somethingWrong = false
+            somethingWrong = false,
         )
         projectId = ""
     }
 
-    fun clearAllError(){
+    fun clearAllError() {
         state = state.copy(somethingWrong = false)
     }
 

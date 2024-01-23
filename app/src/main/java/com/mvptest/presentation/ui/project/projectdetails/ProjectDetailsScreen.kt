@@ -1,6 +1,7 @@
 package com.mvptest.presentation.ui.project.projectdetails
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,20 +9,25 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
@@ -34,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mvptest.presentation.ui.common.MyAlertDialog
+import com.mvptest.presentation.ui.common.MyAlertDialogOneAnswer
 import com.mvptest.utils.interFamily
 import com.mvptest.ventilation.R
 
@@ -49,17 +56,30 @@ fun ProjectDetailsScreen(
 ) {
     var tempProjectId = ""
 
-    if (projectId != "{projectId}") {
-        tempProjectId = projectId
+    tempProjectId = if (projectId != "{projectId}") {
+        projectId
     } else {
-        tempProjectId = projectDetailsViewModel.temporalProjectId
+        projectDetailsViewModel.temporalProjectId
     }
+
+    var errorWhenAddUser by remember { mutableStateOf(value = "") }
 
     projectDetailsViewModel.getProjectById(tempProjectId)
 
-    val openMore = remember { mutableStateOf(false) }
-    val openSendDialog = remember { mutableStateOf(false) }
+    val openAddUserDialog = remember { mutableStateOf(false) }
     val openDeleteDialog = remember { mutableStateOf(false) }
+
+    if (projectDetailsViewModel.state.isEmailNotFound == true) {
+        errorWhenAddUser = context.getString(R.string.email_not_found)
+    } else if (projectDetailsViewModel.state.somethingWrong == true) {
+        errorWhenAddUser = context.getString(R.string.something_wrong)
+    }
+
+    if (projectDetailsViewModel.state.isSuccessAddingUser == true) {
+        openAddUserDialog.value = false
+        Toast.makeText(context, "Пользователь добавлен в проект", Toast.LENGTH_SHORT)
+            .show()
+    }
 
     if (openDeleteDialog.value) {
         MyAlertDialog(
@@ -73,6 +93,21 @@ fun ProjectDetailsScreen(
                 projectDetailsViewModel.deleteProject()
                 onBackPressed()
             },
+        )
+    }
+
+    if (openAddUserDialog.value) {
+        MyAlertDialogOneAnswer(
+            titleId = R.string.enter_added_user_email,
+            confirmButtonText = R.string.add,
+            error = errorWhenAddUser,
+            onCancelClicked = {
+                openAddUserDialog.value = false
+                errorWhenAddUser = ""
+                projectDetailsViewModel.clearErrors()
+            },
+            onConfirmClicked = { projectDetailsViewModel.addUserToProject() },
+            onEmailChanged = { text -> projectDetailsViewModel.setAddingUserEmail(text) },
         )
     }
 
@@ -94,7 +129,8 @@ fun ProjectDetailsScreen(
                 ) {
                     Box(
                         modifier = Modifier
-                            .clickable { openMore.value = !openMore.value },
+                            .padding(top = 10.dp)
+                            .clickable { onEditProjectInfoClicked.invoke(projectId) },
                     ) {
                         Icon(
                             modifier = Modifier
@@ -105,72 +141,69 @@ fun ProjectDetailsScreen(
                         )
                         Icon(
                             modifier = Modifier.align(Alignment.Center),
-                            painter = painterResource(id = R.drawable.ic_more),
+                            painter = painterResource(id = R.drawable.ic_edit),
                             contentDescription = "image",
                             tint = colorResource(id = R.color.gray),
                         )
                     }
-                    if (openMore.value) {
-                        Box(
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable {
+                                projectDetailsViewModel.shareProjectPdfFile(context)
+                            },
+                    ) {
+                        Icon(
                             modifier = Modifier
-                                .padding(top = 10.dp)
-                                .clickable { onEditProjectInfoClicked.invoke(projectId) },
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .height(50.dp)
-                                    .width(50.dp),
-                                painter = painterResource(id = R.drawable.ic_ellipse),
-                                contentDescription = "image",
-                            )
-                            Icon(
-                                modifier = Modifier.align(Alignment.Center),
-                                painter = painterResource(id = R.drawable.ic_edit),
-                                contentDescription = "image",
-                                tint = colorResource(id = R.color.gray),
-                            )
-                        }
-                        Box(
+                                .height(50.dp)
+                                .width(50.dp),
+                            painter = painterResource(id = R.drawable.ic_ellipse),
+                            contentDescription = "image",
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_send),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray),
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable { openAddUserDialog.value = true },
+                    ) {
+                        Icon(
                             modifier = Modifier
-                                .padding(top = 10.dp)
-                                .clickable {
-//                                    openSendDialog.value = true
-                                    projectDetailsViewModel.shareProjectPdfFile(context)
-                                },
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .height(50.dp)
-                                    .width(50.dp),
-                                painter = painterResource(id = R.drawable.ic_ellipse),
-                                contentDescription = "image",
-                            )
-                            Icon(
-                                modifier = Modifier.align(Alignment.Center),
-                                painter = painterResource(id = R.drawable.ic_send),
-                                contentDescription = "image",
-                                tint = colorResource(id = R.color.gray),
-                            )
-                        }
-                        Box(
+                                .height(50.dp)
+                                .width(50.dp),
+                            painter = painterResource(id = R.drawable.ic_ellipse),
+                            contentDescription = "image",
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_add_user),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray),
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .clickable { openDeleteDialog.value = true },
+                    ) {
+                        Icon(
                             modifier = Modifier
-                                .padding(top = 10.dp)
-                                .clickable { openDeleteDialog.value = true },
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .height(50.dp)
-                                    .width(50.dp),
-                                painter = painterResource(id = R.drawable.ic_ellipse),
-                                contentDescription = "image",
-                            )
-                            Icon(
-                                modifier = Modifier.align(Alignment.Center),
-                                painter = painterResource(id = R.drawable.ic_delete),
-                                contentDescription = "image",
-                                tint = colorResource(id = R.color.gray),
-                            )
-                        }
+                                .height(50.dp)
+                                .width(50.dp),
+                            painter = painterResource(id = R.drawable.ic_ellipse),
+                            contentDescription = "image",
+                        )
+                        Icon(
+                            modifier = Modifier.align(Alignment.Center),
+                            painter = painterResource(id = R.drawable.ic_delete),
+                            contentDescription = "image",
+                            tint = colorResource(id = R.color.gray),
+                        )
                     }
                 }
                 Column(modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp)) {
@@ -336,6 +369,21 @@ fun ProjectDetailsScreen(
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
+        }
+    }
+
+    if (projectDetailsViewModel.state.isLoading == true) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.5f)),
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(60.dp),
+                color = colorResource(id = R.color.dark_blue),
+            )
         }
     }
 }

@@ -5,16 +5,18 @@ import android.util.Log
 import com.mvptest.data.network.ProjectsApi
 import com.mvptest.data.network.mappers.toProject
 import com.mvptest.data.network.mappers.toProjectRequest
+import com.mvptest.data.network.requests.AddUserToProjectRequest
 import com.mvptest.domain.ProjectsRepository
 import com.mvptest.domain.ProjectsStorage
 import com.mvptest.domain.models.Project
 import com.mvptest.domain.models.RoomDetails
 import com.mvptest.utils.ShareProjectHelper
+import retrofit2.Response
 import javax.inject.Inject
 
 class ProjectsRepositoryImpl @Inject constructor(
     private val projectsStorage: ProjectsStorage,
-    private val projectsApi: ProjectsApi
+    private val projectsApi: ProjectsApi,
 ) : ProjectsRepository {
     override suspend fun fetchProjects(userId: String) {
         val projectsResponse = projectsApi.getProjectsByUserId(userId)
@@ -45,8 +47,16 @@ class ProjectsRepositoryImpl @Inject constructor(
         projectsStorage.deleteProject(id)
     }
 
-    override suspend fun shareProjectPdfFile(project: Project, rooms: List<RoomDetails>, context: Context) {
+    override suspend fun shareProjectPdfFile(
+        project: Project,
+        rooms: List<RoomDetails>,
+        context: Context,
+    ) {
         val shareProjectHelper = ShareProjectHelper(context)
         shareProjectHelper.createPdfFromObject(project, rooms)
+    }
+
+    override suspend fun addNewUserToProject(projectId: String, email: String): Response<Unit> {
+        return projectsApi.addNewUser(AddUserToProjectRequest(email, projectId))
     }
 }

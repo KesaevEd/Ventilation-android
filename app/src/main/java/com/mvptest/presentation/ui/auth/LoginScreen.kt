@@ -49,7 +49,7 @@ fun LoginScreen(
     context: Context,
     forgotPasswordClick: () -> Unit,
     logInClick: () -> Unit,
-    logUpClick: () -> Unit
+    logUpClick: () -> Unit,
 ) {
     val activity = LocalContext.current as AppCompatActivity
     activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -60,16 +60,17 @@ fun LoginScreen(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier
-                .padding(start = 18.dp, end = 18.dp, top = 35.dp)
+                .padding(start = 18.dp, end = 18.dp, top = 35.dp),
         ) {
             BigTextTitle(
-                modifier = Modifier.align(Alignment.CenterHorizontally), text = stringResource(
-                    id = R.string.enter
-                )
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = stringResource(
+                    id = R.string.enter,
+                ),
             )
             RoundedTextField(
                 modifier = Modifier
@@ -82,12 +83,12 @@ fun LoginScreen(
                     email = text
                 },
                 hint = stringResource(
-                    id = R.string.email
+                    id = R.string.email,
                 ),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             )
             Box(
-                modifier = Modifier.padding(top = 20.dp)
+                modifier = Modifier.padding(top = 20.dp),
             ) {
                 PasswordTextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -98,20 +99,24 @@ fun LoginScreen(
                         password = it
                     },
                     hint = stringResource(id = R.string.password),
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 )
                 Icon(
                     modifier = Modifier
                         .padding(end = 25.dp)
                         .align(Alignment.CenterEnd)
                         .clickable { passwordVisible = !passwordVisible },
-                    painter = if (passwordVisible) painterResource(id = R.drawable.ic_unvisible) else painterResource(
-                        id = R.drawable.ic_visible
-                    ),
+                    painter = if (passwordVisible) {
+                        painterResource(id = R.drawable.ic_unvisible)
+                    } else {
+                        painterResource(
+                            id = R.drawable.ic_visible,
+                        )
+                    },
                     contentDescription = "image",
                     tint = colorResource(
-                        id = R.color.gray
-                    )
+                        id = R.color.gray,
+                    ),
                 )
             }
 
@@ -122,7 +127,7 @@ fun LoginScreen(
                     fontFamily = interFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light,
-                    color = colorResource(id = R.color.red)
+                    color = colorResource(id = R.color.red),
                 )
             }
 
@@ -133,7 +138,7 @@ fun LoginScreen(
                     fontFamily = interFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light,
-                    color = colorResource(id = R.color.red)
+                    color = colorResource(id = R.color.red),
                 )
             }
 
@@ -143,10 +148,10 @@ fun LoginScreen(
                     .padding(top = 20.dp),
                 textId = R.string.sign_in,
                 onClick = {
-                    if(email.isNotEmpty() && password.isNotEmpty()) {
+                    if (email.isNotEmpty() && password.isNotEmpty()) {
                         userAuthViewModel.login()
                     }
-                }
+                },
             )
 
             Text(
@@ -158,13 +163,13 @@ fun LoginScreen(
                 fontFamily = interFamily,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
-                color = colorResource(id = R.color.dark_gray_2)
+                color = colorResource(id = R.color.dark_gray_2),
             )
 
             Row(
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .align(Alignment.CenterHorizontally)
+                    .align(Alignment.CenterHorizontally),
             ) {
                 HorizontalLine(modifier = Modifier.align(Alignment.CenterVertically))
                 Text(
@@ -175,12 +180,12 @@ fun LoginScreen(
                     fontFamily = interFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
-                    color = colorResource(id = R.color.dark_gray_2)
+                    color = colorResource(id = R.color.dark_gray_2),
                 )
                 HorizontalLine(
                     modifier = Modifier
                         .padding(start = 10.dp)
-                        .align(Alignment.CenterVertically)
+                        .align(Alignment.CenterVertically),
                 )
             }
 
@@ -189,7 +194,7 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .padding(top = 24.dp),
                 textId = R.string.sign_up,
-                onClick = { logUpClick() }
+                onClick = { logUpClick() },
             )
 
             if (userAuthViewModel.state.isSuccessLogin == true) {
@@ -201,21 +206,23 @@ fun LoginScreen(
                 Toast.makeText(
                     context,
                     "Что то пошло не так, попробуйте еще раз",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 )
                     .show()
                 userAuthViewModel.clearAllError()
             }
         }
         if (userAuthViewModel.state.isLoading == true) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.5f))) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f)),
+            ) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(60.dp),
-                    color = colorResource(id = R.color.dark_blue)
+                    color = colorResource(id = R.color.dark_blue),
                 )
             }
         }

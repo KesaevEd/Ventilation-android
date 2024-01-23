@@ -1,9 +1,6 @@
 package com.mvptest.presentation.ui.auth
 
-import com.mvptest.data.network.requests.LoginRequest
-import com.mvptest.data.network.requests.RegisterRequest
 import com.mvptest.domain.models.User
-import io.reactivex.internal.operators.single.SingleDoOnSuccess
 
 data class UserAuthViewState(
     val isLoading: Boolean? = false,
@@ -20,5 +17,5 @@ data class UserAuthViewState(
     val user: User? = null,
     val somethingWrong: Boolean? = false,
     val email: String? = null,
-    val password: String? = null
+    val password: String? = null,
 )

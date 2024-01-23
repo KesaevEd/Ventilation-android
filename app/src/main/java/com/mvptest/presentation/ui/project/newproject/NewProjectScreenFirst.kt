@@ -39,9 +39,8 @@ import com.mvptest.ventilation.R
 fun NewProjectScreenFirst(
     viewModel: NewProjectViewModel,
     onCheckButtonClick: () -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
 ) {
-
     val openDialog = remember { mutableStateOf(false) }
 
     if (openDialog.value) {
@@ -54,19 +53,19 @@ fun NewProjectScreenFirst(
             onConfirmClicked = {
                 openDialog.value = false
                 onBackPressed()
-            })
+            },
+        )
     }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
-
         var newItem by remember { mutableStateOf(value = viewModel.state.title ?: "") }
         var newTextFieldModifier by remember {
             mutableStateOf(
                 Modifier
                     .height(60.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
         }
 
@@ -81,28 +80,28 @@ fun NewProjectScreenFirst(
         Box(
             modifier = Modifier
                 .align(Alignment.End)
-                .padding(end = 20.dp, top = 41.dp)
+                .padding(end = 20.dp, top = 41.dp),
         ) {
             Icon(
                 modifier = Modifier
                     .clickable { openDialog.value = true },
                 painter = painterResource(id = R.drawable.ic_close),
                 tint = colorResource(id = R.color.gray),
-                contentDescription = "image"
+                contentDescription = "image",
             )
         }
 
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Text(
                 modifier = Modifier,
                 text = stringResource(id = R.string.new_project),
                 fontSize = 20.sp,
                 fontFamily = interFamily,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
 
             TextFieldWithCheckButton(onTextChanged = { text ->
@@ -118,7 +117,7 @@ fun TextFieldWithCheckButton(
     newItem: String,
     modifier: Modifier,
     onCheckButtonClick: () -> Unit,
-    viewModel: NewProjectViewModel
+    viewModel: NewProjectViewModel,
 ) {
     var textValue by remember {
         mutableStateOf(value = viewModel.state.title)
@@ -140,7 +139,7 @@ fun TextFieldWithCheckButton(
                     onTextChanged(newValue)
                 }
             },
-            hint = stringResource(id = R.string.write_project_name)
+            hint = stringResource(id = R.string.write_project_name),
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -152,14 +151,13 @@ fun TextFieldWithCheckButton(
                     .height(60.dp),
                 onClick = { onCheckButtonClick() },
                 shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
-            )
-            {
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
+            ) {
                 Icon(
                     modifier = Modifier.padding(),
                     painter = painterResource(id = R.drawable.ic_check),
                     tint = Color.White,
-                    contentDescription = "check"
+                    contentDescription = "check",
                 )
             }
         }
