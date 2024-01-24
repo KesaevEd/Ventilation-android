@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class ProjectDbEntity(
     @PrimaryKey
     @ColumnInfo(name = "id") val id: String,
+    @ColumnInfo(name = "creator_id") val creatorId: String,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "address") val address: String,
     @ColumnInfo(name = "start_date") val startDate: String,

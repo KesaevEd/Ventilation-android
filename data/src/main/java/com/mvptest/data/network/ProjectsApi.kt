@@ -1,5 +1,6 @@
 package com.mvptest.data.network
 
+import com.mvptest.data.network.requests.AddUserToProjectRequest
 import com.mvptest.data.network.requests.NewProjectRequest
 import com.mvptest.data.network.responses.ProjectsResponse
 import retrofit2.Response
@@ -13,16 +14,21 @@ interface ProjectsApi {
 
     @POST("/save_project")
     suspend fun saveProject(
-        @Body newProjectRequest: NewProjectRequest
+        @Body newProjectRequest: NewProjectRequest,
     ): Response<Unit>
 
     @GET("/get_projects/{user_id}")
     suspend fun getProjectsByUserId(
-        @Path("user_id") userId: String
+        @Path("user_id") userId: String,
     ): Response<ProjectsResponse>
 
     @DELETE("/delete_project/{project_id}")
     suspend fun deleteProject(
-        @Path("project_id") projectId: String
+        @Path("project_id") projectId: String,
+    ): Response<Unit>
+
+    @POST("/add_user_to_project")
+    suspend fun addNewUser(
+        @Body addUserToProjectRequest: AddUserToProjectRequest,
     ): Response<Unit>
 }

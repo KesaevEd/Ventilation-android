@@ -10,21 +10,23 @@ import com.mvptest.domain.models.VentSystemDestination
 fun Project.toDbEntity(): ProjectDbEntity =
     ProjectDbEntity(
         id = id,
+        creatorId = creatorId,
         title = title,
         address = address,
         startDate = startDate ?: "",
         contact = contact ?: "",
-        contactPhone = contactPhone ?: ""
+        contactPhone = contactPhone ?: "",
     )
 
 fun ProjectDbEntity.toProject(): Project =
     Project(
         id = id,
+        creatorId = creatorId,
         title = title,
         address = address,
         startDate = startDate,
         contact = contact,
-        contactPhone = contactPhone
+        contactPhone = contactPhone,
     )
 
 fun RoomDetails.toDbEntity(projectId: String): RoomDbEntity =
@@ -43,7 +45,7 @@ fun RoomDetails.toDbEntity(projectId: String): RoomDbEntity =
         airConditionerPerformance = airConditionerPerformance,
         startDate = startDate,
         deadLines = deadLines,
-        comment = comment
+        comment = comment,
     )
 
 fun RoomDbEntity.toRoomDetails(): RoomDetails =
@@ -61,5 +63,5 @@ fun RoomDbEntity.toRoomDetails(): RoomDetails =
         airConditionerPerformance = airConditionerPerformance,
         startDate = startDate,
         deadLines = deadLines,
-        comment = comment
+        comment = comment,
     )

@@ -1,10 +1,8 @@
 package com.mvptest.presentation.ui.myprojects
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,7 +19,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -49,7 +46,7 @@ fun MyProjectsScreen(
     navController: NavController,
     viewModel: MyProjectsViewModel,
     onCreateNewProjectClicked: () -> Unit,
-    onItemClicked: (id: String) -> Unit
+    onItemClicked: (id: String) -> Unit,
 ) {
     val token = homeScreenViewModel.getToken()
 
@@ -64,12 +61,12 @@ fun MyProjectsScreen(
             },
             onCancelClicked = {
                 openDialog.value = false
-            }
+            },
         )
     }
 
     Column(
-        Modifier.padding(top = 10.dp)
+        Modifier.padding(top = 10.dp),
     ) {
         if (viewModel.state.projects != null && viewModel.state.projects!!.isNotEmpty()) {
             Button(
@@ -97,12 +94,12 @@ fun MyProjectsScreen(
                             textAlign = TextAlign.Center,
                             fontFamily = interFamily,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
                         )
                     }
                 },
                 onClick = { onCreateNewProjectClicked() },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
             )
         }
         if (viewModel.state.projects != null && viewModel.state.projects!!.isEmpty()) {
@@ -115,8 +112,8 @@ fun MyProjectsScreen(
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Medium,
                 color = colorResource(
-                    id = R.color.dark_gray
-                )
+                    id = R.color.dark_gray,
+                ),
             )
             Button(
                 modifier = Modifier
@@ -131,9 +128,13 @@ fun MyProjectsScreen(
                                 .align(CenterVertically)
                                 .height(20.dp)
                                 .width(20.dp),
-                            painter = if (token != null) painterResource(id = R.drawable.ic_add) else painterResource(
-                                id = R.drawable.ic_lock
-                            ),
+                            painter = if (token != null) {
+                                painterResource(id = R.drawable.ic_add)
+                            } else {
+                                painterResource(
+                                    id = R.drawable.ic_lock,
+                                )
+                            },
                             contentDescription = "image",
                             tint = Color.White,
                         )
@@ -141,28 +142,32 @@ fun MyProjectsScreen(
                             text = stringResource(id = R.string.create_project),
                             modifier = Modifier
                                 .padding(17.dp),
-                            color = if (token != null) colorResource(id = R.color.white) else colorResource(
-                                id = R.color.lock_gray1
-                            ),
+                            color = if (token != null) {
+                                colorResource(id = R.color.white)
+                            } else {
+                                colorResource(
+                                    id = R.color.lock_gray1,
+                                )
+                            },
                             textAlign = TextAlign.Center,
                             fontFamily = interFamily,
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
                         )
                     }
                 },
                 onClick = {
-                    if(token != null) {
+                    if (token != null) {
                         onCreateNewProjectClicked()
                     } else {
                         openDialog.value = true
                     }
                 },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
             )
         } else {
             ListContent(
-                projectsList = viewModel.state.projects ?: emptyList()
+                projectsList = viewModel.state.projects ?: emptyList(),
             ) { itemId -> onItemClicked.invoke(itemId) }
         }
     }
@@ -179,7 +184,7 @@ fun MyProjectsScreen(
 @Composable
 fun ListContent(
     projectsList: List<Project>,
-    onItemClicked: (id: String) -> Unit = { }
+    onItemClicked: (id: String) -> Unit = { },
 ) {
     LazyVerticalGrid(
         modifier = Modifier.padding(bottom = 80.dp),
@@ -188,13 +193,14 @@ fun ListContent(
             items(projectsList) { item ->
                 ProjectItem(project = item, onItemClicked = onItemClicked)
             }
-        })
+        },
+    )
 }
 
 @Composable
 fun ProjectItem(
     project: Project,
-    onItemClicked: (id: String) -> Unit = { }
+    onItemClicked: (id: String) -> Unit = { },
 ) {
     ItemCard(item = project, onItemClicked = onItemClicked)
 }
@@ -202,23 +208,22 @@ fun ProjectItem(
 @Composable
 fun ItemCard(
     item: Project,
-    onItemClicked: (id: String) -> Unit = { }
+    onItemClicked: (id: String) -> Unit = { },
 ) {
     Card(
         modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 18.dp),
         backgroundColor = colorResource(id = R.color.dark_blue),
         shape = RoundedCornerShape(size = 25.dp),
-        elevation = 0.dp
+        elevation = 0.dp,
     ) {
         Column(modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp)) {
-
             Text(
                 modifier = Modifier.padding(top = 25.dp),
                 text = item.title,
                 fontSize = 22.sp,
                 color = Color.White,
                 fontFamily = interFamily,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
 
             Text(
@@ -227,7 +232,7 @@ fun ItemCard(
                 fontSize = 12.sp,
                 color = colorResource(id = R.color.gray),
                 fontFamily = interFamily,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
             )
 
             Text(
@@ -236,7 +241,7 @@ fun ItemCard(
                 fontSize = 14.sp,
                 color = Color.White,
                 fontFamily = interFamily,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
             )
 
             Text(
@@ -245,7 +250,7 @@ fun ItemCard(
                 fontSize = 12.sp,
                 color = colorResource(id = R.color.gray),
                 fontFamily = interFamily,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
             )
 
             Text(
@@ -254,7 +259,7 @@ fun ItemCard(
                 fontSize = 14.sp,
                 color = Color.White,
                 fontFamily = interFamily,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
             )
 
             Button(
@@ -272,9 +277,8 @@ fun ItemCard(
                     )
                 },
                 onClick = { onItemClicked.invoke(item.id) },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.background_gray))
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.background_gray)),
             )
-
         }
     }
 }

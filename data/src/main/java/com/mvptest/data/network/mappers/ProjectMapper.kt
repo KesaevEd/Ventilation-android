@@ -7,6 +7,7 @@ import com.mvptest.domain.models.Project
 fun ProjectResponse.toProject(): Project {
     return Project(
         id = id,
+        creatorId = userId,
         title = title,
         address = address,
         startDate = startDate,

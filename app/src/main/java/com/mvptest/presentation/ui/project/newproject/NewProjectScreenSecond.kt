@@ -45,9 +45,8 @@ fun NewProjectScreenSecond(
     viewModel: NewProjectViewModel,
     onBackPressed: () -> Unit,
     onContinueButtonClick: (id: String) -> Unit,
-    context: Context
+    context: Context,
 ) {
-
     var address by remember {
         mutableStateOf(value = viewModel.state.address ?: "")
     }
@@ -64,7 +63,7 @@ fun NewProjectScreenSecond(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Column(modifier = Modifier.padding(18.dp)) {
             Box(
@@ -72,8 +71,8 @@ fun NewProjectScreenSecond(
                     .fillMaxWidth()
                     .background(
                         color = colorResource(id = R.color.dark_blue),
-                        shape = RoundedCornerShape(25.dp)
-                    )
+                        shape = RoundedCornerShape(25.dp),
+                    ),
             ) {
                 Text(
                     modifier = Modifier.padding(start = 25.dp, bottom = 16.dp, top = 16.dp),
@@ -81,7 +80,7 @@ fun NewProjectScreenSecond(
                     fontSize = 22.sp,
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = Color.White,
                 )
             }
             RoundedTextField(
@@ -93,14 +92,16 @@ fun NewProjectScreenSecond(
                     viewModel.setAddress(it)
                     address = it
                 },
-                hint = stringResource(id = R.string.project_address)
+                hint = stringResource(id = R.string.project_address),
             )
 
-            Box(modifier = Modifier
-                .padding(top = 20.dp)
-                .clickable {
-                    isCalendarClicked.value = true
-                }) {
+            Box(
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .clickable {
+                        isCalendarClicked.value = true
+                    },
+            ) {
                 RoundedTextField(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -110,7 +111,7 @@ fun NewProjectScreenSecond(
                         startDate = it
                     },
                     hint = stringResource(id = R.string.start_date),
-                    enabled = false
+                    enabled = false,
                 )
                 Icon(
                     modifier = Modifier
@@ -119,12 +120,10 @@ fun NewProjectScreenSecond(
                     painter = painterResource(id = R.drawable.ic_calculator),
                     contentDescription = "image",
                     tint = colorResource(
-                        id = R.color.gray
-                    )
+                        id = R.color.gray,
+                    ),
                 )
-
             }
-
 
             if (isCalendarClicked.value) {
                 MyDatePickerDialog(onDateSelected = { date ->
@@ -132,7 +131,6 @@ fun NewProjectScreenSecond(
                     viewModel.setStartDate(date)
                 }) { isCalendarClicked.value = false }
             }
-
 
             RoundedTextField(
                 modifier = Modifier
@@ -143,7 +141,7 @@ fun NewProjectScreenSecond(
                     viewModel.setContact(it)
                     contact = it
                 },
-                hint = stringResource(id = R.string.contact)
+                hint = stringResource(id = R.string.contact),
             )
 
             RoundedTextField(
@@ -155,7 +153,7 @@ fun NewProjectScreenSecond(
                     viewModel.setContactPhone(it)
                     contactPhone = it
                 },
-                hint = stringResource(id = R.string.contact_phone)
+                hint = stringResource(id = R.string.contact_phone),
             )
 
             Row(modifier = Modifier.padding(top = 30.dp)) {
@@ -176,7 +174,7 @@ fun NewProjectScreenSecond(
                             contentDescription = "image",
                             tint = colorResource(id = R.color.dark_gray_2),
                         )
-                    }
+                    },
                 )
 
                 Button(
@@ -204,7 +202,7 @@ fun NewProjectScreenSecond(
                                 textAlign = TextAlign.Center,
                                 fontSize = 16.sp,
                                 fontFamily = interFamily,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
                             )
                         }
                     },
@@ -212,32 +210,32 @@ fun NewProjectScreenSecond(
                         viewModel.saveProject()
                         onContinueButtonClick.invoke(viewModel.projectId)
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
             if (viewModel.state.somethingWrong == true) {
                 Toast.makeText(
                     context,
                     "Что то пошло не так, попробуйте еще раз",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 )
                     .show()
                 viewModel.clearAllError()
             }
         }
         if (viewModel.state.isLoading == true) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.5f))) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f)),
+            ) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(60.dp),
-                    color = colorResource(id = R.color.dark_blue)
+                    color = colorResource(id = R.color.dark_blue),
                 )
             }
         }
-
-
     }
 }

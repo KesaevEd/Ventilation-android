@@ -7,10 +7,13 @@ import com.mvptest.data.database.dao.RoomsDao
 import com.mvptest.data.database.entities.ProjectDbEntity
 import com.mvptest.data.database.entities.RoomDbEntity
 
-@Database(entities = [ProjectDbEntity::class, RoomDbEntity::class], version = 1)
+@Database(
+    entities = [ProjectDbEntity::class, RoomDbEntity::class],
+    version = 2,
+)
 abstract class DataBase : RoomDatabase() {
 
-    companion object{
+    companion object {
         const val NAME = "data_base"
     }
 
@@ -18,3 +21,5 @@ abstract class DataBase : RoomDatabase() {
 
     abstract fun roomsDao(): RoomsDao
 }
+
+
