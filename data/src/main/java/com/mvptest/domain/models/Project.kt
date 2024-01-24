@@ -2,6 +2,7 @@ package com.mvptest.domain.models
 
 data class Project(
     val id: String,
+    val creatorId: String,
     val title: String,
     val address: String,
     val startDate: String? = "",

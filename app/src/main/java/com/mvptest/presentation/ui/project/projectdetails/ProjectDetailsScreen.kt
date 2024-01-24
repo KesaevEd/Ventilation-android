@@ -186,24 +186,27 @@ fun ProjectDetailsScreen(
                             tint = colorResource(id = R.color.gray),
                         )
                     }
-                    Box(
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .clickable { openDeleteDialog.value = true },
-                    ) {
-                        Icon(
+
+                    if (projectDetailsViewModel.isCreator()) {
+                        Box(
                             modifier = Modifier
-                                .height(50.dp)
-                                .width(50.dp),
-                            painter = painterResource(id = R.drawable.ic_ellipse),
-                            contentDescription = "image",
-                        )
-                        Icon(
-                            modifier = Modifier.align(Alignment.Center),
-                            painter = painterResource(id = R.drawable.ic_delete),
-                            contentDescription = "image",
-                            tint = colorResource(id = R.color.gray),
-                        )
+                                .padding(top = 10.dp)
+                                .clickable { openDeleteDialog.value = true },
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .height(50.dp)
+                                    .width(50.dp),
+                                painter = painterResource(id = R.drawable.ic_ellipse),
+                                contentDescription = "image",
+                            )
+                            Icon(
+                                modifier = Modifier.align(Alignment.Center),
+                                painter = painterResource(id = R.drawable.ic_delete),
+                                contentDescription = "image",
+                                tint = colorResource(id = R.color.gray),
+                            )
+                        }
                     }
                 }
                 Column(modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp)) {

@@ -1,6 +1,7 @@
 package com.mvptest.presentation.ui.project.projectdetails
 
 data class ProjectDetailsViewState(
+    val creatorId: String? = "",
     val title: String? = "",
     val address: String? = "",
     val startDate: String? = "",

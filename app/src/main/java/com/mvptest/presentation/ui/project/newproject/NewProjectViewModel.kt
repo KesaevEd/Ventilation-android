@@ -34,6 +34,7 @@ class NewProjectViewModel @Inject constructor(private val projectsRepository: Pr
                 projectsRepository.saveProject(
                     project = Project(
                         id = projectId,
+                        creatorId = userId ?: "",
                         state.title ?: "",
                         state.address ?: "",
                         state.startDate,

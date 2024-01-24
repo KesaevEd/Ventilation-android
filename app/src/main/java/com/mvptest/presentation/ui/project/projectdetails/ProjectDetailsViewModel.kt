@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mvptest.data.SharedPrefStorage
 import com.mvptest.domain.ProjectsRepository
 import com.mvptest.domain.RoomsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class ProjectDetailsViewModel @Inject constructor(
     private val projectsRepository: ProjectsRepository,
     private val roomsRepository: RoomsRepository,
+    private val sharedPrefStorage: SharedPrefStorage,
 ) : ViewModel() {
 
     var state by mutableStateOf(ProjectDetailsViewState())
@@ -32,6 +34,7 @@ class ProjectDetailsViewModel @Inject constructor(
             val rooms = roomsRepository.getRoomsByProjectId(projectId)
             if (project != null && rooms != null) {
                 state = state.copy(
+                    creatorId = project.creatorId,
                     title = project.title,
                     address = project.address,
                     startDate = project.startDate,
@@ -42,6 +45,8 @@ class ProjectDetailsViewModel @Inject constructor(
             }
         }
     }
+
+    fun isCreator(): Boolean = state.creatorId == sharedPrefStorage.userId
 
     fun deleteProject() {
         viewModelScope.launch {
