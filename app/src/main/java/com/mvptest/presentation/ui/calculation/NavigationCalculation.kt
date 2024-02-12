@@ -34,7 +34,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
         }
         composable(NavigationCalculationItem.AirExchange.route) {
             val fromProject = it.arguments?.getString("fromProject")
-            AirExchangeScreen(fromProject ?: "false", onBackPressed = {
+            AirExchangeScreen(context, fromProject ?: "false", onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
                     popUpTo(
                         NavigationItem.Calculating.route
@@ -54,7 +54,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
         }
         composable(NavigationCalculationItem.DuctCrossSection.route) {
             val fromProject = it.arguments?.getString("fromProject")
-            DuctCrossSectionScreen(fromProject ?: "false", onBackPressed = {
+            DuctCrossSectionScreen(context, fromProject ?: "false", onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
                     popUpTo(
                         NavigationItem.Calculating.route
@@ -94,7 +94,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
         }
         composable(NavigationCalculationItem.Diffusers.route) {
             val fromProject = it.arguments?.getString("fromProject")
-            DiffusersScreen(fromProject ?: "false", onBackPressed = {
+            DiffusersScreen(context, fromProject ?: "false", onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
                     popUpTo(
                         NavigationItem.Calculating.route
@@ -114,7 +114,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
         }
         composable(NavigationCalculationItem.Aerodynamic.route) {
             val fromProject = it.arguments?.getString("fromProject")
-            AerodynamicScreen(fromProject ?: "false", aerodynamicViewModel, onBackPressed = {
+            AerodynamicScreen(context, fromProject ?: "false", aerodynamicViewModel, onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
                     popUpTo(
                         NavigationItem.Calculating.route
@@ -134,7 +134,7 @@ fun NavGraphBuilder.calculationGraph(navController: NavController, context: Cont
         }
         composable(NavigationCalculationItem.Conditioner.route) {
             val fromProject = it.arguments?.getString("fromProject")
-            ConditionerScreen(fromProject ?: "false", onBackPressed = {
+            ConditionerScreen(context, fromProject ?: "false", onBackPressed = {
                 navController.navigate(NavigationItem.Calculating.route) {
                     popUpTo(
                         NavigationItem.Calculating.route

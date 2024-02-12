@@ -15,7 +15,6 @@ import com.mvptest.data.network.requests.SendCodeRequest
 import com.mvptest.domain.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.util.Random
 import javax.inject.Inject
 

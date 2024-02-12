@@ -1,8 +1,8 @@
 package com.mvptest.presentation.ui.calculation.calculators.aerodynamic
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -41,10 +40,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mvptest.presentation.ui.calculation.CalculationResult
-import com.mvptest.presentation.ui.calculation.calculators.airheater.AirHeaterHelper
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mvptest.domain.models.CalculationType
-import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeHelper
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.presentation.ui.common.ButtonIconAndText
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.TextMediumBlack14sp
@@ -55,13 +54,13 @@ import com.mvptest.ventilation.R
 
 @Composable
 fun AerodynamicScreen(
+    context: Context,
     isFromProject: String,
     aerodynamicViewModel: AerodynamicViewModel,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    newRoomViewModel: NewRoomViewModel
+    newRoomViewModel: NewRoomViewModel,
 ) {
-
     val activity = LocalContext.current as AppCompatActivity
     activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 
@@ -90,7 +89,7 @@ fun AerodynamicScreen(
 
     LazyColumn(
         modifier = Modifier
-            .padding(18.dp)
+            .padding(18.dp),
     ) {
         item {
             Box(
@@ -98,70 +97,68 @@ fun AerodynamicScreen(
                     .fillMaxWidth()
                     .background(
                         color = colorResource(id = R.color.sand),
-                        shape = RoundedCornerShape(25.dp)
-                    )
+                        shape = RoundedCornerShape(25.dp),
+                    ),
             ) {
                 TextTitle(
                     modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp),
                     text = stringResource(id = R.string.aerodynamic_title),
-                    colorId = R.color.white
+                    colorId = R.color.white,
                 )
             }
 
             if (isPortrait) {
                 Row(modifier = Modifier.padding(top = 25.dp)) {
-
                     TextMediumBlack14sp(
                         modifier = Modifier,
-                        text = stringResource(id = R.string.advice_turn_devise)
+                        text = stringResource(id = R.string.advice_turn_devise),
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Box(
                         modifier = Modifier.background(
                             color = colorResource(id = R.color.dark_gray_2),
-                            shape = RoundedCornerShape(16.dp)
-                        )
+                            shape = RoundedCornerShape(16.dp),
+                        ),
                     ) {
                         Icon(
                             modifier = Modifier.padding(10.dp),
                             painter = painterResource(id = R.drawable.ic_turn_device),
                             contentDescription = "image",
-                            tint = colorResource(id = R.color.white)
+                            tint = colorResource(id = R.color.white),
                         )
                     }
                 }
             }
 
-
             Row(
                 modifier = Modifier
                     .padding(top = 34.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 TextMediumBlack14sp(
                     modifier = Modifier.weight(0.05f),
                     text = stringResource(id = R.string.aerodynamic_number),
-                    centerText = true
+                    centerText = true,
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.weight(0.2f),
                     text = stringResource(id = R.string.aerodynamic_air_flow),
-                    centerText = true
+                    centerText = true,
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.weight(0.15f),
                     text = stringResource(id = R.string.aerodynamic_length),
-                    centerText = true
+                    centerText = true,
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.weight(0.25f),
                     text = stringResource(id = R.string.aerodynamic_cut_area),
-                    centerText = true
+                    centerText = true,
                 )
                 TextMediumBlack14sp(
                     modifier = Modifier.weight(0.35f),
                     text = stringResource(id = R.string.aerodynamic_elements),
-                    centerText = true
+                    centerText = true,
                 )
             }
         }
@@ -188,12 +185,12 @@ fun AerodynamicScreen(
                     aerodynamicViewModel.newSection(sectionNumber)
                     sectionNumber++
                     aerodynamicViewModel.sectionNumber++
-                }
+                },
             )
 
             if (isResult && !isSomethingWrong) {
                 CalculatorsResult(
-                    calculationResult = aerodynamicResult
+                    calculationResult = aerodynamicResult,
                 )
             }
 
@@ -204,7 +201,7 @@ fun AerodynamicScreen(
                     fontFamily = interFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light,
-                    color = colorResource(id = R.color.red)
+                    color = colorResource(id = R.color.red),
                 )
             }
 
@@ -226,7 +223,7 @@ fun AerodynamicScreen(
                             contentDescription = "image",
                             tint = colorResource(id = R.color.dark_gray_2),
                         )
-                    }
+                    },
                 )
 
                 Button(
@@ -259,20 +256,26 @@ fun AerodynamicScreen(
                                 )
                             }
                             Text(
-                                text = if (isResult && isFromProject == "true") stringResource(id = R.string.save_button) else stringResource(
-                                    id = R.string.calculating
-                                ),
+                                text = if (isResult && isFromProject == "true") {
+                                    stringResource(id = R.string.save_button)
+                                } else {
+                                    stringResource(
+                                        id = R.string.calculating,
+                                    )
+                                },
                                 modifier = Modifier
                                     .padding(start = 15.dp),
                                 color = colorResource(id = R.color.white),
                                 textAlign = TextAlign.Center,
                                 fontSize = 16.sp,
                                 fontFamily = interFamily,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
                             )
                         }
                     },
                     onClick = {
+                        val firebase = FirebaseAnalytics.getInstance(context)
+                        firebase.logEvent("calculation_aerodynamic", bundleOf())
                         if (isResult && isFromProject == "true") {
                             onBackPressedFromProject()
                         } else {
@@ -289,7 +292,7 @@ fun AerodynamicScreen(
                             }
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
         }
@@ -298,5 +301,4 @@ fun AerodynamicScreen(
     BackHandler {
         if (isFromProject == "true") onBackPressedFromProject() else onBackPressed()
     }
-
 }

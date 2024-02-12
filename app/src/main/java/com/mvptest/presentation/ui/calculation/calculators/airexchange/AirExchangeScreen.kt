@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.calculation.calculators.airexchange
 
+import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -35,10 +36,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.presentation.ui.calculation.ventilationconstans.airMultiplicityByDestination
 import com.mvptest.presentation.ui.calculation.ventilationconstans.peopleBehaviorList
-import com.mvptest.presentation.ui.calculation.CalculationResult
-import com.mvptest.domain.models.CalculationType
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.PairObjectsDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
@@ -50,12 +53,12 @@ import com.mvptest.ventilation.R
 
 @Composable
 fun AirExchangeScreen(
+    context: Context,
     isFromProject: String,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    newRoomViewModel: NewRoomViewModel
+    newRoomViewModel: NewRoomViewModel,
 ) {
-
     val airExchangeTypes = listOf(AirExchangeType.MULTIPLICITY, AirExchangeType.SANITARY)
     var airExchangeType by remember {
         mutableStateOf(value = AirExchangeType.MULTIPLICITY)
@@ -89,40 +92,39 @@ fun AirExchangeScreen(
         mutableIntStateOf(value = 0)
     }
 
-
     Column(
         modifier = Modifier
             .padding(18.dp)
             .verticalScroll(
-                rememberScrollState()
-            )
+                rememberScrollState(),
+            ),
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
                     color = colorResource(id = R.color.sand),
-                    shape = RoundedCornerShape(25.dp)
-                )
+                    shape = RoundedCornerShape(25.dp),
+                ),
         ) {
             TextTitle(
                 modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp),
                 text = stringResource(id = R.string.air_exchange_title),
-                colorId = R.color.white
+                colorId = R.color.white,
             )
         }
 
         TextTitleOfTextField(
             modifier = Modifier.padding(top = 20.dp),
-            textId = R.string.choose_diff_type
+            textId = R.string.choose_diff_type,
         )
         Box(
             modifier = Modifier
                 .padding(top = 5.dp)
                 .background(
                     colorResource(id = R.color.light_gray),
-                    shape = RoundedCornerShape(15.dp)
-                )
+                    shape = RoundedCornerShape(15.dp),
+                ),
         ) {
             Row() {
                 selectedTypeButtonIndex = airExchangeTypes.indexOf(airExchangeType)
@@ -138,16 +140,24 @@ fun AirExchangeScreen(
                             .padding(10.dp),
                         border = BorderStroke(
                             1.dp,
-                            color = colorResource(id = R.color.gray)
+                            color = colorResource(id = R.color.gray),
                         ),
                         shape = RoundedCornerShape(100.dp),
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = if (selectedTypeButtonIndex == index) colorResource(
-                                id = R.color.dark_gray_2
-                            ) else colorResource(id = R.color.light_gray),
-                            contentColor = if (selectedTypeButtonIndex == index) Color.White else colorResource(
-                                id = R.color.gray
-                            )
+                            backgroundColor = if (selectedTypeButtonIndex == index) {
+                                colorResource(
+                                    id = R.color.dark_gray_2,
+                                )
+                            } else {
+                                colorResource(id = R.color.light_gray)
+                            },
+                            contentColor = if (selectedTypeButtonIndex == index) {
+                                Color.White
+                            } else {
+                                colorResource(
+                                    id = R.color.gray,
+                                )
+                            },
                         ),
                         content = {
                             Text(
@@ -155,9 +165,9 @@ fun AirExchangeScreen(
                                 text = stringResource(id = airExchangeTypes[index].textId),
                                 fontFamily = interFamily,
                                 fontWeight = FontWeight.Medium,
-                                fontSize = 12.sp
+                                fontSize = 12.sp,
                             )
-                        }
+                        },
                     )
                 }
             }
@@ -166,7 +176,7 @@ fun AirExchangeScreen(
         if (airExchangeType == AirExchangeType.MULTIPLICITY) {
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.room_volume
+                textId = R.string.room_volume,
             )
             RoundedTextField(
                 modifier = Modifier
@@ -178,13 +188,12 @@ fun AirExchangeScreen(
                     roomVolume = it
                 },
                 hint = stringResource(id = R.string.room_volume),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
         } else {
-
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.people_count
+                textId = R.string.people_count,
             )
             RoundedTextField(
                 modifier = Modifier
@@ -197,20 +206,19 @@ fun AirExchangeScreen(
                     peopleCount = text
                 },
                 hint = stringResource(id = R.string.enter_value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
-
         }
 
         TextTitleOfTextField(
             modifier = Modifier.padding(top = 15.dp),
-            textId = if (airExchangeType == AirExchangeType.MULTIPLICITY) R.string.room_destination else R.string.people_behavior
+            textId = if (airExchangeType == AirExchangeType.MULTIPLICITY) R.string.room_destination else R.string.people_behavior,
         )
         Box(
             modifier = Modifier
-                .padding(top = 5.dp)
+                .padding(top = 5.dp),
         ) {
-            if(airExchangeType == AirExchangeType.MULTIPLICITY) {
+            if (airExchangeType == AirExchangeType.MULTIPLICITY) {
                 PairObjectsDropDown(
                     R.string.choose_variant,
                     airMultiplicityByDestination,
@@ -222,7 +230,8 @@ fun AirExchangeScreen(
                         } else {
                             airFlowForOneHuman = value
                         }
-                    })
+                    },
+                )
             } else {
                 PairObjectsDropDown(
                     R.string.choose_variant,
@@ -235,7 +244,8 @@ fun AirExchangeScreen(
                         } else {
                             airFlowForOneHuman = value
                         }
-                    })
+                    },
+                )
             }
             Icon(
                 modifier = Modifier
@@ -244,14 +254,14 @@ fun AirExchangeScreen(
                 painter = painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "image",
                 tint = colorResource(
-                    id = R.color.gray
-                )
+                    id = R.color.gray,
+                ),
             )
         }
 
         if (isResult) {
             CalculatorsResult(
-                calculationResult = airExchangeResult
+                calculationResult = airExchangeResult,
             )
         }
 
@@ -262,7 +272,7 @@ fun AirExchangeScreen(
                 fontFamily = interFamily,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Light,
-                color = colorResource(id = R.color.red)
+                color = colorResource(id = R.color.red),
             )
         }
 
@@ -284,7 +294,7 @@ fun AirExchangeScreen(
                         contentDescription = "image",
                         tint = colorResource(id = R.color.dark_gray_2),
                     )
-                }
+                },
             )
 
             Button(
@@ -317,20 +327,26 @@ fun AirExchangeScreen(
                             )
                         }
                         Text(
-                            text = if (isResult && isFromProject == "true") stringResource(id = R.string.save_button) else stringResource(
-                                id = R.string.calculating
-                            ),
+                            text = if (isResult && isFromProject == "true") {
+                                stringResource(id = R.string.save_button)
+                            } else {
+                                stringResource(
+                                    id = R.string.calculating,
+                                )
+                            },
                             modifier = Modifier
                                 .padding(start = 15.dp),
                             color = colorResource(id = R.color.white),
                             textAlign = TextAlign.Center,
                             fontSize = 16.sp,
                             fontFamily = interFamily,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                     }
                 },
                 onClick = {
+                    val firebase = FirebaseAnalytics.getInstance(context)
+                    firebase.logEvent("calculation_airexchange", bundleOf())
                     if (isResult && isFromProject == "true") {
                         onBackPressedFromProject()
                     } else {
@@ -339,7 +355,7 @@ fun AirExchangeScreen(
                             roomVolume = roomVolume,
                             airMultiplicity = airMultiplicity,
                             peopleCount = peopleCount,
-                            airFlowForOne = airFlowForOneHuman
+                            airFlowForOne = airFlowForOneHuman,
                         )
                         val result = calculatorHelper.calculate()
 
@@ -354,7 +370,7 @@ fun AirExchangeScreen(
                         }
                     }
                 },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
             )
         }
     }
@@ -363,7 +379,6 @@ fun AirExchangeScreen(
         if (isFromProject == "true") onBackPressedFromProject() else onBackPressed()
     }
 }
-
 
 enum class AirExchangeType(val textId: Int) {
     MULTIPLICITY(R.string.multiplicity_variant), SANITARY(R.string.sanitary_variant)

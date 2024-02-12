@@ -1,5 +1,6 @@
 package com.mvptest.presentation.ui.calculation.calculators.conditioner
 
+import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -35,14 +36,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.mvptest.domain.models.CalculationType
+import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.presentation.ui.calculation.ventilationconstans.equipmentsList
 import com.mvptest.presentation.ui.calculation.ventilationconstans.heatLevelList
 import com.mvptest.presentation.ui.calculation.ventilationconstans.lightLevelList
 import com.mvptest.presentation.ui.calculation.ventilationconstans.peopleRadiations
 import com.mvptest.presentation.ui.calculation.ventilationconstans.sunRadiationList
-import com.mvptest.presentation.ui.calculation.CalculationResult
-import com.mvptest.domain.models.CalculationType
-import com.mvptest.presentation.ui.calculation.calculators.airexchange.AirExchangeHelper
 import com.mvptest.presentation.ui.common.CalculatorsResult
 import com.mvptest.presentation.ui.common.PairObjectsDropDown
 import com.mvptest.presentation.ui.common.RoundedTextField
@@ -55,12 +57,12 @@ import com.mvptest.ventilation.R
 
 @Composable
 fun ConditionerScreen(
+    context: Context,
     isFromProject: String,
     onBackPressed: () -> Unit,
     onBackPressedFromProject: () -> Unit,
-    newRoomViewModel: NewRoomViewModel
+    newRoomViewModel: NewRoomViewModel,
 ) {
-
     var peopleBehaviors by remember { mutableStateOf("") }
 
     var peopleRadiation by remember {
@@ -112,10 +114,9 @@ fun ConditionerScreen(
         mutableStateOf(value = false)
     }
 
-
     LazyColumn(
         modifier = Modifier
-            .padding(18.dp)
+            .padding(18.dp),
     ) {
         item {
             Box(
@@ -123,23 +124,23 @@ fun ConditionerScreen(
                     .fillMaxWidth()
                     .background(
                         color = colorResource(id = R.color.sand),
-                        shape = RoundedCornerShape(25.dp)
-                    )
+                        shape = RoundedCornerShape(25.dp),
+                    ),
             ) {
                 TextTitle(
                     modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp),
                     text = stringResource(id = R.string.conditioner_title),
-                    colorId = R.color.white
+                    colorId = R.color.white,
                 )
             }
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.people_radiations
+                textId = R.string.people_radiations,
             )
             Box(
                 modifier = Modifier
-                    .padding(top = 5.dp)
+                    .padding(top = 5.dp),
             ) {
                 PairObjectsDropDown(
                     R.string.choose_variant,
@@ -149,7 +150,8 @@ fun ConditionerScreen(
                         isSomethingWrong = false
                         peopleBehaviors = behaviors
                         peopleRadiation = radiations
-                    })
+                    },
+                )
                 Icon(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
@@ -157,14 +159,14 @@ fun ConditionerScreen(
                     painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "image",
                     tint = colorResource(
-                        id = R.color.gray
-                    )
+                        id = R.color.gray,
+                    ),
                 )
             }
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.people_count
+                textId = R.string.people_count,
             )
             RoundedTextField(
                 modifier = Modifier
@@ -177,16 +179,16 @@ fun ConditionerScreen(
                     peopleCount = text
                 },
                 hint = stringResource(id = R.string.enter_value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.light_level
+                textId = R.string.light_level,
             )
             Box(
                 modifier = Modifier
-                    .padding(top = 5.dp)
+                    .padding(top = 5.dp),
             ) {
                 PairObjectsDropDown(
                     R.string.choose_variant,
@@ -196,7 +198,8 @@ fun ConditionerScreen(
                         isSomethingWrong = false
                         lightLevelText = text
                         lightLevel = value
-                    })
+                    },
+                )
                 Icon(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
@@ -204,18 +207,18 @@ fun ConditionerScreen(
                     painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "image",
                     tint = colorResource(
-                        id = R.color.gray
-                    )
+                        id = R.color.gray,
+                    ),
                 )
             }
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.heat_level
+                textId = R.string.heat_level,
             )
             Box(
                 modifier = Modifier
-                    .padding(top = 5.dp)
+                    .padding(top = 5.dp),
             ) {
                 PairObjectsDropDown(
                     R.string.choose_variant,
@@ -225,7 +228,8 @@ fun ConditionerScreen(
                         isSomethingWrong = false
                         heatLevelText = text
                         heatLevel = value
-                    })
+                    },
+                )
                 Icon(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
@@ -233,14 +237,14 @@ fun ConditionerScreen(
                     painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "image",
                     tint = colorResource(
-                        id = R.color.gray
-                    )
+                        id = R.color.gray,
+                    ),
                 )
             }
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.room_area
+                textId = R.string.room_area,
             )
             RoundedTextField(
                 modifier = Modifier
@@ -253,12 +257,12 @@ fun ConditionerScreen(
                     roomArea = text
                 },
                 hint = stringResource(id = R.string.enter_value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.room_height
+                textId = R.string.room_height,
             )
             RoundedTextField(
                 modifier = Modifier
@@ -271,16 +275,16 @@ fun ConditionerScreen(
                     roomHeight = text
                 },
                 hint = stringResource(id = R.string.enter_value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.sun_radiations
+                textId = R.string.sun_radiations,
             )
             Box(
                 modifier = Modifier
-                    .padding(top = 5.dp)
+                    .padding(top = 5.dp),
             ) {
                 PairObjectsDropDown(
                     R.string.choose_variant,
@@ -290,7 +294,8 @@ fun ConditionerScreen(
                         isSomethingWrong = false
                         sunLevelText = text
                         sunLevel = value
-                    })
+                    },
+                )
                 Icon(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
@@ -298,14 +303,14 @@ fun ConditionerScreen(
                     painter = painterResource(id = R.drawable.ic_arrow_down),
                     contentDescription = "image",
                     tint = colorResource(
-                        id = R.color.gray
-                    )
+                        id = R.color.gray,
+                    ),
                 )
             }
 
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.equipment_radiations
+                textId = R.string.equipment_radiations,
             )
         }
 
@@ -345,7 +350,7 @@ fun ConditionerScreen(
                                 textAlign = TextAlign.Center,
                                 fontFamily = interFamily,
                                 fontWeight = FontWeight.Medium,
-                                fontSize = 12.sp
+                                fontSize = 12.sp,
                             )
                         }
                     },
@@ -354,14 +359,13 @@ fun ConditionerScreen(
                         isSomethingWrong = false
                         equipmentList.add(EquipItem("", 0, ""))
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
 
-
             if (isResult) {
                 CalculatorsResult(
-                    calculationResult = conditionerResult
+                    calculationResult = conditionerResult,
                 )
             }
 
@@ -372,7 +376,7 @@ fun ConditionerScreen(
                     fontFamily = interFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light,
-                    color = colorResource(id = R.color.red)
+                    color = colorResource(id = R.color.red),
                 )
             }
 
@@ -384,7 +388,7 @@ fun ConditionerScreen(
                     onClick = { if (isFromProject == "true") onBackPressedFromProject() else onBackPressed() },
                     border = BorderStroke(
                         1.dp,
-                        color = colorResource(id = R.color.dark_gray_2)
+                        color = colorResource(id = R.color.dark_gray_2),
                     ),
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.white)),
@@ -397,7 +401,7 @@ fun ConditionerScreen(
                             contentDescription = "image",
                             tint = colorResource(id = R.color.dark_gray_2),
                         )
-                    }
+                    },
                 )
 
                 Button(
@@ -430,20 +434,26 @@ fun ConditionerScreen(
                                 )
                             }
                             Text(
-                                text = if (isResult && isFromProject == "true") stringResource(id = R.string.save_button) else stringResource(
-                                    id = R.string.calculating
-                                ),
+                                text = if (isResult && isFromProject == "true") {
+                                    stringResource(id = R.string.save_button)
+                                } else {
+                                    stringResource(
+                                        id = R.string.calculating,
+                                    )
+                                },
                                 modifier = Modifier
                                     .padding(start = 15.dp),
                                 color = colorResource(id = R.color.white),
                                 textAlign = TextAlign.Center,
                                 fontSize = 16.sp,
                                 fontFamily = interFamily,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
                             )
                         }
                     },
                     onClick = {
+                        val firebase = FirebaseAnalytics.getInstance(context)
+                        firebase.logEvent("calculation_conditioner", bundleOf())
                         if (isResult && isFromProject == "true") {
                             onBackPressedFromProject()
                         } else {
@@ -455,7 +465,7 @@ fun ConditionerScreen(
                                 roomArea = roomArea,
                                 roomHeight = roomHeight,
                                 sunRadiation = sunLevel,
-                                equipments = equipmentList
+                                equipments = equipmentList,
                             )
                             val result = calculatorHelper.calculate()
 
@@ -470,7 +480,7 @@ fun ConditionerScreen(
                             }
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
         }
@@ -480,12 +490,11 @@ fun ConditionerScreen(
     }
 }
 
-
 @Composable
 fun EquipItem(
     item: EquipItem,
     onValueChange: (item: EquipItem) -> Unit,
-    onDeleteClicked: (item: EquipItem) -> Unit
+    onDeleteClicked: (item: EquipItem) -> Unit,
 ) {
     var equipItem = item
     Row(modifier = Modifier.padding(top = 5.dp)) {
@@ -496,7 +505,8 @@ fun EquipItem(
                 onItemClick = { text, value ->
                     equipItem = item.copy(volume = value)
                     onValueChange(equipItem)
-                }, isMaxWidth = false
+                },
+                isMaxWidth = false,
             )
             Icon(
                 modifier = Modifier
@@ -505,8 +515,8 @@ fun EquipItem(
                 painter = painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "image",
                 tint = colorResource(
-                    id = R.color.gray
-                )
+                    id = R.color.gray,
+                ),
             )
         }
         RoundedTextField(
@@ -518,7 +528,7 @@ fun EquipItem(
                 onValueChange(equipItem)
             },
             hint = stringResource(id = R.string.counts),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
     }
 }
@@ -526,5 +536,5 @@ fun EquipItem(
 data class EquipItem(
     val name: String,
     val volume: Int,
-    val count: String
+    val count: String,
 )

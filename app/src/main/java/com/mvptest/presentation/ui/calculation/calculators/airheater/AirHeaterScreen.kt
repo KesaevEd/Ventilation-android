@@ -40,6 +40,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mvptest.domain.models.CalculationType
 import com.mvptest.presentation.ui.calculation.CalculationResult
 import com.mvptest.presentation.ui.common.CalculatorsResult
@@ -279,6 +281,8 @@ fun AirHeaterScreen(
                         }
                     },
                     onClick = {
+                        val firebase = FirebaseAnalytics.getInstance(context)
+                        firebase.logEvent("calculation_airheater", bundleOf())
                         if (isResult && isFromProject == "true") {
                             onBackPressedFromProject()
                         } else {
