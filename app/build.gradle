@@ -24,7 +24,7 @@ android {
         applicationId "com.mvptest.ventilation"
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 4
+        versionCode 5
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
