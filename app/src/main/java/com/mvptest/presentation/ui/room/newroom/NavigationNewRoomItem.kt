@@ -1,12 +1,14 @@
 package com.mvptest.presentation.ui.room.newroom
 
 import android.app.Activity
+import android.content.Context
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
-import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsViewModel
 import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsScreen
 import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsViewModel
 
@@ -14,33 +16,33 @@ sealed class NavigationNewRoomItem(val route: String) {
     object First : NavigationNewRoomItem("new_room_first")
     object Second : NavigationNewRoomItem("new_room_second")
     object Third : NavigationNewRoomItem("new_room_third")
-    object RoomDetails: NavigationNewRoomItem("room_details/{roomId}")
+    object RoomDetails : NavigationNewRoomItem("room_details/{roomId}")
 }
 
 fun NavGraphBuilder.newRoomGraph(
     newProjectViewModel: NewProjectViewModel,
     newRoomViewModel: NewRoomViewModel,
     navController: NavController,
-    activity: Activity
-){
+    activity: Activity,
+) {
     composable(NavigationNewRoomItem.First.route) {
         NewRoomScreenFirst(
             viewModel = newRoomViewModel,
             onCheckButtonClick = {
                 navController.navigate(
-                    NavigationNewRoomItem.Second.route
+                    NavigationNewRoomItem.Second.route,
                 )
             },
             onBackPressed = {
                 navController.navigate(NavigationNewProjectItem.ProjectDetails.route) {
-
                     newRoomViewModel.clearState()
 
                     popUpTo(NavigationNewProjectItem.ProjectDetails.route) {
                         inclusive = true
                     }
                 }
-            })
+            },
+        )
     }
 
     composable(NavigationNewRoomItem.Second.route) {
@@ -49,10 +51,10 @@ fun NavGraphBuilder.newRoomGraph(
             newProjectViewModel = newProjectViewModel,
             onBackPressed = {
                 navController.navigate(
-                    NavigationNewRoomItem.First.route
+                    NavigationNewRoomItem.First.route,
                 )
             },
-            onContinueButtonClick = { navController.navigate(NavigationNewRoomItem.Third.route) }
+            onContinueButtonClick = { navController.navigate(NavigationNewRoomItem.Third.route) },
         )
     }
 
@@ -62,41 +64,45 @@ fun NavGraphBuilder.newRoomGraph(
             newProjectViewModel = newProjectViewModel,
             onBackPressed = {
                 navController.navigate(
-                    NavigationNewRoomItem.Second.route
+                    NavigationNewRoomItem.Second.route,
                 )
             },
             onSaveRoomClicked = { projectId ->
                 navController.navigate(
                     NavigationNewProjectItem.ProjectDetails.route.replace(
                         oldValue = "{projectId}",
-                        newValue = projectId
-                    )
-                ){
+                        newValue = projectId,
+                    ),
+                ) {
                     popUpTo(NavigationNewProjectItem.ProjectDetails.route) {
                         inclusive = true
                     }
                 }
                 newRoomViewModel.showInAppReviewDialog(activity)
             },
-            navController
+            navController,
         )
     }
 }
 
 fun NavGraphBuilder.roomDetailsGraph(
+    context: Context,
     roomDetailsViewModel: RoomDetailsViewModel,
     newRoomViewModel: NewRoomViewModel,
-    navController: NavController
-){
+    navController: NavController,
+) {
     composable(route = NavigationNewRoomItem.RoomDetails.route) {
         val roomId = it.arguments?.getString("roomId")
         roomId?.let { id ->
+            val firebase = FirebaseAnalytics.getInstance(context)
+            firebase.logEvent("room_details", bundleOf())
+
             RoomDetailsScreen(
                 roomDetailsViewModel = roomDetailsViewModel,
                 roomId = id,
                 onBackPressed = {
                     navController.navigate(
-                        NavigationNewProjectItem.ProjectDetails.route
+                        NavigationNewProjectItem.ProjectDetails.route,
                     )
                 },
                 onEditRoomClicked = { roomId ->
@@ -104,10 +110,10 @@ fun NavGraphBuilder.roomDetailsGraph(
                     navController.navigate(
                         NavigationNewRoomItem.First.route.replace(
                             oldValue = "{roomId}",
-                            newValue = roomId
-                        )
+                            newValue = roomId,
+                        ),
                     )
-                }
+                },
             )
         }
     }

@@ -35,6 +35,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mvptest.presentation.ui.common.BigTextTitle
 import com.mvptest.presentation.ui.common.ButtonWithText
 import com.mvptest.presentation.ui.common.HorizontalLine
@@ -198,6 +200,8 @@ fun LoginScreen(
             )
 
             if (userAuthViewModel.state.isSuccessLogin == true) {
+                val firebase = FirebaseAnalytics.getInstance(context)
+                firebase.logEvent(FirebaseAnalytics.Event.LOGIN, bundleOf())
                 logInClick()
                 userAuthViewModel.stopSuccessLogin()
             }

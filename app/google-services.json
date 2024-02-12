@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "601940511959",
+    "project_id": "ventilation-acc0f",
+    "storage_bucket": "ventilation-acc0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601940511959:android:1d9959af87a9fedd30b492",
+        "android_client_info": {
+          "package_name": "com.mvptest.ventilation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq2WBHtyY99HvlDPZWHuw-Vveq8vppD6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

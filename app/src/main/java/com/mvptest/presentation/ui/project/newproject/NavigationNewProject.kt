@@ -1,10 +1,13 @@
 package com.mvptest.presentation.ui.project.newproject
 
 import android.content.Context
+import android.util.Log
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mvptest.presentation.ui.bottommenu.NavigationItem
 import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsScreen
 import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsViewModel

@@ -5,8 +5,10 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mvptest.data.SharedPrefStorage
 import com.mvptest.domain.ProjectsRepository
 import com.mvptest.domain.RoomsRepository
@@ -56,6 +58,8 @@ class ProjectDetailsViewModel @Inject constructor(
     }
 
     fun shareProjectPdfFile(context: Context) {
+        val firebase = FirebaseAnalytics.getInstance(context)
+        firebase.logEvent("share_project", bundleOf())
         viewModelScope.launch {
             val project = projectsRepository.getProjectById(temporalProjectId)
             if (project != null) {
