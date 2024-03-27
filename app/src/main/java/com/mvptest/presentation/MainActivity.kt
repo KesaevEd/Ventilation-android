@@ -1,24 +1,23 @@
 package com.mvptest.presentation
 
 import android.annotation.SuppressLint
-import android.content.pm.ActivityInfo
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.Composable
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.bottommenu.BottomNavigationBar
 import com.mvptest.presentation.ui.bottommenu.NavigationGraph
-import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicScreen
 import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicViewModel
+import com.mvptest.presentation.ui.calculation.calculators.airductarea.AirDuctAreaViewModel
 import com.mvptest.presentation.ui.home.HomeScreenViewModel
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
-import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsViewModel
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     @Composable
     private fun App() {
-
         val homeScreenViewModel: HomeScreenViewModel = viewModel()
         val newProjectViewModel: NewProjectViewModel = viewModel()
         val newRoomViewModel: NewRoomViewModel = viewModel()
@@ -44,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         val roomDetailsViewModel: RoomDetailsViewModel = viewModel()
         val userAuthViewModel: UserAuthViewModel = viewModel()
         val aerodynamicViewModel: AerodynamicViewModel = viewModel()
+        val airDuctAreaViewModel: AirDuctAreaViewModel = viewModel()
 
         val navController = rememberNavController()
 
@@ -58,8 +57,9 @@ class MainActivity : AppCompatActivity() {
                 roomDetailsViewModel,
                 userAuthViewModel,
                 aerodynamicViewModel,
+                airDuctAreaViewModel,
                 this,
-                this@MainActivity
+                this@MainActivity,
             )
         }
     }

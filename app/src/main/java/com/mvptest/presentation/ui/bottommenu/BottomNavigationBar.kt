@@ -22,21 +22,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.mvptest.presentation.ui.home.HomeScreen
 import com.mvptest.presentation.ui.auth.LoginScreen
 import com.mvptest.presentation.ui.auth.NavigationAuthItem
 import com.mvptest.presentation.ui.auth.UserAuthViewModel
 import com.mvptest.presentation.ui.auth.authGraph
 import com.mvptest.presentation.ui.calculation.calculationGraph
 import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicViewModel
+import com.mvptest.presentation.ui.calculation.calculators.airductarea.AirDuctAreaViewModel
+import com.mvptest.presentation.ui.home.HomeScreen
 import com.mvptest.presentation.ui.home.HomeScreenViewModel
 import com.mvptest.presentation.ui.myprojects.MyProjectsScreen
 import com.mvptest.presentation.ui.myprojects.MyProjectsViewModel
 import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
 import com.mvptest.presentation.ui.project.newproject.NewProjectViewModel
 import com.mvptest.presentation.ui.project.newproject.newProjectGraph
-import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.presentation.ui.project.projectdetails.ProjectDetailsViewModel
+import com.mvptest.presentation.ui.room.newroom.NewRoomViewModel
 import com.mvptest.presentation.ui.room.newroom.newRoomGraph
 import com.mvptest.presentation.ui.room.newroom.roomDetailsGraph
 import com.mvptest.presentation.ui.room.roomdetails.RoomDetailsViewModel
@@ -48,24 +49,22 @@ fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
         NavigationItem.Home,
         NavigationItem.Calculating,
-        NavigationItem.MyProjects
+        NavigationItem.MyProjects,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     if (currentRoute != null && !isBottomBarInvisible(currentRoute)) {
-
         Card(
             modifier = Modifier
                 .padding(start = 41.dp, end = 41.dp, bottom = 23.dp),
             shape = RoundedCornerShape(50.dp, 50.dp, 50.dp, 50.dp),
             elevation = 10.dp,
 
-            ) {
+        ) {
             BottomNavigation(
                 backgroundColor = colorResource(id = R.color.white),
             ) {
-
                 Row(modifier = Modifier.padding(horizontal = 35.dp)) {
                     items.forEach { navItem ->
                         BottomNavigationItem(
@@ -75,7 +74,7 @@ fun BottomNavigationBar(navController: NavController) {
                                     contentDescription = navItem.route,
                                     modifier = Modifier
                                         .align(CenterVertically)
-                                        .fillMaxHeight(0.5f)
+                                        .fillMaxHeight(0.5f),
                                 )
                             },
                             selectedContentColor = colorResource(id = R.color.dark_gray_2),
@@ -83,7 +82,7 @@ fun BottomNavigationBar(navController: NavController) {
                             selected = currentRoute == navItem.route,
                             onClick = {
                                 navController.navigate(navItem.route)
-                            }
+                            },
                         )
                     }
                 }
@@ -103,27 +102,28 @@ fun NavigationGraph(
     roomDetailsViewModel: RoomDetailsViewModel,
     userAuthViewModel: UserAuthViewModel,
     aerodynamicViewModel: AerodynamicViewModel,
+    airDuctAreaViewModel: AirDuctAreaViewModel,
     context: Context,
-    activity: Activity
+    activity: Activity,
 ) {
-
     NavHost(navController, startDestination = NavigationItem.Home.route) {
-
         composable(route = NavigationAuthItem.Login.route) {
             LoginScreen(
                 userAuthViewModel,
                 context,
                 forgotPasswordClick = { navController.navigate(NavigationAuthItem.EnterEmail.route) },
-                logInClick = { navController.navigate(NavigationItem.Home.route) {
-                    popUpTo(NavigationItem.Home.route) {
-                        inclusive = true
+                logInClick = {
+                    navController.navigate(NavigationItem.Home.route) {
+                        popUpTo(NavigationItem.Home.route) {
+                            inclusive = true
+                        }
                     }
-                } },
+                },
                 logUpClick = { navController.navigate(NavigationAuthItem.Registration.route) },
             )
         }
 
-        //Bottom Navigation
+        // Bottom Navigation
         composable(NavigationItem.Home.route) {
             HomeScreen(navController, homeScreenViewModel)
         }
@@ -134,17 +134,18 @@ fun NavigationGraph(
                 myProjectsViewModel,
                 onCreateNewProjectClicked = {
                     navController.navigate(
-                        NavigationNewProjectItem.First.route
+                        NavigationNewProjectItem.First.route,
                     )
                 },
                 onItemClicked = { projectId ->
                     navController.navigate(
                         NavigationNewProjectItem.ProjectDetails.route.replace(
                             oldValue = "{projectId}",
-                            newValue = projectId
-                        )
+                            newValue = projectId,
+                        ),
                     )
-                })
+                },
+            )
         }
 
         authGraph(navController, userAuthViewModel, context)
@@ -154,17 +155,13 @@ fun NavigationGraph(
             newProjectViewModel,
             newRoomViewModel,
             projectDetailsViewModel,
-            navController
+            navController,
         )
 
         newRoomGraph(newProjectViewModel, newRoomViewModel, navController, activity)
 
         roomDetailsGraph(context, roomDetailsViewModel, newRoomViewModel, navController)
 
-        calculationGraph(navController, context, aerodynamicViewModel, newRoomViewModel)
+        calculationGraph(navController, context, aerodynamicViewModel, newRoomViewModel, airDuctAreaViewModel)
     }
 }
-
-
-
-

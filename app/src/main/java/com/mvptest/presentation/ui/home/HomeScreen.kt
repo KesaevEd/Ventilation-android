@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mvptest.presentation.ui.auth.NavigationAuthItem
 import com.mvptest.presentation.ui.bottommenu.NavigationItem
-import com.mvptest.presentation.ui.common.MyAlertDialog
 import com.mvptest.presentation.ui.common.RegisterOfferDialog
 import com.mvptest.presentation.ui.project.newproject.NavigationNewProjectItem
 import com.mvptest.utils.interFamily
@@ -50,7 +49,7 @@ fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenView
             },
             onCancelClicked = {
                 openDialog.value = false
-            }
+            },
         )
     }
 
@@ -64,7 +63,7 @@ fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenView
                 .fillMaxWidth()
                 .clickable(
                     interactionSource = MutableInteractionSource(),
-                    indication = null
+                    indication = null,
                 ) {
                     if (token != null) {
                         navController.navigate(NavigationNewProjectItem.First.route)
@@ -77,40 +76,39 @@ fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenView
             subTitleId = R.string.new_project_subtitle,
             backgroundColorId = R.color.dark_gray,
             token == null,
-            isNewProject = true
+            isNewProject = true,
         )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 6.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        )
-        {
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
             HomeItem(
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .clickable(
                         interactionSource = MutableInteractionSource(),
-                        indication = null
+                        indication = null,
                     ) { navController.navigate(NavigationItem.Calculating.route) },
                 icon = R.drawable.ic_calculator,
                 titleId = R.string.calculating_bottomnav,
                 subTitleId = R.string.calculators_subtitile,
                 backgroundColorId = R.color.sand,
                 false,
-                isNewProject = false
+                isNewProject = false,
             )
             HomeItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable(
                         interactionSource = MutableInteractionSource(),
-                        indication = null
+                        indication = null,
                     ) {
                         if (token != null) {
                             navController.navigate(NavigationItem.MyProjects.route)
                         } else {
-                          openDialog.value = true
+                            openDialog.value = true
                         }
                     },
                 icon = if (token != null) R.drawable.ic_notes else R.drawable.ic_lock,
@@ -118,7 +116,7 @@ fun HomeScreen(navController: NavController, homeScreenViewModel: HomeScreenView
                 subTitleId = R.string.projects_subtitle,
                 backgroundColorId = R.color.dark_blue,
                 token == null,
-                false
+                false,
             )
         }
     }
@@ -132,25 +130,25 @@ fun HomeItem(
     subTitleId: Int,
     backgroundColorId: Int,
     isLock: Boolean,
-    isNewProject: Boolean
+    isNewProject: Boolean,
 ) {
     Card(
         modifier = modifier,
         backgroundColor = colorResource(id = backgroundColorId),
         shape = RoundedCornerShape(size = 25.dp),
-        elevation = 0.dp
+        elevation = 0.dp,
     ) {
         Column(modifier = Modifier.padding(start = 25.dp, top = 25.dp, bottom = 25.dp)) {
             Box() {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_ellipse),
-                    contentDescription = "image"
+                    contentDescription = "image",
                 )
                 Icon(
                     modifier = Modifier.align(Alignment.Center),
                     painter = painterResource(id = icon),
                     contentDescription = "image",
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
 
@@ -158,23 +156,34 @@ fun HomeItem(
                 modifier = Modifier.padding(top = 70.dp),
                 text = stringResource(id = titleId),
                 fontSize = 22.sp,
-                color = if (isLock && isNewProject) colorResource(id = R.color.lock_gray1) else if (isLock && !isNewProject) colorResource(
-                    id = R.color.lock_gray2
-                ) else Color.White,
+                color = if (isLock && isNewProject) {
+                    colorResource(id = R.color.lock_gray1)
+                } else if (isLock && !isNewProject) {
+                    colorResource(
+                        id = R.color.lock_gray2,
+                    )
+                } else {
+                    Color.White
+                },
                 fontFamily = interFamily,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
             Text(
                 modifier = Modifier.padding(top = 10.dp),
                 text = stringResource(id = subTitleId),
                 fontSize = 14.sp,
-                color = if (isLock && isNewProject) colorResource(id = R.color.lock_gray1) else if (isLock && !isNewProject) colorResource(
-                    id = R.color.lock_gray2
-                ) else Color.White,
+                color = if (isLock && isNewProject) {
+                    colorResource(id = R.color.lock_gray1)
+                } else if (isLock && !isNewProject) {
+                    colorResource(
+                        id = R.color.lock_gray2,
+                    )
+                } else {
+                    Color.White
+                },
                 fontFamily = interFamily,
-                fontWeight = FontWeight.Light
+                fontWeight = FontWeight.Light,
             )
-
         }
     }
 }

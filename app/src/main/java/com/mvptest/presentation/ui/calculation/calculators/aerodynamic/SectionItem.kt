@@ -37,9 +37,8 @@ fun SectionItem(
     item: AerodynamicSection,
     aerodynamicViewModel: AerodynamicViewModel,
     onRemoveSection: (sectionIndex: Int) -> Unit,
-    onValueChanged: () -> Unit
+    onValueChanged: () -> Unit,
 ) {
-
     val sectionIndex = aerodynamicViewModel.state.sections.indexOf(item)
 
     var airFlow by remember {
@@ -62,47 +61,54 @@ fun SectionItem(
         Row(
             modifier = Modifier
                 .padding(top = 5.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         ) {
             TextMediumGray14sp(
                 modifier = Modifier
                     .weight(0.05f)
                     .align(Alignment.CenterVertically),
-                text = item.number.toString()
+                text = item.number.toString(),
             )
             RoundedTextField(
                 modifier = Modifier
                     .weight(0.2f)
                     .padding(end = 2.dp),
-                value = airFlow, onValueChange = { text ->
+                value = airFlow,
+                onValueChange = { text ->
                     onValueChanged()
                     airFlow = text
                     aerodynamicViewModel.setAirFlow(sectionIndex, text)
-                }, hint = "",
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                },
+                hint = "",
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             RoundedTextField(
                 modifier = Modifier
                     .weight(0.15f)
                     .padding(end = 2.dp),
-                value = length, onValueChange = { text ->
+                value = length,
+                onValueChange = { text ->
                     onValueChanged()
                     length = text
                     aerodynamicViewModel.setLength(sectionIndex, text)
-                }, hint = "",
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                },
+                hint = "",
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             Box(
                 modifier = Modifier
                     .weight(0.25f)
-                    .padding(end = 2.dp)
+                    .padding(end = 2.dp),
             ) {
                 AirDuctSizeAerodynamicDropDown(
-                    modifier = Modifier, selected = size, onItemClick = { text ->
+                    modifier = Modifier,
+                    selected = size,
+                    onItemClick = { text ->
                         onValueChanged()
                         size = text
                         aerodynamicViewModel.setDuctSize(sectionIndex, text)
-                    })
+                    },
+                )
 //                Icon(
 //                    modifier = Modifier
 //                        .align(Alignment.CenterEnd)
@@ -133,8 +139,10 @@ fun SectionItem(
             }
         }
 
-        Row(modifier = Modifier
-            .padding(top = 5.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(top = 5.dp),
+        ) {
             Spacer(modifier = Modifier.weight(0.65f))
             Box(modifier = Modifier.weight(0.35f)) {
                 Button(
@@ -159,7 +167,7 @@ fun SectionItem(
                         elements = newList
                         aerodynamicViewModel.addElement(sectionIndex)
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2))
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.dark_gray_2)),
                 )
             }
         }
@@ -170,7 +178,7 @@ fun SectionItem(
 fun ElementItem(
     item: AerodynamicElement,
     onItemClicked: (AerodynamicElement) -> Unit,
-    onRemoveClicked: (AerodynamicElement) -> Unit
+    onRemoveClicked: (AerodynamicElement) -> Unit,
 ) {
     Box {
         AerodynamicElementsDropDown(item, onItemClick = { onItemClicked.invoke(it) })
@@ -183,7 +191,7 @@ fun ElementItem(
                 .clickable { onRemoveClicked.invoke(item) },
             painter = painterResource(id = R.drawable.ic_close),
             tint = colorResource(id = R.color.gray),
-            contentDescription = "icon"
+            contentDescription = "icon",
         )
     }
 }

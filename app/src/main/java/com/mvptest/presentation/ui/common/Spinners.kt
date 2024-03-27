@@ -1,86 +1,41 @@
 package com.mvptest.presentation.ui.common
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
 import androidx.compose.material.Text
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicElement
+import com.mvptest.presentation.ui.calculation.calculators.airductarea.AirDuctShortItem
+import com.mvptest.presentation.ui.calculation.calculators.airductarea.airDuctShortItemList
 import com.mvptest.presentation.ui.calculation.ventilationconstans.airDuctSizes
 import com.mvptest.presentation.ui.calculation.ventilationconstans.ductSizeListAerodynamic
-import com.mvptest.presentation.ui.calculation.ventilationconstans.roomDestinations
 import com.mvptest.presentation.ui.calculation.ventilationconstans.ventElements
-import com.mvptest.presentation.ui.calculation.calculators.aerodynamic.AerodynamicElement
 import com.mvptest.ventilation.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RoomDestinationDropDown(onItemClick: (destination: String) -> Unit) {
-
-    var expanded by remember { mutableStateOf(false) }
-    var selectedDestination by remember { mutableStateOf("") }
-
-    Box(
-    ) {
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = {},
-            content = {
-                RoundedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            expanded = !expanded
-                        },
-                    value = selectedDestination,
-                    onValueChange = {},
-                    hint = stringResource(id = R.string.room_destination),
-                    enabled = false
-                )
-
-                if (roomDestinations.isNotEmpty()) {
-                    ExposedDropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = {
-                            expanded = false
-                        }
-                    ) {
-                        roomDestinations.forEach { item ->
-                            DropdownMenuItem(
-                                content = { Text(text = item) },
-                                onClick = {
-                                    onItemClick.invoke(item)
-                                    selectedDestination = item
-                                    expanded = false
-                                }
-                            )
-                        }
-                    }
-                }
-            })
-    }
-}
-
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
 fun AirDuctSizeDropDown(modifier: Modifier? = Modifier, onItemClick: (size: String) -> Unit) {
-
     var expanded by remember { mutableStateOf(false) }
     var selectedSize by remember { mutableStateOf("") }
 
     Box(
-        modifier = modifier ?: Modifier
+        modifier = modifier ?: Modifier,
     ) {
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -95,7 +50,7 @@ fun AirDuctSizeDropDown(modifier: Modifier? = Modifier, onItemClick: (size: Stri
                     value = selectedSize,
                     onValueChange = {},
                     hint = stringResource(id = R.string.choose_size),
-                    enabled = false
+                    enabled = false,
                 )
 
                 if (airDuctSizes.isNotEmpty()) {
@@ -103,7 +58,7 @@ fun AirDuctSizeDropDown(modifier: Modifier? = Modifier, onItemClick: (size: Stri
                         expanded = expanded,
                         onDismissRequest = {
                             expanded = false
-                        }
+                        },
                     ) {
                         airDuctSizes.forEach { item ->
                             DropdownMenuItem(
@@ -112,12 +67,13 @@ fun AirDuctSizeDropDown(modifier: Modifier? = Modifier, onItemClick: (size: Stri
                                     onItemClick.invoke(item)
                                     selectedSize = item
                                     expanded = false
-                                }
+                                },
                             )
                         }
                     }
                 }
-            })
+            },
+        )
     }
 }
 
@@ -126,14 +82,13 @@ fun AirDuctSizeDropDown(modifier: Modifier? = Modifier, onItemClick: (size: Stri
 fun AirDuctSizeAerodynamicDropDown(
     modifier: Modifier? = Modifier,
     selected: String?,
-    onItemClick: (size: String) -> Unit
+    onItemClick: (size: String) -> Unit,
 ) {
-
     var expanded by remember { mutableStateOf(false) }
     var selectedSize by remember { mutableStateOf(selected) }
 
     Box(
-        modifier = modifier ?: Modifier
+        modifier = modifier ?: Modifier,
     ) {
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -148,7 +103,7 @@ fun AirDuctSizeAerodynamicDropDown(
                     value = selectedSize ?: "",
                     onValueChange = {},
                     hint = "",
-                    enabled = false
+                    enabled = false,
                 )
 
                 if (ductSizeListAerodynamic.isNotEmpty()) {
@@ -156,7 +111,7 @@ fun AirDuctSizeAerodynamicDropDown(
                         expanded = expanded,
                         onDismissRequest = {
                             expanded = false
-                        }
+                        },
                     ) {
                         ductSizeListAerodynamic.forEach { item ->
                             DropdownMenuItem(
@@ -165,12 +120,13 @@ fun AirDuctSizeAerodynamicDropDown(
                                     onItemClick.invoke(item)
                                     selectedSize = item
                                     expanded = false
-                                }
+                                },
                             )
                         }
                     }
                 }
-            })
+            },
+        )
     }
 }
 
@@ -180,36 +136,44 @@ fun PairObjectsDropDown(
     hintId: Int,
     list: Array<Pair<String, Int>>,
     onItemClick: (first: String, second: Int) -> Unit,
-    isMaxWidth: Boolean? = true
+    isMaxWidth: Boolean? = true,
 ) {
-
     var expanded by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf("") }
 
-    val modifier = if (isMaxWidth != false) Modifier
-        .fillMaxWidth()
-        .clickable {
-            expanded = !expanded
-        } else Modifier
-        .clickable {
-            expanded = !expanded
-        }
+    val modifier = if (isMaxWidth != false) {
+        Modifier
+            .fillMaxWidth()
+            .clickable {
+                expanded = !expanded
+            }
+    } else {
+        Modifier
+            .clickable {
+                expanded = !expanded
+            }
+    }
 
-    Box(
-    ) {
+    Box() {
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = {},
             content = {
                 RoundedTextField(
                     modifier = modifier,
-                    value = if (selected.length < 31) selected else (selected.substring(
-                        startIndex = 0,
-                        endIndex = 31
-                    ) + "..."),
+                    value = if (selected.length < 31) {
+                        selected
+                    } else {
+                        (
+                            selected.substring(
+                                startIndex = 0,
+                                endIndex = 31,
+                            ) + "..."
+                            )
+                    },
                     onValueChange = {},
                     hint = stringResource(id = hintId),
-                    enabled = false
+                    enabled = false,
                 )
 
                 if (list.isNotEmpty()) {
@@ -217,7 +181,7 @@ fun PairObjectsDropDown(
                         expanded = expanded,
                         onDismissRequest = {
                             expanded = false
-                        }
+                        },
                     ) {
                         list.forEach { item ->
                             DropdownMenuItem(
@@ -226,15 +190,15 @@ fun PairObjectsDropDown(
                                     onItemClick.invoke(item.first, item.second)
                                     selected = item.first
                                     expanded = false
-                                }
+                                },
                             )
                         }
                     }
                 }
-            })
+            },
+        )
     }
 }
-
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -242,36 +206,44 @@ fun ShortPairObjectsDropDown(
     hintId: Int,
     list: Array<Pair<String, Int>>,
     onItemClick: (first: String, second: Int) -> Unit,
-    isMaxWidth: Boolean? = true
+    isMaxWidth: Boolean? = true,
 ) {
-
     var expanded by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf("") }
 
-    val modifier = if (isMaxWidth != false) Modifier
-        .fillMaxWidth()
-        .clickable {
-            expanded = !expanded
-        } else Modifier
-        .clickable {
-            expanded = !expanded
-        }
+    val modifier = if (isMaxWidth != false) {
+        Modifier
+            .fillMaxWidth()
+            .clickable {
+                expanded = !expanded
+            }
+    } else {
+        Modifier
+            .clickable {
+                expanded = !expanded
+            }
+    }
 
-    Box(
-    ) {
+    Box() {
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = {},
             content = {
                 RoundedTextField(
                     modifier = modifier,
-                    value = if (selected.length < 17) selected else (selected.substring(
-                        startIndex = 0,
-                        endIndex = 17
-                    ) + "..."),
+                    value = if (selected.length < 17) {
+                        selected
+                    } else {
+                        (
+                            selected.substring(
+                                startIndex = 0,
+                                endIndex = 17,
+                            ) + "..."
+                            )
+                    },
                     onValueChange = {},
                     hint = stringResource(id = hintId),
-                    enabled = false
+                    enabled = false,
                 )
 
                 if (list.isNotEmpty()) {
@@ -279,7 +251,7 @@ fun ShortPairObjectsDropDown(
                         expanded = expanded,
                         onDismissRequest = {
                             expanded = false
-                        }
+                        },
                     ) {
                         list.forEach { item ->
                             DropdownMenuItem(
@@ -288,12 +260,13 @@ fun ShortPairObjectsDropDown(
                                     onItemClick.invoke(item.first, item.second)
                                     selected = item.first
                                     expanded = false
-                                }
+                                },
                             )
                         }
                     }
                 }
-            })
+            },
+        )
     }
 }
 
@@ -301,7 +274,7 @@ fun ShortPairObjectsDropDown(
 @Composable
 fun AerodynamicElementsDropDown(
     item: AerodynamicElement,
-    onItemClick: (element: AerodynamicElement) -> Unit
+    onItemClick: (element: AerodynamicElement) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf(item.name) }
@@ -311,7 +284,8 @@ fun AerodynamicElementsDropDown(
             expanded = !expanded
         }
 
-    Box(modifier = Modifier.padding(top = 2.dp)
+    Box(
+        modifier = Modifier.padding(top = 2.dp),
     ) {
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -319,13 +293,19 @@ fun AerodynamicElementsDropDown(
             content = {
                 RoundedTextField(
                     modifier = modifier,
-                    value = if (selected.length < 31) selected else (selected.substring(
-                        startIndex = 0,
-                        endIndex = 31
-                    ) + "..."),
+                    value = if (selected.length < 31) {
+                        selected
+                    } else {
+                        (
+                                selected.substring(
+                                    startIndex = 0,
+                                    endIndex = 31,
+                                ) + "..."
+                                )
+                    },
                     onValueChange = {},
                     hint = "Отвод 30°",
-                    enabled = false
+                    enabled = false,
                 )
 
                 if (ventElements.isNotEmpty()) {
@@ -333,7 +313,7 @@ fun AerodynamicElementsDropDown(
                         expanded = expanded,
                         onDismissRequest = {
                             expanded = false
-                        }
+                        },
                     ) {
                         ventElements.forEach { item ->
                             DropdownMenuItem(
@@ -342,11 +322,12 @@ fun AerodynamicElementsDropDown(
                                     onItemClick.invoke(item)
                                     selected = item.name
                                     expanded = false
-                                }
+                                },
                             )
                         }
                     }
                 }
-            })
+            },
+        )
     }
 }

@@ -24,6 +24,7 @@ fun isBottomBarInvisible(route: String): Boolean = when (route) {
     NavigationCalculationItem.Conditioner.route -> true
     NavigationCalculationItem.Aerodynamic.route -> true
     NavigationCalculationItem.Diffusers.route -> true
+    NavigationCalculationItem.AirDuctArea.route -> true
     else -> false
 
 }

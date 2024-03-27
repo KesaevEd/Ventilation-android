@@ -48,8 +48,6 @@ class AerodynamicViewModel() : ViewModel() {
 
                 return CalculationResult(CalculationType.AERODYNAMIC, result.toInt().toString())
             }
-
-
         } catch (e: Exception) {
             Log.e("error", "AerodynamicViewModel Error = $e")
             return null
@@ -65,8 +63,8 @@ class AerodynamicViewModel() : ViewModel() {
                 "",
                 "",
                 "",
-                listOf(AerodynamicElement("", 0, 0.0))
-            )
+                listOf(AerodynamicElement("", 0, 0.0)),
+            ),
         )
         state = state.copy(sections = mutableList)
     }
@@ -101,7 +99,7 @@ class AerodynamicViewModel() : ViewModel() {
     fun setElement(
         indexSection: Int,
         indexElement: Int,
-        newElement: AerodynamicElement
+        newElement: AerodynamicElement,
     ) {
         val list = state.sections
 
@@ -148,11 +146,15 @@ class AerodynamicViewModel() : ViewModel() {
 data class AerodynamicViewState(
     var sections: List<AerodynamicSection> = listOf(
         AerodynamicSection(
-            0, "", "", "",  listOf(
-                AerodynamicElement("", 0, 0.0)
-            )
-        )
-    )
+            0,
+            "",
+            "",
+            "",
+            listOf(
+                AerodynamicElement("", 0, 0.0),
+            ),
+        ),
+    ),
 )
 
 data class AerodynamicSection(
@@ -160,11 +162,11 @@ data class AerodynamicSection(
     var airFlow: String,
     var length: String,
     var ductSize: String,
-    var elements: List<AerodynamicElement>
+    var elements: List<AerodynamicElement>,
 )
 
 data class AerodynamicElement(
     val name: String,
     val area: Int,
-    val pressureLoss: Double
+    val pressureLoss: Double,
 )

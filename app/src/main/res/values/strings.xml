@@ -16,6 +16,7 @@
     <string name="kaloriferi">Мощности калорифера \n</string>
     <string name="aerodinamika">Аэродинами\nческий</string>
     <string name="kondicioneri">Мощности кондиционирования</string>
+    <string name="air_duct_area">Площади воздуховодов</string>
     <string name="podbor_ventilyatora">ПОДБОР ВЕНТИЛЯТОРА</string>
     <string name="обьем">Объем помещения:</string>
     <string name="воздухообмен_по_кратности">Воздухообмен по кратности:</string>
@@ -68,7 +69,7 @@
 
     <string name="air_heater_title">Мощность калорифера</string>
     <string name="temp_after_heater">Температура воздуха после калорифера, ℃</string>
-    <string name="temp_outside">Температура наружнего воздуха, ℃</string>
+    <string name="temp_outside">Температура наружного воздуха, ℃</string>
     <string name="go_to_sp">Перейти в СП</string>
     <string name="air_heater_power">Воздухообмен</string>
     <string name="air_heater_result">Мощность\nкалорифера</string>
@@ -83,6 +84,34 @@
     <string name="aerodynamic_elements">Элементы</string>
     <string name="add_section">Добавить участок</string>
     <string name="recommended_duct_size">Рекомендуемое сечение</string>
+
+    <string name="air_duct_area_title">Площадь воздуховодов</string>
+    <string name="ductwork_round_area">Площадь воздуховода круглого сечения</string>
+    <string name="ductwork_rectangle_area">Площадь воздуховода прямоугольного сечения</string>
+    <string name="tap_round_area">Площадь отвода круглого сечения</string>
+    <string name="tap_rectangular_area">Площадь отвода прямоугольного сечения</string>
+    <string name="transition_round_round_area">Площадь перехода круглого на круглое сечение</string>
+    <string name="transition_rectangular_rectangular_area">Площадь перехода прямоугольного на прямоугольное сечение</string>
+    <string name="transition_round_rectangular_area">Площадь перехода круглого на прямоугольное сечение</string>
+    <string name="incut_straight_round_area">Площадь врезки прямой круглой</string>
+    <string name="incut_straight_rectangular_area">Площадь врезки прямой прямоугольной</string>
+    <string name="incut_collar_round_area">Площадь круглой врезки с воротником</string>
+    <string name="incut_collar_rectangular_area">Площадь прямоугольной врезки с воротником</string>
+    <string name="tee_incut_round_round_area">Площадь тройника круглого в круглое сечение</string>
+    <string name="tee_incut_area">Площадь тройника прямоугольного в круглое сечение</string>
+    <string name="tee_output_rectangular_round_area">Площадь тройника круглого в прямоугольное сечение</string>
+    <string name="tee_output_rectangular_rectangular_area">Площадь тройника прямоугольного в прямоугольное сечение</string>
+    <string name="cup_round_area">Площадь заглушки круглого сечения</string>
+    <string name="cup_rectangle_area">Площадь заглушки прямоугольного сечения</string>
+    <string name="duck_one_area">Площадь утки со смещением в 1-ой плоскости</string>
+    <string name="duck_two_area">Площадь утки со смещением в 2-х плоскостях</string>
+    <string name="canopy_sharp_area">Площадь зонта островного типа</string>
+    <string name="canopy_blunt_area">Площадь зонта пристенного типа</string>
+    <string name="add_element">Добавить элемент</string>
+    <string name="length">Длина</string>
+    <string name="value_m">Зачение, м</string>
+    <string name="diamenter">Диаметр</string>
+    <string name="value_mm">Зачение, мм</string>
 
     <string name="enter">Вход</string>
     <string name="registration">Регистрация</string>
@@ -159,7 +188,6 @@
     <string name="air_duct_cross">Сечение воздуховодов</string>
     <string name="pressure_loss_and_air_area">Потери давления и площадь воздуховодов</string>
     <string name="pressure_loss">Потери давления, Па</string>
-    <string name="air_duct_area">Площадь воздуховодов, м2</string>
     <string name="heater_type">Тип калорифера</string>
     <string name="heater_performance">Производительность калорифера, кВт</string>
     <string name="air_conditioner">Кондиционер</string>
@@ -198,6 +226,7 @@
 
     <string name="send_project">"Отправить проект"</string>
 
+    <string name="m"> м</string>
     <string name="m2"> м2</string>
     <string name="m3"> м3</string>
     <string name="m3InH"> м3/ч</string>

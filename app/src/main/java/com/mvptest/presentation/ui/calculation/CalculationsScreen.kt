@@ -33,11 +33,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.navigation
 import com.mvptest.domain.models.CalculateItem
 import com.mvptest.domain.models.CalculationType
 import com.mvptest.presentation.ui.bottommenu.NavigationItem
@@ -57,8 +52,8 @@ fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: S
             iconId = R.drawable.ic_air_exchange,
             route = NavigationCalculationItem.AirExchange.route.replace(
                 oldValue = "{fromProject}",
-                newValue = "false"
-            )
+                newValue = "false",
+            ),
         ),
         CalculateItem(
             type = CalculationType.AERODYNAMIC,
@@ -67,8 +62,8 @@ fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: S
             iconId = R.drawable.ic_aerodynamic,
             route = NavigationCalculationItem.Aerodynamic.route.replace(
                 oldValue = "{fromProject}",
-                newValue = "false"
-            )
+                newValue = "false",
+            ),
         ),
         CalculateItem(
             type = CalculationType.DUCT_CROSS_SECTIONS,
@@ -77,8 +72,8 @@ fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: S
             iconId = R.drawable.ic_air_duct,
             route = NavigationCalculationItem.DuctCrossSection.route.replace(
                 oldValue = "{fromProject}",
-                newValue = "false"
-            )
+                newValue = "false",
+            ),
         ),
         CalculateItem(
             type = CalculationType.DIFFUSERS,
@@ -87,8 +82,8 @@ fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: S
             iconId = R.drawable.ic_diffusers,
             route = NavigationCalculationItem.Diffusers.route.replace(
                 oldValue = "{fromProject}",
-                newValue = "false"
-            )
+                newValue = "false",
+            ),
         ),
         CalculateItem(
             type = CalculationType.AIR_HEATER,
@@ -97,8 +92,8 @@ fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: S
             iconId = R.drawable.ic_air_heater,
             route = NavigationCalculationItem.AirHeater.route.replace(
                 oldValue = "{fromProject}",
-                newValue = "false"
-            )
+                newValue = "false",
+            ),
         ),
         CalculateItem(
             type = CalculationType.CONDITIONER,
@@ -107,9 +102,19 @@ fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: S
             iconId = R.drawable.ic_conditioner,
             route = NavigationCalculationItem.Conditioner.route.replace(
                 oldValue = "{fromProject}",
-                newValue = "false"
-            )
-        )
+                newValue = "false",
+            ),
+        ),
+        CalculateItem(
+            type = CalculationType.AIR_DUCT_AREA,
+            titleId1 = R.string.calculating_bottomnav,
+            titleId = R.string.air_duct_area,
+            iconId = R.drawable.ic_air_duct,
+            route = NavigationCalculationItem.AirDuctArea.route.replace(
+                oldValue = "{fromProject}",
+                newValue = "false",
+            ),
+        ),
     )
 
     LazyVerticalGrid(
@@ -120,8 +125,9 @@ fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: S
         verticalArrangement = Arrangement.spacedBy(5.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         content = {
-            items(list) { ItemCard(item = it){route ->  onItemClicked.invoke(route)} }
-        })
+            items(list) { ItemCard(item = it) { route -> onItemClicked.invoke(route) } }
+        },
+    )
 
     BackHandler {
         navController.navigate(NavigationItem.Home.route) {
@@ -132,28 +138,26 @@ fun CalculatingMainScreen(navController: NavController, onItemClicked: (route: S
     }
 }
 
-
 @Composable
 fun ItemCard(item: CalculateItem, onItemClicked: (route: String) -> Unit = { }) {
     Box(
         modifier = Modifier.background(
             color = colorResource(id = R.color.sand),
-            shape = RoundedCornerShape(25.dp)
+            shape = RoundedCornerShape(25.dp),
         ),
-    )
-    {
+    ) {
         Column(
             modifier = Modifier
                 .padding(
                     start = 20.dp,
                     top = 15.dp,
                     end = 15.dp,
-                    bottom = 25.dp
+                    bottom = 25.dp,
                 )
-                .clickable { onItemClicked(item.route) }
+                .clickable { onItemClicked(item.route) },
         ) {
             Row(
-                Modifier.wrapContentHeight()
+                Modifier.wrapContentHeight(),
             ) {
                 Text(
                     text = stringResource(id = item.titleId1),
@@ -163,7 +167,7 @@ fun ItemCard(item: CalculateItem, onItemClicked: (route: String) -> Unit = { }) 
                     color = colorResource(id = R.color.white),
                     fontFamily = interFamily,
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Light
+                    fontWeight = FontWeight.Light,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Box(modifier = Modifier) {
@@ -173,13 +177,13 @@ fun ItemCard(item: CalculateItem, onItemClicked: (route: String) -> Unit = { }) 
                             .width(54.dp),
                         painter = painterResource(id = R.drawable.ic_ellipse_white),
                         contentDescription = "icon",
-                        tint = colorResource(id = R.color.light_sand)
+                        tint = colorResource(id = R.color.light_sand),
                     )
                     Icon(
                         modifier = Modifier.align(Alignment.Center),
                         painter = painterResource(id = item.iconId),
                         contentDescription = "icon",
-                        tint = colorResource(id = R.color.white)
+                        tint = colorResource(id = R.color.white),
                     )
                 }
             }
@@ -189,7 +193,7 @@ fun ItemCard(item: CalculateItem, onItemClicked: (route: String) -> Unit = { }) 
                 color = colorResource(id = R.color.white),
                 fontFamily = interFamily,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
             )
         }
     }

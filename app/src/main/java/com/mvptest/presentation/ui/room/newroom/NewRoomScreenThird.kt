@@ -55,9 +55,8 @@ fun NewRoomScreenThird(
     newProjectViewModel: NewProjectViewModel,
     onBackPressed: () -> Unit,
     onSaveRoomClicked: (projectId: String) -> Unit,
-    navController: NavController
+    navController: NavController,
 ) {
-
     val activity = LocalContext.current as AppCompatActivity
     activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -65,7 +64,7 @@ fun NewRoomScreenThird(
     val heaterNames = listOf(
         stringResource(id = R.string.no_heater),
         stringResource(id = R.string.water_heater),
-        stringResource(id = R.string.electro_heater)
+        stringResource(id = R.string.electro_heater),
     )
 
     var airExchangePerformance by remember {
@@ -101,16 +100,15 @@ fun NewRoomScreenThird(
     Column(
         modifier = Modifier
             .padding(18.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
     ) {
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
                     color = colorResource(id = R.color.dark_blue),
-                    shape = RoundedCornerShape(25.dp)
-                )
+                    shape = RoundedCornerShape(25.dp),
+                ),
         ) {
             Column(modifier = Modifier.padding(start = 25.dp, bottom = 25.dp, top = 25.dp)) {
                 Text(
@@ -119,7 +117,7 @@ fun NewRoomScreenThird(
                     fontSize = 22.sp,
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = Color.White,
                 )
 
                 Text(
@@ -128,15 +126,14 @@ fun NewRoomScreenThird(
                     fontSize = 16.sp,
                     fontFamily = interFamily,
                     fontWeight = FontWeight.Medium,
-                    color = Color.White
+                    color = Color.White,
                 )
             }
-
         }
 
         TextTitleOfTextField(
             modifier = Modifier.padding(top = 20.dp),
-            textId = R.string.air_exchange_performance
+            textId = R.string.air_exchange_performance,
         )
         Box(modifier = Modifier.padding(top = 5.dp)) {
             RoundedTextField(
@@ -148,23 +145,23 @@ fun NewRoomScreenThird(
                     airExchangePerformance = it
                 },
                 hint = stringResource(id = R.string.value_m3),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             CalculatingButton(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(end = 15.dp)
+                    .padding(end = 15.dp),
             ) {
                 navigateToCalculatorScreen(
                     NavigationCalculationItem.AirExchange.route,
-                    navController
+                    navController,
                 )
             }
         }
 
         TextTitleOfTextField(
             modifier = Modifier.padding(top = 15.dp),
-            textId = R.string.air_duct_cross
+            textId = R.string.air_duct_cross,
         )
         Box(modifier = Modifier.padding(top = 5.dp)) {
             RoundedTextField(
@@ -176,24 +173,23 @@ fun NewRoomScreenThird(
                     airDuctCrossSize = it
                 },
                 hint = stringResource(id = R.string.value),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             CalculatingButton(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(end = 15.dp)
+                    .padding(end = 15.dp),
             ) {
                 navigateToCalculatorScreen(
                     NavigationCalculationItem.DuctCrossSection.route,
-                    navController
+                    navController,
                 )
             }
         }
 
-
         TextTitleOfTextField(
             modifier = Modifier.padding(top = 15.dp),
-            textId = R.string.pressure_loss
+            textId = R.string.pressure_loss,
         )
         Box(modifier = Modifier.padding(top = 5.dp)) {
             RoundedTextField(
@@ -205,32 +201,32 @@ fun NewRoomScreenThird(
                     pressureLoss = it
                 },
                 hint = stringResource(id = R.string.value_pa),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             CalculatingButton(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(end = 15.dp)
+                    .padding(end = 15.dp),
             ) {
                 navigateToCalculatorScreen(
                     NavigationCalculationItem.Aerodynamic.route,
-                    navController
+                    navController,
                 )
             }
         }
 
-        if(newRoomViewModel.state.ventSystemDestination == VentSystemDestination.FORCED || newRoomViewModel.state.ventSystemDestination == VentSystemDestination.FORCED_EXHAUST) {
+        if (newRoomViewModel.state.ventSystemDestination == VentSystemDestination.FORCED || newRoomViewModel.state.ventSystemDestination == VentSystemDestination.FORCED_EXHAUST) {
             TextTitleOfTextField(
                 modifier = Modifier.padding(top = 15.dp),
-                textId = R.string.heater_type
+                textId = R.string.heater_type,
             )
             Box(
                 modifier = Modifier
                     .padding(top = 5.dp)
                     .background(
                         colorResource(id = R.color.light_gray),
-                        shape = RoundedCornerShape(15.dp)
-                    )
+                        shape = RoundedCornerShape(15.dp),
+                    ),
             ) {
                 Row() {
                     selectedHeaterButtonIndex = heaterTypes.indexOf(heaterType)
@@ -245,16 +241,24 @@ fun NewRoomScreenThird(
                                 .padding(10.dp),
                             border = BorderStroke(
                                 1.dp,
-                                color = colorResource(id = R.color.gray)
+                                color = colorResource(id = R.color.gray),
                             ),
                             shape = RoundedCornerShape(100.dp),
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = if (selectedHeaterButtonIndex == index) colorResource(
-                                    id = R.color.dark_gray_2
-                                ) else colorResource(id = R.color.light_gray),
-                                contentColor = if (selectedHeaterButtonIndex == index) Color.White else colorResource(
-                                    id = R.color.gray
-                                )
+                                backgroundColor = if (selectedHeaterButtonIndex == index) {
+                                    colorResource(
+                                        id = R.color.dark_gray_2,
+                                    )
+                                } else {
+                                    colorResource(id = R.color.light_gray)
+                                },
+                                contentColor = if (selectedHeaterButtonIndex == index) {
+                                    Color.White
+                                } else {
+                                    colorResource(
+                                        id = R.color.gray,
+                                    )
+                                },
                             ),
                             content = {
                                 Text(
@@ -262,9 +266,9 @@ fun NewRoomScreenThird(
                                     text = heaterNames[index],
                                     fontFamily = interFamily,
                                     fontWeight = FontWeight.Medium,
-                                    fontSize = 12.sp
+                                    fontSize = 12.sp,
                                 )
-                            }
+                            },
                         )
                     }
                 }
@@ -273,7 +277,7 @@ fun NewRoomScreenThird(
             if (heaterType != HeaterType.NONE) {
                 TextTitleOfTextField(
                     modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.heater_performance
+                    textId = R.string.heater_performance,
                 )
                 Box(modifier = Modifier.padding(top = 5.dp)) {
                     RoundedTextField(
@@ -285,16 +289,16 @@ fun NewRoomScreenThird(
                             heaterPerformance = it
                         },
                         hint = stringResource(id = R.string.value_kvt),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     )
                     CalculatingButton(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(end = 15.dp)
+                            .padding(end = 15.dp),
                     ) {
                         navigateToCalculatorScreen(
                             NavigationCalculationItem.AirHeater.route,
-                            navController
+                            navController,
                         )
                     }
                 }
@@ -305,16 +309,16 @@ fun NewRoomScreenThird(
                     .padding(top = 15.dp)
                     .background(
                         colorResource(id = R.color.light_gray),
-                        shape = RoundedCornerShape(15.dp)
-                    )
+                        shape = RoundedCornerShape(15.dp),
+                    ),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
                         text = stringResource(id = R.string.air_conditioner),
-                        modifier = Modifier.padding(start = 25.dp, top = 21.dp, bottom = 21.dp)
+                        modifier = Modifier.padding(start = 25.dp, top = 21.dp, bottom = 21.dp),
                     )
                     Spacer(Modifier.weight(1f))
                     RadioButton(
@@ -322,21 +326,22 @@ fun NewRoomScreenThird(
                         colors = RadioButtonDefaults.colors(
                             unselectedColor = colorResource(id = R.color.dark_gray),
                             selectedColor = colorResource(
-                                id = R.color.dark_gray
-                            )
+                                id = R.color.dark_gray,
+                            ),
                         ),
                         selected = isAirConditioner,
                         onClick = {
                             isAirConditioner = !isAirConditioner
                             newRoomViewModel.setIsAirConditioner(isAirConditioner)
-                        })
+                        },
+                    )
                 }
             }
 
             if (isAirConditioner) {
                 TextTitleOfTextField(
                     modifier = Modifier.padding(top = 15.dp),
-                    textId = R.string.air_conditioner_performance
+                    textId = R.string.air_conditioner_performance,
                 )
                 Box(modifier = Modifier.padding(top = 5.dp)) {
                     RoundedTextField(
@@ -348,16 +353,16 @@ fun NewRoomScreenThird(
                             airConditionerPerformance = it
                         },
                         hint = stringResource(id = R.string.value_kvt),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     )
                     CalculatingButton(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(end = 15.dp)
+                            .padding(end = 15.dp),
                     ) {
                         navigateToCalculatorScreen(
                             NavigationCalculationItem.Conditioner.route,
-                            navController
+                            navController,
                         )
                     }
                 }
@@ -369,20 +374,18 @@ fun NewRoomScreenThird(
             newRoomViewModel.clearState()
             onSaveRoomClicked(newProjectViewModel.projectId)
         })
-
     }
-
 }
 
 private fun navigateToCalculatorScreen(route: String, navController: NavController) {
     navController.navigate(
         route.replace(
             oldValue = "{fromProject}",
-            newValue = "true"
-        )
+            newValue = "true",
+        ),
     ) {
         popUpTo(
-            NavigationItem.Calculating.route
+            NavigationItem.Calculating.route,
         ) {
             inclusive = true
         }

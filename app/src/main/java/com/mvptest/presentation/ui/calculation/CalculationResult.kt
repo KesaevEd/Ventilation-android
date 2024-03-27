@@ -6,7 +6,7 @@ import com.mvptest.ventilation.R
 data class CalculationResult(
     val type: CalculationType,
     val firstResult: String,
-    val secondResult: String? = null
+    val secondResult: String? = null,
 ) {
     val firstTitleId: Pair<Int, Int> = when (type) {
         CalculationType.AIR_EXCHANGE -> {
@@ -32,8 +32,11 @@ data class CalculationResult(
         CalculationType.CONDITIONER -> {
             Pair(R.string.conditioner_title, R.string.kvt)
         }
-    }
 
+        CalculationType.AIR_DUCT_AREA -> {
+            Pair(R.string.air_duct_area, R.string.m2)
+        }
+    }
 
     val secondTitleId: Pair<Int, Int> = when (type) {
         CalculationType.AIR_EXCHANGE -> {
@@ -59,6 +62,9 @@ data class CalculationResult(
         CalculationType.CONDITIONER -> {
             Pair(0, 0)
         }
-    }
 
+        CalculationType.AIR_DUCT_AREA -> {
+            Pair(0, 0)
+        }
+    }
 }

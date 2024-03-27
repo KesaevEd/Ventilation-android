@@ -5,9 +5,9 @@ data class CalculateItem(
     val titleId1: Int,
     val titleId: Int,
     val iconId: Int,
-    val route: String
+    val route: String,
 )
 
-enum class CalculationType{
-    AIR_EXCHANGE, DUCT_CROSS_SECTIONS, AIR_HEATER, DIFFUSERS, AERODYNAMIC, CONDITIONER
+enum class CalculationType {
+    AIR_EXCHANGE, DUCT_CROSS_SECTIONS, AIR_HEATER, DIFFUSERS, AERODYNAMIC, CONDITIONER, AIR_DUCT_AREA
 }
